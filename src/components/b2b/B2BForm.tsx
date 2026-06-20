@@ -8,7 +8,7 @@ import { CheckCircle2, Loader2 } from "lucide-react";
 import { b2bLeadSchema, type B2BLead } from "@/lib/schemas";
 import { cn } from "@/lib/utils";
 
-type Status = "idle" | "submitting" | "success";
+type Status = "idle" | "submitting" | "success" | "error";
 
 export function B2BForm() {
   const [status, setStatus] = useState<Status>("idle");
@@ -27,23 +27,31 @@ export function B2BForm() {
   const onSubmit = async (data: B2BLead) => {
     setStatus("submitting");
 
-    // Simulación de envío al backend / CRM.
-    // Aquí se integraría un Server Action, API route o webhook (HubSpot, etc.).
-    await new Promise((r) => setTimeout(r, 1200));
-
-    // Evento para la capa de datos (GTM → BigQuery → Looker).
-    if (typeof window !== "undefined") {
-      window.dataLayer = window.dataLayer || [];
-      window.dataLayer.push({
-        event: "generate_lead_b2b",
-        lead_company: data.company,
-        lead_channel: "b2b_form",
+    try {
+      const res = await fetch("/api/b2b-lead", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
       });
-    }
+      if (!res.ok) throw new Error(`Respuesta ${res.status}`);
 
-    setLeadName(data.contactName.split(" ")[0] ?? "");
-    setStatus("success");
-    reset();
+      // Evento para la capa de datos (GTM → BigQuery → Looker).
+      if (typeof window !== "undefined") {
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({
+          event: "generate_lead_b2b",
+          lead_company: data.company,
+          lead_channel: "b2b_form",
+        });
+      }
+
+      setLeadName(data.contactName.split(" ")[0] ?? "");
+      setStatus("success");
+      reset();
+    } catch (error) {
+      console.error("[B2BForm] Error al enviar el lead:", error);
+      setStatus("error");
+    }
   };
 
   return (
@@ -128,6 +136,16 @@ export function B2BForm() {
                 error={errors.phone?.message}
                 {...register("phone")}
               />
+
+              {status === "error" && (
+                <p
+                  role="alert"
+                  className="rounded-lg bg-terracotta/10 px-4 py-3 text-sm text-terracotta"
+                >
+                  No pudimos enviar tu solicitud. Revisa tu conexión e inténtalo
+                  nuevamente.
+                </p>
+              )}
 
               <button
                 type="submit"

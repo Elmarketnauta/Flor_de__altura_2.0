@@ -3,9 +3,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
-import { Menu, X } from "lucide-react";
+import { Menu } from "lucide-react";
 import { CartButton } from "@/components/cart/CartButton";
+import { MobileMenu } from "./MobileMenu";
 
 const NAV = [
   { href: "#origen", label: "Origen" },
@@ -16,7 +16,7 @@ const NAV = [
 ];
 
 export function Header() {
-  const [open, setOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   return (
     <header className="sticky top-0 z-40 border-b border-sand/70 bg-cream/85 backdrop-blur-md">
@@ -54,43 +54,21 @@ export function Header() {
         <div className="flex items-center gap-1">
           <CartButton />
           <button
-            onClick={() => setOpen((v) => !v)}
-            aria-label={open ? "Cerrar menú" : "Abrir menú"}
-            aria-expanded={open}
+            onClick={() => setMenuOpen(true)}
+            aria-label="Abrir menú"
+            aria-expanded={menuOpen}
             className="rounded-full p-2.5 text-espresso-700 transition hover:bg-sand md:hidden"
           >
-            {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            <Menu className="h-5 w-5" />
           </button>
         </div>
       </div>
 
-      {/* Menú móvil */}
-      <AnimatePresence>
-        {open && (
-          <motion.nav
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.25 }}
-            className="overflow-hidden border-t border-sand bg-cream md:hidden"
-            aria-label="Móvil"
-          >
-            <ul className="container-app flex flex-col gap-1 py-3">
-              {NAV.map((item) => (
-                <li key={item.href}>
-                  <a
-                    href={item.href}
-                    onClick={() => setOpen(false)}
-                    className="block rounded-lg px-3 py-2.5 font-medium text-espresso-700 transition hover:bg-sand"
-                  >
-                    {item.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </motion.nav>
-        )}
-      </AnimatePresence>
+      <MobileMenu
+        open={menuOpen}
+        onClose={() => setMenuOpen(false)}
+        nav={NAV}
+      />
     </header>
   );
 }
