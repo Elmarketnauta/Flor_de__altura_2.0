@@ -1,0 +1,39 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Variables nativas de marca (espejo de tailwind.config.ts) */
+  --color-bg: #faf6f0;
+  --color-text: #2c221e;
+  --color-primary: #3c2218;
+  --color-secondary: #5c3a21;
+  --color-gold: #c08b5c;
+  --color-gold-light: #ebd9c8;
+  --color-green: #2a4135;
+  --color-terracotta: #c84b31;
+}
+
+@layer base {
+  body {
+    @apply bg-cream text-espresso-800 antialiased;
+    font-feature-settings: "liga" 1, "calt" 1;
+  }
+
+  h1,
+  h2,
+  h3 {
+    @apply font-serif tracking-tight;
+  }
+}
+
+@layer utilities {
+  .container-app {
+    @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
+  }
+
+  /* Bloqueo de scroll del body cuando hay overlays abiertos */
+  .scroll-locked {
+    overflow: hidden;
+  }
+}

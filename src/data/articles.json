@@ -1,0 +1,44 @@
+[
+  {
+    "id": "geysha-origen",
+    "title": "El Origen de la Variedad Geysha: De Etiopía a los Andes Peruanos",
+    "category": "origen",
+    "date": "18 de Junio, 2026",
+    "readTime": "5 min",
+    "excerpt": "Descubre el fascinante viaje de la variedad de café más cotizada del mundo y cómo se aclimató a los suelos de Chanchamayo.",
+    "image": "/brand/logo.png",
+    "content": [
+      "La variedad Geysha es considerada el champagne de los cafés. Originaria del bosque de Gesha en Etiopía, fue redescubierta en Panamá en 2004 antes de extenderse a las zonas de altura más selectas de Sudamérica. En el Perú, los microclimas de la Selva Central (Junín y Pasco) a más de 1.600 metros de altura han brindado un terreno excepcional para su cultivo.",
+      "El Geysha se caracteriza por un perfil de taza extremadamente floral y cítrico, que a menudo recuerda al jazmín, los melocotones y el té negro. Su cultivo es delicado y requiere un cuidado meticuloso y un sombreado ecológico específico, características que la familia caficultora de Flor de Altura mantiene como una tradición sagrada.",
+      "Al tomar una taza de Geysha de Flor de Altura, no solo estás experimentando notas aromáticas de alta complejidad, sino también apoyando un modelo agrícola sostenible que protege los bosques nativos de Pichanaqui."
+    ]
+  },
+  {
+    "id": "temperatura-agua",
+    "title": "Guía Definitiva: Temperatura del Agua para Extracciones Perfectas",
+    "category": "metodos",
+    "date": "10 de Junio, 2026",
+    "readTime": "4 min",
+    "excerpt": "¿Sabías que el agua hirviendo quema los aceites esenciales del café de especialidad? Aprende la temperatura ideal para tu método.",
+    "image": "/brand/logo.png",
+    "content": [
+      "Uno de los errores más comunes al preparar café de especialidad en casa es verter agua hirviendo directamente sobre la molienda. El agua a 100 °C sobre-extrae los compuestos amargos y quema los sutiles aceites aromáticos que caracterizan al grano de especialidad.",
+      "Para métodos de filtrado manuales como la V60, Chemex o Prensa Francesa, la temperatura ideal oscila entre los 90 °C y 94 °C. Si no tienes un termómetro a la mano, un truco sencillo consiste en apagar la tetera apenas comience a hervir y dejarla reposar destapada por unos 45 a 60 segundos antes de realizar la preinfusión.",
+      "Una temperatura adecuada preservará los sabores dulces y las notas afrutadas y florales nativas de nuestro grano Catuai y Geysha, garantizando una taza balanceada y libre de amargores desagradables."
+    ]
+  },
+  {
+    "id": "cultivo-bajo-sombra",
+    "title": "El Impacto Ecológico del Cultivo Bajo Sombra en Pichanaqui",
+    "category": "sostenibilidad",
+    "date": "02 de Junio, 2026",
+    "readTime": "6 min",
+    "excerpt": "Cómo la agricultura regenerativa y la reforestación local devuelven la vida a los suelos de la Selva Central del Perú.",
+    "image": "/brand/logo.png",
+    "content": [
+      "La Selva Central peruana ha sufrido décadas de deforestación por agricultura extensiva de sol directo. En Flor de Altura, implementamos el cultivo bajo sombra, una práctica agroforestal donde los cafetos crecen protegidos por árboles nativos como el guabo y el pacae.",
+      "Este sistema conserva la humedad del suelo, previene la erosión y crea corredores biológicos para aves migratorias y abejas polinizadoras. Además, las hojas caídas de los árboles de sombra actúan como abono orgánico natural, enriqueciendo los granos de café con nutrientes únicos del bosque húmedo.",
+      "Nuestra visión es demostrar que la excelencia sensorial del café y la conservación ambiental van de la mano. Cada bolsa vendida financia directamente la siembra de árboles nativos y el pago justo a los productores que defienden la biodiversidad andino-amazónica."
+    ]
+  }
+]

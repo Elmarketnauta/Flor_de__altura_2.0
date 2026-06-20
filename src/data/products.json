@@ -1,0 +1,53 @@
+[
+  {
+    "id": "catuai-250",
+    "slug": "catuai-250",
+    "name": "Café Orgánico de Altura – Catuai (250g)",
+    "tagline": "Caramelo, chocolate con leche y cuerpo suave",
+    "description": "Cultivado en las montañas de Pichanaqui. Perfil equilibrado con notas dulces de caramelo, chocolate con leche y cuerpo suave, ideal para el día a día.",
+    "scaScore": 84,
+    "altitude": 1700,
+    "process": "Lavado",
+    "variety": "Arábica Orgánico",
+    "notes": ["Caramelo", "Chocolate con leche", "Cuerpo suave"],
+    "price": 30.0,
+    "weightGrams": 250,
+    "image": "/brand/logo.png",
+    "badge": "Más vendido",
+    "available": true
+  },
+  {
+    "id": "catuai-500",
+    "slug": "catuai-500",
+    "name": "Café Orgánico de Altura – Catuai (500g)",
+    "tagline": "Formato familiar para tu ritual diario",
+    "description": "La misma calidad premium de nuestro Catuai en formato familiar. Perfecto para los amantes del buen café que disfrutan de un ritual diario.",
+    "scaScore": 84,
+    "altitude": 1700,
+    "process": "Lavado",
+    "variety": "Arábica Orgánico",
+    "notes": ["Caramelo", "Chocolate", "Formato 500g"],
+    "price": 50.0,
+    "weightGrams": 500,
+    "image": "/brand/logo.png",
+    "badge": "Ahorro",
+    "available": true
+  },
+  {
+    "id": "geysha-250",
+    "slug": "geysha-250",
+    "name": "Café Orgánico de Altura – Geysha (250g)",
+    "tagline": "Floral, jazmín y té de bergamota",
+    "description": "Variedad de alta gama con aroma intensamente floral. Perfil delicado con exquisitas notas cítricas, jazmín y té de bergamota. Una taza inolvidable.",
+    "scaScore": 87,
+    "altitude": 1700,
+    "process": "Lavado",
+    "variety": "Variedad Geysha Premium",
+    "notes": ["Jazmín", "Cítricos", "Bergamota"],
+    "price": 40.0,
+    "weightGrams": 250,
+    "image": "/brand/logo.png",
+    "badge": "Microlote",
+    "available": true
+  }
+]
