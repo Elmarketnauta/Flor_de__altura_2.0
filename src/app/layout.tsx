@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Poppins, Playfair_Display, DM_Mono } from "next/font/google";
 import "./globals.css";
+import { AppProviders } from "@/components/providers/AppProviders";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -53,7 +54,9 @@ export default function RootLayout({
       lang="es"
       className={`${poppins.variable} ${playfair.variable} ${dmMono.variable}`}
     >
-      <body>{children}</body>
+      <body>
+        <AppProviders>{children}</AppProviders>
+      </body>
     </html>
   );
 }
