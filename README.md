@@ -65,19 +65,57 @@ npm run typecheck  # verificación de tipos (tsc --noEmit)
 npm run lint       # ESLint
 ```
 
-## Despliegue en Vercel (vía GitHub)
+## CI/CD y Despliegue Automático
 
-1. Crea un repo vacío en GitHub (ej. `flor-de-altura-cafe`).
-2. Conecta este repo local y empuja:
+### ✅ Configuración completada
 
+- **GitHub**: Repo público en [`Elmarketnauta/Flor_de__altura_2.0`](https://github.com/Elmarketnauta/Flor_de__altura_2.0)
+- **Vercel**: Proyecto vinculado automáticamente (`elmarketnautas-projects/flor-de-altura-2-0`)
+- **Despliegue continuo**: Cada `git push origin main` → build + deploy en Vercel en ~1–2 min
+- **Production URL**: `https://flor-de-altura-2-0-ocpwsd5wv-elmarketnautas-projects.vercel.app`
+
+### Flujo de desarrollo futuro
+
+1. **Desarrollo local**:
    ```bash
-   git remote add origin https://github.com/<usuario>/flor-de-altura-cafe.git
-   git push -u origin main
+   npm run dev
    ```
 
-3. En [vercel.com](https://vercel.com) → **New Project** → importa el repo.
-   Vercel detecta Next.js automáticamente (sin configuración). Cada `push` a
-   `main` dispara un despliegue de producción.
+2. **Commit y push**:
+   ```bash
+   git add .
+   git commit -m "feat/fix: descripción"
+   git push origin main
+   ```
+
+3. **Vercel despliega automáticamente** (monitorear en
+   [vercel.com/dashboard](https://vercel.com/dashboard))
+
+### Variables de entorno
+
+- `.env.local` — **local only**, nunca se sube a Git:
+  - `GITHUB_TOKEN` — PAT para operaciones programáticas (GitHub Actions, etc.)
+  - `VERCEL_TOKEN` — token de CI/CD (ya configurado)
+  - `B2B_WEBHOOK_URL` — *opcional*, URL webhook para reenviar leads B2B a CRM/Make/Zapier
+
+- **En Vercel** (dashboard → Settings → Environment Variables):
+  - `B2B_WEBHOOK_URL` — si usas Make/Zapier/Google Apps Script para procesar leads
+
+### Webhook B2B (opcional)
+
+El endpoint `POST /api/b2b-lead` valida y reenvía leads a `B2B_WEBHOOK_URL`. Ejemplos:
+
+- **Make** (ex-Integromat): webhooks automáticos → Slack, Google Sheets, HubSpot
+- **Zapier**: zap webhook → email, CRM
+- **Google Apps Script**: webhooks → Google Sheets (gratuito, sin límites)
+
+Configura en Vercel dashboard → **Settings** → **Environment Variables** → agregar
+`B2B_WEBHOOK_URL=https://...`.
+
+### Branches y preview deployments
+
+- `main` → producción
+- PRs → preview deployments (URL temporal para revisar cambios)
 
 ---
 
