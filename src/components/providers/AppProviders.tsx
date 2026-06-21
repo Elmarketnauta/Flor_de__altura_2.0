@@ -2,6 +2,7 @@
 
 import dynamic from "next/dynamic";
 import type { ReactNode } from "react";
+import { Analytics } from "./Analytics";
 
 /**
  * Carga diferida de la capa cinemática (Lenis + GSAP) en cliente.
@@ -23,6 +24,7 @@ const CustomCursor = dynamic(
 export function AppProviders({ children }: { children: ReactNode }) {
   return (
     <SmoothScrollProvider>
+      <Analytics />
       {children}
       <CustomCursor />
     </SmoothScrollProvider>

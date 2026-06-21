@@ -2,11 +2,13 @@
 
 import Image from "next/image";
 import { useState } from "react";
-import { Plus } from "lucide-react";
+import { Plus, Heart } from "lucide-react";
 import type { Product, ProductFormat } from "@/types";
 import { useCartStore } from "@/store/cart-store";
+import { useWishlistStore } from "@/store/wishlist-store";
 import { cn, formatPEN } from "@/lib/utils";
 import { useTilt } from "@/lib/use-tilt";
+import { trackEvent } from "@/lib/analytics";
 
 const FORMATS: { value: ProductFormat; label: string }[] = [
   { value: "grano", label: "En grano" },
@@ -19,7 +21,13 @@ const FORMATS: { value: ProductFormat; label: string }[] = [
  */
 export function ProductCard({ product }: { product: Product }) {
   const addItem = useCartStore((s) => s.addItem);
+  const isFavorite = useWishlistStore((s) => s.isFavorite);
+  const addToWishlist = useWishlistStore((s) => s.addToWishlist);
+  const removeFromWishlist = useWishlistStore((s) => s.removeFromWishlist);
   const [format, setFormat] = useState<ProductFormat>("grano");
+  const [isWishlisted, setIsWishlisted] = useState(
+    isFavorite(product.id)
+  );
   const { ref, glareRef } = useTilt({
     scale: 1.08,
     rotationX: 12,
@@ -27,6 +35,28 @@ export function ProductCard({ product }: { product: Product }) {
     glareEnable: true,
     glareMaxOpacity: 0.25,
   });
+
+  const handleAddToCart = () => {
+    addItem(product, format);
+    trackEvent("add_to_cart", {
+      productId: product.id,
+      productName: product.name,
+      format,
+      price: product.price,
+    });
+  };
+
+  const handleToggleWishlist = () => {
+    if (isWishlisted) {
+      removeFromWishlist(product.id);
+      trackEvent("remove_from_wishlist", { productId: product.id });
+      setIsWishlisted(false);
+    } else {
+      addToWishlist(product.id, "browse");
+      trackEvent("add_to_wishlist", { productId: product.id });
+      setIsWishlisted(true);
+    }
+  };
 
   return (
     <article
@@ -103,7 +133,7 @@ export function ProductCard({ product }: { product: Product }) {
             ))}
           </div>
 
-          <div className="mt-5 flex items-center justify-between pt-2">
+          <div className="mt-5 flex items-center justify-between gap-2 pt-2">
             <div>
               <span className="font-serif text-2xl font-semibold text-espresso-800 tabular-nums">
                 {formatPEN(product.price)}
@@ -113,20 +143,35 @@ export function ProductCard({ product }: { product: Product }) {
               </span>
             </div>
 
-            <button
-              onClick={() => addItem(product, format)}
-              aria-label={`Añadir ${product.name} al carrito`}
-              data-layer="add_to_cart"
-              data-product-id={product.id}
-              data-product-name={product.name}
-              data-product-price={product.price}
-              data-product-format={format}
-              data-cursor="Añadir grano"
-              className="flex items-center gap-1.5 rounded-full bg-gold px-4 py-2.5 text-sm font-semibold text-espresso-900 shadow-sm transition hover:bg-gold-dark hover:text-cream active:scale-95"
-            >
-              <Plus className="h-4 w-4" />
-              Añadir
-            </button>
+            <div className="flex gap-2">
+              <button
+                onClick={handleToggleWishlist}
+                aria-label={isWishlisted ? "Quitar de favoritos" : "Añadir a favoritos"}
+                className="flex items-center justify-center rounded-full bg-sand p-2.5 transition hover:bg-gold/20"
+              >
+                <Heart
+                  className="h-4 w-4"
+                  strokeWidth={2}
+                  fill={isWishlisted ? "currentColor" : "none"}
+                  color={isWishlisted ? "#d4a574" : "#6b4f47"}
+                />
+              </button>
+
+              <button
+                onClick={handleAddToCart}
+                aria-label={`Añadir ${product.name} al carrito`}
+                data-layer="add_to_cart"
+                data-product-id={product.id}
+                data-product-name={product.name}
+                data-product-price={product.price}
+                data-product-format={format}
+                data-cursor="Añadir grano"
+                className="flex items-center gap-1.5 rounded-full bg-gold px-4 py-2.5 text-sm font-semibold text-espresso-900 shadow-sm transition hover:bg-gold-dark hover:text-cream active:scale-95"
+              >
+                <Plus className="h-4 w-4" />
+                Añadir
+              </button>
+            </div>
           </div>
         </div>
       </div>
