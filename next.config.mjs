@@ -1,6 +1,13 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  webpack: (config, { isServer }) => {
+    config.watchOptions = {
+      ...config.watchOptions,
+      ignored: ['**/mobile/**', '**/.next/**', '**/node_modules/**'],
+    };
+    return config;
+  },
   images: {
     remotePatterns: [
       { protocol: "https", hostname: "images.unsplash.com" },
