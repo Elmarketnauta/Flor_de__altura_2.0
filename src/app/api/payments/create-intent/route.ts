@@ -5,7 +5,16 @@ import { NextResponse, NextRequest } from "next/server";
 
 export const dynamic = "force-dynamic";
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
+// Lazy init so `next build` never needs STRIPE_SECRET_KEY at import time.
+let stripeClient: Stripe | null = null;
+function getStripe(): Stripe {
+  if (!stripeClient) {
+    const key = process.env.STRIPE_SECRET_KEY;
+    if (!key) throw new Error("STRIPE_SECRET_KEY is not configured");
+    stripeClient = new Stripe(key);
+  }
+  return stripeClient;
+}
 
 export async function POST(request: NextRequest) {
   try {
@@ -50,7 +59,7 @@ export async function POST(request: NextRequest) {
     const amount = order.total;
 
     // Create Stripe payment intent (idempotent with order ID)
-    const paymentIntent = await stripe.paymentIntents.create(
+    const paymentIntent = await getStripe().paymentIntents.create(
       {
         amount: Math.round(amount * 100), // Convert to cents
         currency: "pen",

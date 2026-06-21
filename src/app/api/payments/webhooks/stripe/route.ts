@@ -6,8 +6,16 @@ import { NextResponse, NextRequest } from "next/server";
 
 export const dynamic = "force-dynamic";
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
-const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET!;
+// Lazy init so `next build` never needs Stripe secrets at import time.
+let stripeClient: Stripe | null = null;
+function getStripe(): Stripe {
+  if (!stripeClient) {
+    const key = process.env.STRIPE_SECRET_KEY;
+    if (!key) throw new Error("STRIPE_SECRET_KEY is not configured");
+    stripeClient = new Stripe(key);
+  }
+  return stripeClient;
+}
 
 export async function POST(request: NextRequest) {
   const body = await request.text();
@@ -16,7 +24,9 @@ export async function POST(request: NextRequest) {
   let event: Stripe.Event;
 
   try {
-    event = stripe.webhooks.constructEvent(body, signature, webhookSecret);
+    const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
+    if (!webhookSecret) throw new Error("STRIPE_WEBHOOK_SECRET is not configured");
+    event = getStripe().webhooks.constructEvent(body, signature, webhookSecret);
   } catch (error) {
     console.error("[StripeWebhookError]", error);
     return NextResponse.json(
