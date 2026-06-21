@@ -1,0 +1,52 @@
+name: Load Testing (k6)
+
+on:
+  schedule:
+    - cron: "0 2 * * 0" # Sunday 2 AM UTC
+  workflow_dispatch:
+
+jobs:
+  smoke-test:
+    name: Smoke Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run k6 smoke test
+        uses: grafana/k6-action@v0.3.0
+        with:
+          filename: load-tests/smoke.js
+          cloud: false
+        env:
+          BASE_URL: "https://flor-de-altura-cafe.vercel.app"
+
+  load-test:
+    name: Load Test
+    runs-on: ubuntu-latest
+    needs: smoke-test
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run k6 load test
+        uses: grafana/k6-action@v0.3.0
+        with:
+          filename: load-tests/load.js
+          cloud: false
+        env:
+          BASE_URL: "https://flor-de-altura-cafe.vercel.app"
+
+  stress-test:
+    name: Stress Test
+    runs-on: ubuntu-latest
+    needs: load-test
+    if: success()
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run k6 stress test
+        uses: grafana/k6-action@v0.3.0
+        with:
+          filename: load-tests/stress.js
+          cloud: false
+        env:
+          BASE_URL: "https://flor-de-altura-cafe.vercel.app"
