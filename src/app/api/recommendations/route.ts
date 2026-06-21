@@ -1,108 +1,147 @@
+import { PRODUCTS } from "@/data/products";
+import { extractProductVector, vectorToArray } from "@/lib/ml/feature-extractor";
+import { calculateUserVector, findTopSimilar } from "@/lib/ml/collab-filtering";
+import { supabaseAdmin } from "@/lib/supabase/server";
 import { NextRequest, NextResponse } from "next/server";
 
 interface RecommendationRequest {
-  strategy: "browsing" | "trending" | "similar_taste";
+  strategy: "browsing" | "trending" | "similar_taste" | "collaborative";
   browsedIds?: string[];
+  limit?: number;
 }
 
-// Mock productos (en un caso real, vendría de la base de datos)
-const MOCK_PRODUCTS = [
-  {
-    id: "prod-1",
-    name: "Pichanaqui Orgánico",
-    slug: "pichanaqui-organico",
-    price: 150,
-    image: "/img/cafe-1.jpg",
-    scaScore: 85,
-    origin: "Pichanaqui",
-    description: "Café de especialidad 100% orgánico",
-    formats: ["grano", "molido"],
-  },
-  {
-    id: "prod-2",
-    name: "Chanchamayo Premium",
-    slug: "chanchamayo-premium",
-    price: 180,
-    image: "/img/cafe-2.jpg",
-    scaScore: 86,
-    origin: "Chanchamayo",
-    description: "Selección premium de la región",
-    formats: ["grano", "molido"],
-  },
-  {
-    id: "prod-3",
-    name: "Mixtura Andina",
-    slug: "mixtura-andina",
-    price: 165,
-    image: "/img/cafe-3.jpg",
-    scaScore: 84,
-    origin: "Junín",
-    description: "Blend equilibrado de la sierra",
-    formats: ["grano", "molido"],
-  },
-  {
-    id: "prod-4",
-    name: "Altura Plus",
-    slug: "altura-plus",
-    price: 195,
-    image: "/img/cafe-4.jpg",
-    scaScore: 87,
-    origin: "Pichanaqui",
-    description: "Nuestra selección más exclusiva",
-    formats: ["grano", "molido"],
-  },
-];
+export const dynamic = "force-dynamic";
 
 export async function POST(request: NextRequest) {
   try {
     const body: RecommendationRequest = await request.json();
-    const { strategy, browsedIds = [] } = body;
+    const { strategy = "trending", browsedIds = [], limit = 5 } = body;
 
-    if (!strategy) {
-      return NextResponse.json(
-        { error: "Missing strategy" },
-        { status: 400 }
-      );
+    // Try to get user from auth header (optional for recommendations)
+    let userId: string | null = null;
+    const authHeader = request.headers.get("authorization");
+    if (authHeader) {
+      const token = authHeader.split(" ")[1];
+      const { data: userData } = await supabaseAdmin.auth.getUser(token);
+      userId = userData?.user?.id || null;
     }
 
-    let recommendations = [...MOCK_PRODUCTS];
+    // Extract vectors for all products
+    const productVectors = PRODUCTS.map((p) => ({
+      id: p.id,
+      vector: vectorToArray(extractProductVector(p)),
+    }));
 
-    // Filtrar productos ya vistos
-    if (browsedIds.length > 0) {
-      recommendations = recommendations.filter(
-        (p) => !browsedIds.includes(p.id)
-      );
-    }
+    // Filter already browsed
+    const candidates = productVectors.filter((p) => !browsedIds.includes(p.id));
 
-    // Aplicar lógica según estrategia
+    let recommendations = PRODUCTS.filter((p) => !browsedIds.includes(p.id));
+
     switch (strategy) {
-      case "trending":
-        // Ordenar por SCA score (descendente)
-        recommendations.sort((a, b) => b.scaScore - a.scaScore);
+      case "trending": {
+        // Highest SCA score
+        recommendations = recommendations
+          .sort((a, b) => b.scaScore - a.scaScore)
+          .slice(0, limit);
         break;
+      }
 
-      case "similar_taste":
-        // Agrupar por origin (similares)
-        recommendations.sort((a, b) =>
-          a.origin.localeCompare(b.origin)
-        );
+      case "similar_taste": {
+        // Filter by origin from browsed products
+        const browsedOrigins = PRODUCTS
+          .filter((p) => browsedIds.includes(p.id))
+          .map((p) => p.origin);
+
+        if (browsedOrigins.length > 0) {
+          recommendations = recommendations
+            .filter((p) => browsedOrigins.includes(p.origin))
+            .slice(0, limit);
+        } else {
+          recommendations = recommendations.slice(0, limit);
+        }
         break;
+      }
+
+      case "collaborative": {
+        if (userId) {
+          // Fetch user's browsing history from Supabase
+          const { data: behavior } = await supabaseAdmin
+            .from("user_behavior")
+            .select("product_id, event_type")
+            .eq("user_id", userId)
+            .limit(10)
+            .order("created_at", { ascending: false });
+
+          if (behavior && behavior.length > 0) {
+            // Build user preference vector from browsing history
+            const behaviorVectors = behavior
+              .map((b) => {
+                const product = PRODUCTS.find((p) => p.id === b.product_id);
+                return product ? vectorToArray(extractProductVector(product)) : null;
+              })
+              .filter(Boolean) as number[][];
+
+            // Weight more recent interactions higher
+            const weights = behavior.map((_, i) => 1 / (i + 1));
+
+            const userVector = calculateUserVector(behaviorVectors, weights);
+
+            // Find most similar products
+            const topSimilar = findTopSimilar(userVector, candidates, limit);
+            const topIds = topSimilar.map((r) => r.id);
+
+            recommendations = PRODUCTS.filter((p) =>
+              topIds.includes(p.id)
+            ).sort((a, b) => {
+              const aScore = topSimilar.find((r) => r.id === a.id)?.score || 0;
+              const bScore = topSimilar.find((r) => r.id === b.id)?.score || 0;
+              return bScore - aScore;
+            });
+          } else {
+            // Fallback to trending if no history
+            recommendations = recommendations
+              .sort((a, b) => b.scaScore - a.scaScore)
+              .slice(0, limit);
+          }
+        } else {
+          // Fallback for anonymous users
+          recommendations = recommendations
+            .sort((a, b) => b.scaScore - a.scaScore)
+            .slice(0, limit);
+        }
+        break;
+      }
 
       case "browsing":
-        // Aleatorio
-        recommendations.sort(() => Math.random() - 0.5);
-        break;
+      default: {
+        // Random shuffle
+        recommendations = recommendations
+          .sort(() => Math.random() - 0.5)
+          .slice(0, limit);
+      }
     }
 
-    return NextResponse.json(
-      {
-        success: true,
-        strategy,
-        products: recommendations.slice(0, 4),
-        count: recommendations.length,
-      },
-      { status: 200 }
-    );
+    // Log recommendation event if authenticated
+    if (userId) {
+      await supabaseAdmin.from("audit_logs").insert([
+        {
+          user_id: userId,
+          event_type: "recommendation_served",
+          details: {
+            strategy,
+            count: recommendations.length,
+            browsedCount: browsedIds.length,
+          },
+        },
+      ]);
+    }
+
+    return NextResponse.json({
+      success: true,
+      strategy,
+      products: recommendations,
+      count: recommendations.length,
+    });
   } catch (error) {
     console.error("[RecommendationsAPI Error]", error);
     return NextResponse.json(

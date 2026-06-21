@@ -1,15 +1,10 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import { SessionProvider } from "next-auth/react";
 import type { ReactNode } from "react";
 import { Analytics } from "./Analytics";
 
-/**
- * Carga diferida de la capa cinemática (Lenis + GSAP) en cliente.
- * `ssr: false` evita penalizar el LCP del Hero con JS de animación en el
- * primer render; el contenido se pinta de inmediato y el smooth-scroll se
- * hidrata después.
- */
 const SmoothScrollProvider = dynamic(
   () =>
     import("./SmoothScrollProvider").then((m) => m.SmoothScrollProvider),
@@ -28,11 +23,13 @@ const ScrollToTop = dynamic(
 
 export function AppProviders({ children }: { children: ReactNode }) {
   return (
-    <SmoothScrollProvider>
-      <Analytics />
-      {children}
-      <CustomCursor />
-      <ScrollToTop />
-    </SmoothScrollProvider>
+    <SessionProvider>
+      <SmoothScrollProvider>
+        <Analytics />
+        {children}
+        <CustomCursor />
+        <ScrollToTop />
+      </SmoothScrollProvider>
+    </SessionProvider>
   );
 }

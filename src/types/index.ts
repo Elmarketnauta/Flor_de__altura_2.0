@@ -59,3 +59,87 @@ export interface Article {
 
 /** Opción de filtro de la revista, incluido "Todos". */
 export type ArticleFilter = "all" | ArticleCategory;
+
+// ============================================================
+// AUTHENTICATION & USERS
+// ============================================================
+
+export type UserRole = "customer" | "admin";
+
+export interface User {
+  id: string;
+  email: string;
+  fullName?: string;
+  phone?: string;
+  country: string;
+  role: UserRole;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface AuthSession {
+  user: {
+    id: string;
+    email: string;
+    name?: string;
+    image?: string;
+    role: UserRole;
+  };
+  expires: string;
+}
+
+// ============================================================
+// ORDERS & PAYMENTS
+// ============================================================
+
+export type OrderStatus = "pending" | "paid" | "processing" | "shipped" | "delivered" | "refunded" | "failed";
+export type PaymentMethod = "stripe" | "paypal";
+
+export interface OrderItem {
+  productId: string;
+  format: ProductFormat;
+  quantity: number;
+  priceAtPurchase: number;
+}
+
+export interface Order {
+  id: string;
+  userId: string;
+  status: OrderStatus;
+  subtotal: number;
+  tax: number;
+  total: number;
+  paymentMethod: PaymentMethod;
+  stripePaymentIntentId?: string;
+  paypalOrderId?: string;
+  items: OrderItem[];
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface PaymentIntent {
+  clientSecret: string;
+  orderId: string;
+  amount: number;
+  currency: string;
+  status: string;
+}
+
+// ============================================================
+// RECOMMENDATIONS (ML)
+// ============================================================
+
+export interface ProductVector {
+  id: string;
+  flavorBrightness: number;  // 0-1
+  bodyWeight: number;         // 0-1
+  acidityLevel: number;       // 0-1
+  scaScoreNorm: number;       // 0-1
+  priceTier: number;          // 0-1
+}
+
+export interface UserPreference {
+  userId: string;
+  vector: number[];           // 5-dimensional preference vector
+  confidence: number;         // 0-1
+}
