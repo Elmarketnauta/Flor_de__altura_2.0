@@ -1,0 +1,50 @@
+{
+  "expo": {
+    "name": "Flor de Altura",
+    "slug": "flor-de-altura-cafe",
+    "version": "1.0.0",
+    "scheme": "flordealtura",
+    "platforms": [
+      "ios",
+      "android",
+      "web"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.flordealtura.cafe",
+      "buildNumber": "1"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#F5F1ED"
+      },
+      "package": "com.flordealtura.cafe",
+      "versionCode": 1
+    },
+    "web": {
+      "favicon": "./assets/favicon.png",
+      "bundler": "metro"
+    },
+    "plugins": [
+      "expo-router"
+    ],
+    "userInterfaceStyle": "light",
+    "icon": "./assets/icon.png",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#F5F1ED"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/project-id",
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "runtimeVersion": "1.0.0",
+    "orientation": "portrait",
+    "primaryColor": "#8B6F47"
+  }
+}
