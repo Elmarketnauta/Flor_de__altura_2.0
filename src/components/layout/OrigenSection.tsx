@@ -22,12 +22,9 @@ export function OrigenSection() {
     offset: ["start center", "end center"],
   });
 
-  // Progreso de scroll para revelar párrafos en cascada (siempre se crean, independiente de reduced-motion).
-  const p1Opacity = useTransform(scrollYProgress, [0, 0.15, 0.35], [0, 1, 1]);
-  const p1YOut = useTransform(scrollYProgress, [0.35, 0.5], [0, -100]);
-  const p2Opacity = useTransform(scrollYProgress, [0.25, 0.4, 0.6], [0, 1, 1]);
-  const p2YOut = useTransform(scrollYProgress, [0.6, 0.75], [0, -100]);
-  const p3Opacity = useTransform(scrollYProgress, [0.5, 0.65, 0.85], [0, 1, 1]);
+  // Sutil realce de la imagen al entrar en vista. Los párrafos usan un reveal
+  // por opacidad sin desplazamiento vertical para que nunca se solapen entre sí
+  // ni con el título.
   const imageOpacity = useTransform(scrollYProgress, [0, 0.3, 1], [0.5, 1, 1]);
 
   return (
@@ -96,7 +93,10 @@ export function OrigenSection() {
 
           {/* Párrafo 1: Altitud */}
           <motion.div
-            style={reducedMotion ? undefined : { opacity: p1Opacity, y: p1YOut }}
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.6 }}
             className="mt-8 space-y-2"
           >
             <p className="text-lg text-espresso-600">
@@ -109,7 +109,10 @@ export function OrigenSection() {
 
           {/* Párrafo 2: Orgánico */}
           <motion.div
-            style={reducedMotion ? undefined : { opacity: p2Opacity, y: p2YOut }}
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.6, delay: 0.1 }}
             className="mt-12 space-y-2"
           >
             <p className="text-lg text-espresso-600">
@@ -122,7 +125,10 @@ export function OrigenSection() {
 
           {/* Párrafo 3: Comercio Justo + CTA */}
           <motion.div
-            style={reducedMotion ? undefined : { opacity: p3Opacity }}
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.6, delay: 0.1 }}
             className="mt-12 space-y-6"
           >
             <p className="text-lg text-espresso-600">
