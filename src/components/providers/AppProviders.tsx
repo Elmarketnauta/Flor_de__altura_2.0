@@ -18,7 +18,12 @@ const SmoothScrollProvider = dynamic(
 
 const CustomCursor = dynamic(
   () => import("@/components/ui/CustomCursor").then((m) => m.CustomCursor),
-  { ssr: false },
+  { ssr: false, loading: () => null },
+);
+
+const ScrollToTop = dynamic(
+  () => import("@/components/layout/ScrollToTop").then((m) => m.ScrollToTop),
+  { ssr: false, loading: () => null },
 );
 
 export function AppProviders({ children }: { children: ReactNode }) {
@@ -27,6 +32,7 @@ export function AppProviders({ children }: { children: ReactNode }) {
       <Analytics />
       {children}
       <CustomCursor />
+      <ScrollToTop />
     </SmoothScrollProvider>
   );
 }
