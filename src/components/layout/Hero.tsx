@@ -77,7 +77,7 @@ export function Hero() {
       {/* Contenido */}
       <motion.div
         style={reducedMotion ? undefined : { y: yContent, opacity }}
-        className="container-app relative z-20 flex flex-col items-center text-center"
+        className="container-app relative z-20 flex w-full min-w-0 max-w-full flex-col items-center text-center"
       >
         <motion.div
           initial={{ opacity: 0, y: 16 }}
@@ -93,7 +93,7 @@ export function Hero() {
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-          className="max-w-4xl font-serif text-4xl leading-[1.05] sm:text-6xl lg:text-7xl"
+          className="w-full max-w-4xl text-balance font-serif text-4xl leading-[1.05] sm:text-6xl lg:text-7xl"
         >
           El café que crece donde
           <span className="text-gold"> nace la nube</span>
@@ -103,7 +103,7 @@ export function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.25 }}
-          className="mt-6 max-w-xl text-lg text-cream/80"
+          className="mt-6 w-full max-w-xl text-balance text-lg text-cream/80"
         >
           Microlotes de especialidad cultivados a 1.700 msnm en Pichanaqui.
           Trazabilidad total, puntaje {BRAND.scaRange}, y un ritual en cada taza.
@@ -198,7 +198,7 @@ function FogBands({ reducedMotion }: { reducedMotion: boolean }) {
       {[0, 1, 2].map((i) => (
         <motion.div
           key={i}
-          className="absolute left-0 h-32 w-[140%] bg-gradient-to-r from-transparent via-cream/5 to-transparent blur-2xl"
+          className="absolute left-1/2 h-32 w-[140%] -translate-x-1/2 bg-gradient-to-r from-transparent via-cream/5 to-transparent blur-2xl"
           style={{ top: `${42 + i * 16}%` }}
           animate={
             reducedMotion

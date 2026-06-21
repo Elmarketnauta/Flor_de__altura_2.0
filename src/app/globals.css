@@ -15,9 +15,17 @@
 }
 
 @layer base {
+  html {
+    /* Evita scroll horizontal: capas decorativas con anchos > 100vw
+       (parallax, niebla, halos) no deben desplazar el contenido ni recortar
+       el texto en mobile. */
+    overflow-x: hidden;
+  }
+
   body {
     @apply bg-cream text-espresso-800 antialiased;
     font-feature-settings: "liga" 1, "calt" 1;
+    overflow-x: hidden;
   }
 
   h1,
