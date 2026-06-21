@@ -22,12 +22,13 @@ export function OrigenSection() {
     offset: ["start center", "end center"],
   });
 
-  // Progreso de scroll para revelar párrafos en cascada.
+  // Progreso de scroll para revelar párrafos en cascada (siempre se crean, independiente de reduced-motion).
   const p1Opacity = useTransform(scrollYProgress, [0, 0.15, 0.35], [0, 1, 1]);
   const p1YOut = useTransform(scrollYProgress, [0.35, 0.5], [0, -100]);
   const p2Opacity = useTransform(scrollYProgress, [0.25, 0.4, 0.6], [0, 1, 1]);
   const p2YOut = useTransform(scrollYProgress, [0.6, 0.75], [0, -100]);
   const p3Opacity = useTransform(scrollYProgress, [0.5, 0.65, 0.85], [0, 1, 1]);
+  const imageOpacity = useTransform(scrollYProgress, [0, 0.3, 1], [0.5, 1, 1]);
 
   return (
     <section
@@ -43,11 +44,7 @@ export function OrigenSection() {
             reducedMotion
               ? undefined
               : {
-                  opacity: useTransform(
-                    scrollYProgress,
-                    [0, 0.3, 1],
-                    [0.5, 1, 1],
-                  ),
+                  opacity: imageOpacity,
                 }
           }
         >
