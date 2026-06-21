@@ -58,6 +58,21 @@ export async function POST(request: NextRequest) {
                 html,
               });
             }
+
+            // Award loyalty points (FASE 13)
+            try {
+              await fetch(`${process.env.NEXTAUTH_URL || "http://localhost:3000"}/api/loyalty/award`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                  userId: order.user_id,
+                  orderAmount: order.total,
+                  orderId: orderId,
+                }),
+              });
+            } catch (err) {
+              console.error("[LoyaltyAwardFailed]", err);
+            }
           }
 
           console.log(`[PaymentSuccess] Order ${orderId}`);
