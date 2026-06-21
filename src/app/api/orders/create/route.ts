@@ -1,4 +1,5 @@
 import { supabaseAdmin } from "@/lib/supabase/server";
+import { getAuthedUser } from "@/lib/auth/session";
 import { getProductById } from "@/data/products";
 import { NextResponse, NextRequest } from "next/server";
 
@@ -24,21 +25,8 @@ function money(n: number): number {
 
 export async function POST(request: NextRequest) {
   try {
-    const authHeader = request.headers.get("authorization");
-    if (!authHeader) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
-
-    const token = authHeader.split(" ")[1];
-    if (!token) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
-
-    const { data: userData, error: authError } = await supabaseAdmin.auth.getUser(
-      token
-    );
-
-    if (authError || !userData.user?.id) {
+    const user = await getAuthedUser();
+    if (!user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
@@ -123,7 +111,7 @@ export async function POST(request: NextRequest) {
       .from("orders")
       .insert([
         {
-          user_id: userData.user.id,
+          user_id: user.id,
           status: "pending",
           subtotal,
           tax,

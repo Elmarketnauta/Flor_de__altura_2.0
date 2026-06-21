@@ -33,10 +33,9 @@ export default function AdminLayout({ children, title }: AdminLayoutProps) {
 
     async function verifyAdmin() {
       try {
-        const token = (session as any)?.user?.accessToken;
-        const res = await fetch("/api/admin/stats", {
-          headers: token ? { Authorization: `Bearer ${token}` } : undefined,
-        });
+        // The NextAuth session cookie authenticates this request; the endpoint
+        // returns 403 for non-admins.
+        const res = await fetch("/api/admin/stats");
 
         if (cancelled) return;
 

@@ -1,4 +1,5 @@
 import { supabaseAdmin } from "@/lib/supabase/server";
+import { getAuthedUser } from "@/lib/auth/session";
 import Stripe from "stripe";
 import { NextResponse, NextRequest } from "next/server";
 
@@ -8,21 +9,8 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 
 export async function POST(request: NextRequest) {
   try {
-    const authHeader = request.headers.get("authorization");
-    if (!authHeader) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
-
-    const token = authHeader.split(" ")[1];
-    if (!token) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
-
-    const { data: userData, error: authError } = await supabaseAdmin.auth.getUser(
-      token
-    );
-
-    if (authError || !userData.user?.id) {
+    const user = await getAuthedUser();
+    if (!user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
@@ -41,7 +29,7 @@ export async function POST(request: NextRequest) {
       .from("orders")
       .select("*")
       .eq("id", orderId)
-      .eq("user_id", userData.user.id)
+      .eq("user_id", user.id)
       .single();
 
     if (orderError || !order) {
@@ -68,7 +56,7 @@ export async function POST(request: NextRequest) {
         currency: "pen",
         metadata: {
           orderId,
-          userId: userData.user.id,
+          userId: user.id,
         },
         description: `Flor de Altura Coffee Order #${orderId}`,
       },

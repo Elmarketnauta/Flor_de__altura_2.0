@@ -1,4 +1,5 @@
 import { supabaseAdmin } from "@/lib/supabase/server";
+import { getAdminUser } from "@/lib/auth/session";
 import { sendEmail } from "@/lib/email/send";
 import { generateOrderShippedHTML } from "@/lib/email/templates";
 import { NextRequest, NextResponse } from "next/server";
@@ -12,26 +13,8 @@ export const dynamic = "force-dynamic";
  */
 export async function POST(request: NextRequest) {
   try {
-    const authHeader = request.headers.get("authorization");
-    if (!authHeader) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
-
-    const token = authHeader.split(" ")[1];
-    const { data: userData, error: authError } = await supabaseAdmin.auth.getUser(token);
-
-    if (authError || !userData.user?.id) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
-
-    // Admin check
-    const { data: profile } = await supabaseAdmin
-      .from("users")
-      .select("role")
-      .eq("id", userData.user.id)
-      .single();
-
-    if (profile?.role !== "admin") {
+    const admin = await getAdminUser();
+    if (!admin) {
       return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }
 
@@ -83,7 +66,7 @@ export async function POST(request: NextRequest) {
     // Log email sent
     await supabaseAdmin.from("audit_logs").insert([
       {
-        user_id: userData.user.id,
+        user_id: admin.id,
         event_type: "email_sent",
         details: {
           to: user.user.email,

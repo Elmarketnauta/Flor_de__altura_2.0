@@ -1,28 +1,13 @@
 import { supabaseAdmin } from "@/lib/supabase/server";
-import { NextResponse, NextRequest } from "next/server";
+import { getAuthedUser } from "@/lib/auth/session";
+import { NextResponse } from "next/server";
 
 export const dynamic = "force-dynamic";
 
-export async function GET(request: NextRequest) {
+export async function GET() {
   try {
-    // Get auth header from request
-    const authHeader = request.headers.get("authorization");
-    if (!authHeader) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
-
-    // Extract token (format: Bearer <token>)
-    const token = authHeader.split(" ")[1];
-    if (!token) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
-
-    // Verify user with Supabase
-    const { data: userData, error: authError } = await supabaseAdmin.auth.getUser(
-      token
-    );
-
-    if (authError || !userData.user?.id) {
+    const user = await getAuthedUser();
+    if (!user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
@@ -35,7 +20,7 @@ export async function GET(request: NextRequest) {
         order_items (*)
       `
       )
-      .eq("user_id", userData.user.id)
+      .eq("user_id", user.id)
       .order("created_at", { ascending: false })
       .limit(20);
 

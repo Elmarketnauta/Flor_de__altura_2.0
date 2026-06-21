@@ -1,23 +1,17 @@
 import { supabaseAdmin } from "@/lib/supabase/server";
-import { NextRequest, NextResponse } from "next/server";
+import { getAuthedUser } from "@/lib/auth/session";
+import { NextResponse } from "next/server";
 
 export const dynamic = "force-dynamic";
 
-export async function GET(request: NextRequest) {
+export async function GET() {
   try {
-    const authHeader = request.headers.get("authorization");
-    if (!authHeader) {
+    const user = await getAuthedUser();
+    if (!user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const token = authHeader.split(" ")[1];
-    const { data: userData, error: authError } = await supabaseAdmin.auth.getUser(token);
-
-    if (authError || !userData.user?.id) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
-
-    const userId = userData.user.id;
+    const userId = user.id;
 
     // Fetch loyalty account
     let { data: account, error: accountError } = await supabaseAdmin

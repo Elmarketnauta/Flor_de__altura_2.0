@@ -32,11 +32,8 @@ export default function AdminPage() {
       if (!session?.user?.email) return;
 
       try {
-        const response = await fetch("/api/admin/stats", {
-          headers: {
-            Authorization: `Bearer ${(session as any).user?.accessToken}`,
-          },
-        });
+        // Auth travels via the NextAuth session cookie automatically.
+        const response = await fetch("/api/admin/stats");
 
         if (!response.ok) throw new Error("Failed to fetch stats");
         const data = await response.json();

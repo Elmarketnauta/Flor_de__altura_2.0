@@ -41,11 +41,7 @@ export default function AdminOrdenesPage() {
       if (!session?.user?.email) return;
 
       try {
-        const response = await fetch("/api/orders/history", {
-          headers: {
-            Authorization: `Bearer ${(session as any).user?.accessToken}`,
-          },
-        });
+        const response = await fetch("/api/orders/history");
 
         if (!response.ok) throw new Error("Failed to fetch orders");
         const data = await response.json();
@@ -66,7 +62,6 @@ export default function AdminOrdenesPage() {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${(session as any).user?.accessToken}`,
         },
         body: JSON.stringify({
           status,

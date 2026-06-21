@@ -25,11 +25,7 @@ export default function AdminInventarioPage() {
       if (!session?.user?.email) return;
 
       try {
-        const response = await fetch("/api/admin/inventory", {
-          headers: {
-            Authorization: `Bearer ${(session as any).user?.accessToken}`,
-          },
-        });
+        const response = await fetch("/api/admin/inventory");
 
         if (!response.ok) throw new Error("Failed to fetch inventory");
         const data = await response.json();
@@ -60,7 +56,6 @@ export default function AdminInventarioPage() {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${(session as any).user?.accessToken}`,
         },
         body: JSON.stringify({
           productId,

@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { auth } from "@/auth/auth";
 import Link from "next/link";
 import { Order } from "@/types";
 

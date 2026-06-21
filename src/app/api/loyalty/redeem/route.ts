@@ -1,4 +1,5 @@
 import { supabaseAdmin } from "@/lib/supabase/server";
+import { getAuthedUser } from "@/lib/auth/session";
 import { NextRequest, NextResponse } from "next/server";
 
 export const dynamic = "force-dynamic";
@@ -14,15 +15,8 @@ export const dynamic = "force-dynamic";
  */
 export async function POST(request: NextRequest) {
   try {
-    const authHeader = request.headers.get("authorization");
-    if (!authHeader) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
-
-    const token = authHeader.split(" ")[1];
-    const { data: userData, error: authError } = await supabaseAdmin.auth.getUser(token);
-
-    if (authError || !userData.user?.id) {
+    const user = await getAuthedUser();
+    if (!user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
@@ -36,7 +30,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const userId = userData.user.id;
+    const userId = user.id;
 
     // Atomic redemption: locks the row, validates the balance, deducts points,
     // recomputes the tier, and records the transaction — all in one DB call.

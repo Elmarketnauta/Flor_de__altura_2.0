@@ -109,4 +109,10 @@ export const authConfig: any = {
     signIn: "/auth/signin",
     error: "/auth/signin",
   },
+  // Explicit JWT strategy (required for CredentialsProvider and for
+  // getServerSession to read the session in API routes) and explicit secret.
+  session: {
+    strategy: "jwt",
+  },
+  secret: process.env.NEXTAUTH_SECRET,
 };
