@@ -21,7 +21,9 @@ export type EventType =
   | "remove_from_wishlist"
   | "scroll_depth"
   | "element_in_view"
-  | "carousel_scroll";
+  | "carousel_scroll"
+  | "filter_change"
+  | "filter_clear";
 
 // Inicializar Mixpanel (solo en cliente, solo si token existe)
 export function initMixpanel() {

@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import { Menu, Heart } from "lucide-react";
+import { Menu, Heart, User } from "lucide-react";
 import { CartButton } from "@/components/cart/CartButton";
 import { MobileMenu } from "./MobileMenu";
 
@@ -53,11 +53,25 @@ export function Header() {
 
         <div className="flex items-center gap-1">
           <Link
+            href="/productos"
+            aria-label="Catálogo"
+            className="hidden sm:flex rounded-full p-2.5 text-espresso-700 transition hover:bg-sand hover:text-gold text-sm font-medium"
+          >
+            Catálogo
+          </Link>
+          <Link
             href="/wishlist"
             aria-label="Mis favoritos"
             className="rounded-full p-2.5 text-espresso-700 transition hover:bg-sand hover:text-gold"
           >
             <Heart className="h-5 w-5" />
+          </Link>
+          <Link
+            href="/perfil"
+            aria-label="Mi perfil"
+            className="rounded-full p-2.5 text-espresso-700 transition hover:bg-sand hover:text-gold"
+          >
+            <User className="h-5 w-5" />
           </Link>
           <CartButton />
           <button
