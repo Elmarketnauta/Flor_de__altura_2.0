@@ -143,3 +143,45 @@ export interface UserPreference {
   vector: number[];           // 5-dimensional preference vector
   confidence: number;         // 0-1
 }
+
+// ============================================================
+// ADMIN & LOYALTY
+// ============================================================
+
+export type LoyaltyTier = "bronze" | "silver" | "gold" | "platinum";
+
+export interface LoyaltyAccount {
+  id: string;
+  userId: string;
+  points: number;
+  tier: LoyaltyTier;
+  lifetimePoints: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface PointsTransaction {
+  id: string;
+  userId: string;
+  orderId?: string;
+  type: "earn" | "redeem" | "expire" | "bonus";
+  points: number;
+  description: string;
+  createdAt: string;
+}
+
+export interface ProductInventory {
+  productId: string;
+  stock: number;
+  reserved: number;
+  lowStockThreshold: number;
+  updatedAt: string;
+}
+
+export interface AdminStats {
+  totalRevenue: number;
+  totalOrders: number;
+  activeUsers: number;
+  conversionRate: number;
+  recentOrders: Order[];
+}
