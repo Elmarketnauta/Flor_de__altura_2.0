@@ -59,16 +59,17 @@ export async function POST(request: NextRequest) {
               });
             }
 
-            // Award loyalty points (FASE 13)
+            // Award loyalty points (FASE 13).
+            // Authenticated with the internal secret; the award endpoint reads
+            // the amount from the DB itself, so we only pass the orderId.
             try {
               await fetch(`${process.env.NEXTAUTH_URL || "http://localhost:3000"}/api/loyalty/award`, {
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                  userId: order.user_id,
-                  orderAmount: order.total,
-                  orderId: orderId,
-                }),
+                headers: {
+                  "Content-Type": "application/json",
+                  "x-internal-secret": process.env.INTERNAL_API_SECRET || "",
+                },
+                body: JSON.stringify({ orderId }),
               });
             } catch (err) {
               console.error("[LoyaltyAwardFailed]", err);

@@ -27,11 +27,11 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json();
-    const { orderId, amount } = body;
+    const { orderId } = body;
 
-    if (!orderId || !amount) {
+    if (!orderId) {
       return NextResponse.json(
-        { error: "Missing orderId or amount" },
+        { error: "Missing orderId" },
         { status: 400 }
       );
     }
@@ -47,6 +47,19 @@ export async function POST(request: NextRequest) {
     if (orderError || !order) {
       return NextResponse.json({ error: "Order not found" }, { status: 404 });
     }
+
+    // Only allow paying orders that are still pending — prevents re-charging a
+    // paid/refunded order.
+    if (order.status !== "pending") {
+      return NextResponse.json(
+        { error: "Order is not payable" },
+        { status: 409 }
+      );
+    }
+
+    // SECURITY: charge the amount stored on the order (server-computed), never
+    // an amount supplied by the client.
+    const amount = order.total;
 
     // Create Stripe payment intent (idempotent with order ID)
     const paymentIntent = await stripe.paymentIntents.create(

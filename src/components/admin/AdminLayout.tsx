@@ -18,18 +18,46 @@ export default function AdminLayout({ children, title }: AdminLayoutProps) {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Check if user has admin access by attempting to fetch stats
-    // If unauthorized, they'll be redirected
     if (status === "unauthenticated") {
-      router.push("/auth/signin");
+      router.push("/auth/signin?callbackUrl=/admin");
       return;
     }
 
-    if (status === "authenticated") {
-      setIsAdmin(true);
-      setIsLoading(false);
+    if (status !== "authenticated") return;
+
+    // SECURITY: do not grant admin UI to any authenticated user. Verify the
+    // role against the server. /api/admin/stats returns 403 for non-admins, so
+    // a successful response is proof of the admin role. A 401/403 redirects the
+    // user away from the panel.
+    let cancelled = false;
+
+    async function verifyAdmin() {
+      try {
+        const token = (session as any)?.user?.accessToken;
+        const res = await fetch("/api/admin/stats", {
+          headers: token ? { Authorization: `Bearer ${token}` } : undefined,
+        });
+
+        if (cancelled) return;
+
+        if (res.ok) {
+          setIsAdmin(true);
+          setIsLoading(false);
+        } else {
+          // Not an admin (403) or unauthenticated (401) → leave the panel.
+          router.replace("/");
+        }
+      } catch {
+        if (!cancelled) router.replace("/");
+      }
     }
-  }, [status, router]);
+
+    verifyAdmin();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [status, session, router]);
 
   if (isLoading || !session || !isAdmin) {
     return (
