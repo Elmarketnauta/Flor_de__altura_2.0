@@ -1,7 +1,11 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import { Clock, Facebook, Instagram, Mail, MapPin, Phone } from "lucide-react";
+import { motion } from "framer-motion";
 import { BRAND } from "@/lib/constants";
+import { ScrollToTop } from "./ScrollToTop";
 
 const SITE_LINKS = [
   { href: "#top", label: "Inicio" },
@@ -18,12 +22,43 @@ const LEGAL_LINKS = [
 ];
 
 export function Footer() {
+  const columns = [
+    {
+      title: "Marca",
+      isLogo: true,
+    },
+    {
+      title: "Mapa del Sitio",
+      links: SITE_LINKS,
+    },
+    {
+      title: "Legales",
+      links: LEGAL_LINKS.map((l) => ({ label: l, href: "#" })),
+    },
+    {
+      title: "Contacto",
+      isContact: true,
+    },
+  ];
+
   return (
-    <footer className="bg-espresso-900 text-cream/70">
+    <footer className="relative bg-espresso-900 text-cream/70">
+      <ScrollToTop />
+
       <div className="container-app py-14">
-        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
+        <motion.div
+          className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4"
+          initial="hidden"
+          whileInView="visible"
+          variants={{
+            visible: {
+              transition: { staggerChildren: 0.1, delayChildren: 0.2 },
+            },
+          }}
+          viewport={{ once: true }}
+        >
           {/* Marca */}
-          <div>
+          <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}>
             <Image
               src="/brand/logo.png"
               alt="Flor de Altura Café"
@@ -36,18 +71,31 @@ export function Footer() {
               Pichanaqui, Selva Central del Perú. Calidad, trazabilidad y
               comercio justo real en cada grano.
             </p>
-            <div className="mt-4 flex gap-3">
-              <SocialLink href={BRAND.socials.instagram} label="Instagram">
-                <Instagram className="h-4 w-4" />
-              </SocialLink>
-              <SocialLink href={BRAND.socials.facebook} label="Facebook">
-                <Facebook className="h-4 w-4" />
-              </SocialLink>
-            </div>
-          </div>
+            <motion.div
+              className="mt-4 flex gap-3"
+              initial="hidden"
+              whileInView="visible"
+              variants={{
+                visible: {
+                  transition: { staggerChildren: 0.1 },
+                },
+              }}
+            >
+              <motion.div variants={{ hidden: { scale: 0 }, visible: { scale: 1 } }}>
+                <SocialLink href={BRAND.socials.instagram} label="Instagram">
+                  <Instagram className="h-4 w-4" />
+                </SocialLink>
+              </motion.div>
+              <motion.div variants={{ hidden: { scale: 0 }, visible: { scale: 1 } }}>
+                <SocialLink href={BRAND.socials.facebook} label="Facebook">
+                  <Facebook className="h-4 w-4" />
+                </SocialLink>
+              </motion.div>
+            </motion.div>
+          </motion.div>
 
           {/* Mapa del sitio */}
-          <div>
+          <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}>
             <h4 className="text-sm font-semibold uppercase tracking-wide text-cream">
               Mapa del Sitio
             </h4>
@@ -60,10 +108,10 @@ export function Footer() {
                 </li>
               ))}
             </ul>
-          </div>
+          </motion.div>
 
           {/* Legales */}
-          <div>
+          <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}>
             <h4 className="text-sm font-semibold uppercase tracking-wide text-cream">
               Legales
             </h4>
@@ -76,10 +124,10 @@ export function Footer() {
                 </li>
               ))}
             </ul>
-          </div>
+          </motion.div>
 
           {/* Contacto */}
-          <div>
+          <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}>
             <h4 className="text-sm font-semibold uppercase tracking-wide text-cream">
               Contacto
             </h4>
@@ -101,8 +149,8 @@ export function Footer() {
                 Lun - Sáb: 9:00 AM - 6:00 PM
               </li>
             </ul>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
 
         <div className="mt-10 flex flex-col items-center justify-between gap-3 border-t border-espresso-700 pt-6 text-sm sm:flex-row">
           <p>

@@ -1,9 +1,13 @@
 "use client";
 
+import { useRef } from "react";
+import { motion } from "framer-motion";
 import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import type { Article } from "@/types";
 import { ARTICLE_CATEGORY_LABELS } from "@/lib/constants";
+import { useTilt } from "@/lib/use-tilt";
+import { trackEvent } from "@/lib/analytics";
 
 interface ArticleCardProps {
   article: Article;
@@ -11,15 +15,40 @@ interface ArticleCardProps {
 }
 
 export function ArticleCard({ article, onOpen }: ArticleCardProps) {
+  const { ref, glareRef } = useTilt({
+    scale: 1.02,
+    rotationX: 10,
+    rotationY: 10,
+    glareMaxOpacity: 0.15,
+  });
+
+  const handleOpen = () => {
+    trackEvent("open_article", {
+      articleId: article.id,
+      category: article.category,
+    });
+    onOpen(article);
+  };
+
   return (
-    <article className="group flex flex-col overflow-hidden rounded-2xl bg-white shadow-card">
+    <motion.article
+      ref={ref}
+      className="group flex flex-col overflow-hidden rounded-2xl bg-white shadow-card"
+      style={{ transformStyle: "preserve-3d" } as any}
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      viewport={{ once: true }}
+      whileHover={{ y: -4 }}
+    >
       <button
-        onClick={() => onOpen(article)}
+        onClick={handleOpen}
         aria-label={`Leer artículo: ${article.title}`}
         data-layer="open_article"
         data-article-id={article.id}
         data-article-category={article.category}
         className="flex h-full flex-col text-left"
+        style={{ transformStyle: "preserve-3d" } as any}
       >
         <div className="relative aspect-[16/10] overflow-hidden bg-gradient-to-br from-sand to-cream">
           <Image
@@ -50,6 +79,13 @@ export function ArticleCard({ article, onOpen }: ArticleCardProps) {
           </span>
         </div>
       </button>
-    </article>
+
+      {/* Glare overlay para tilt 3D */}
+      <div
+        ref={glareRef}
+        className="pointer-events-none absolute inset-0 rounded-2xl"
+        style={{ transformStyle: "preserve-3d" } as any}
+      />
+    </motion.article>
   );
 }

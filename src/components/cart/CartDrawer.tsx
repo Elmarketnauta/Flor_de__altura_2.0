@@ -3,14 +3,16 @@
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import { Minus, Plus, ShoppingBag, Trash2, X } from "lucide-react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useCartStore } from "@/store/cart-store";
 import { formatPEN } from "@/lib/utils";
+import { ConfettiCanvas } from "./ConfettiCanvas";
+import { trackEvent } from "@/lib/analytics";
 
 /**
- * Panel lateral global del carrito (slide-out).
- * Persiste su estado en el store de Zustand y bloquea el scroll del body
- * mientras está abierto.
+ * Panel lateral global del carrito (slide-out) con cinematografía mejorada.
+ * Backdrop blur masivo (20px) + grayscale (40%) cuando está abierto.
+ * Confetti en checkout exitoso.
  */
 export function CartDrawer() {
   const isOpen = useCartStore((s) => s.isOpen);
@@ -21,6 +23,9 @@ export function CartDrawer() {
   const removeItem = useCartStore((s) => s.removeItem);
   const totalPrice = useCartStore((s) => s.totalPrice);
   const buildWhatsAppUrl = useCartStore((s) => s.buildWhatsAppUrl);
+  const canCheckout = useCartStore((s) => s.canCheckout);
+
+  const [showConfetti, setShowConfetti] = useState(false);
 
   // Body scroll lock + cierre con tecla Escape.
   useEffect(() => {
@@ -39,27 +44,50 @@ export function CartDrawer() {
   const isEmpty = items.length === 0;
 
   const handleCheckout = () => {
-    const url = buildWhatsAppUrl();
-    window.open(url, "_blank", "noopener,noreferrer");
+    if (!canCheckout()) {
+      alert("Mínimo de pedido: S/ 100");
+      return;
+    }
+
+    trackEvent("begin_checkout", {
+      itemsCount: items.length,
+      total: totalPrice(),
+    });
+
+    // Trigger confetti
+    setShowConfetti(true);
+
+    // Abrir WhatsApp después de 1 segundo
+    setTimeout(() => {
+      const url = buildWhatsAppUrl();
+      window.open(url, "_blank", "noopener,noreferrer");
+      closeCart();
+    }, 1000);
   };
 
   return (
-    <AnimatePresence>
-      {isOpen && (
-        <motion.div
-          className="fixed inset-0 z-50"
-          initial="hidden"
-          animate="visible"
-          exit="hidden"
-          aria-hidden={!isOpen}
-        >
-          {/* Overlay */}
+    <>
+      <ConfettiCanvas trigger={showConfetti} />
+
+      <AnimatePresence>
+        {isOpen && (
           <motion.div
-            className="absolute inset-0 bg-espresso-900/50 backdrop-blur-sm"
-            variants={{ hidden: { opacity: 0 }, visible: { opacity: 1 } }}
-            transition={{ duration: 0.25 }}
-            onClick={closeCart}
-          />
+            className="fixed inset-0 z-50"
+            initial="hidden"
+            animate="visible"
+            exit="hidden"
+            aria-hidden={!isOpen}
+          >
+            {/* Overlay con blur masivo + grayscale */}
+            <motion.div
+              className="absolute inset-0 bg-espresso-900/50 backdrop-blur-[20px]"
+              style={{
+                WebkitBackdropFilter: "blur(20px) grayscale(0.4)",
+              }}
+              variants={{ hidden: { opacity: 0 }, visible: { opacity: 1 } }}
+              transition={{ duration: 0.25 }}
+              onClick={closeCart}
+            />
 
           {/* Panel */}
           <motion.aside
@@ -175,32 +203,55 @@ export function CartDrawer() {
 
             {/* Footer / Checkout */}
             {!isEmpty && (
-              <footer className="border-t border-sand bg-white/70 px-5 py-4">
+              <motion.footer
+                className="border-t border-sand bg-white/70 px-5 py-4"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2, duration: 0.3 }}
+              >
                 <div className="mb-3 flex items-center justify-between">
                   <span className="text-espresso-500">Total</span>
-                  <span className="font-serif text-xl font-semibold text-espresso-800 tabular-nums">
+                  <motion.span
+                    className="font-serif text-xl font-semibold text-espresso-800 tabular-nums"
+                    key={totalPrice()}
+                  >
                     {formatPEN(totalPrice())}
-                  </span>
+                  </motion.span>
                 </div>
-                <button
+
+                {!canCheckout() && (
+                  <motion.div
+                    className="mb-3 rounded-lg bg-clay/10 px-3 py-2 text-xs text-clay"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                  >
+                    Mínimo de pedido: S/ 100 · Actual: {formatPEN(totalPrice())}
+                  </motion.div>
+                )}
+
+                <motion.button
                   id="whatsapp-checkout"
                   onClick={handleCheckout}
+                  disabled={!canCheckout()}
                   data-layer="begin_checkout_whatsapp"
                   data-cart-value={totalPrice().toFixed(2)}
-                  className="flex w-full items-center justify-center gap-2 rounded-full bg-organic px-6 py-3.5 font-medium text-white shadow-card transition hover:bg-organic-dark active:scale-[0.99]"
+                  className="flex w-full items-center justify-center gap-2 rounded-full bg-organic px-6 py-3.5 font-medium text-white shadow-card transition disabled:opacity-50 disabled:cursor-not-allowed hover:bg-organic-dark active:scale-[0.99]"
+                  whileHover={canCheckout() ? { scale: 1.02 } : {}}
+                  whileTap={canCheckout() ? { scale: 0.98 } : {}}
                 >
                   <WhatsAppIcon className="h-5 w-5" />
                   Finalizar pedido por WhatsApp
-                </button>
+                </motion.button>
                 <p className="mt-2 text-center text-xs text-espresso-400">
                   Coordinamos pago y entrega por chat. Sin fricciones.
                 </p>
-              </footer>
+              </motion.footer>
             )}
           </motion.aside>
         </motion.div>
       )}
     </AnimatePresence>
+    </>
   );
 }
 

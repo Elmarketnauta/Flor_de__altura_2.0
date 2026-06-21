@@ -13,11 +13,6 @@ import { B2BForm } from "./B2BForm";
 
 const BENEFITS = [
   {
-    title: "Máquinas Italianas en Comodato",
-    description:
-      "Instalamos equipos automáticos de alta tecnología sin costo de alquiler.",
-  },
-  {
     title: "Abastecimiento Semanal",
     description:
       "Entregamos lotes de café recién tostado directo de la tostaduría.",
