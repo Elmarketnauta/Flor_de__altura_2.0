@@ -1,4 +1,6 @@
 import { supabaseAdmin } from "@/lib/supabase/server";
+import { sendEmail } from "@/lib/email/send";
+import { generateOrderConfirmedHTML, generatePaymentFailedHTML, generateOrderRefundedHTML } from "@/lib/email/templates";
 import Stripe from "stripe";
 import { NextResponse, NextRequest } from "next/server";
 
@@ -30,15 +32,34 @@ export async function POST(request: NextRequest) {
         const orderId = paymentIntent.metadata?.orderId;
 
         if (orderId) {
-          await supabaseAdmin
+          // Update order status
+          const { data: order, error: orderError } = await supabaseAdmin
             .from("orders")
-            .update({
-              status: "paid",
-              updated_at: new Date().toISOString(),
-            })
-            .eq("id", orderId);
+            .select("*")
+            .eq("id", orderId)
+            .single();
 
-          // Log success
+          if (!orderError && order) {
+            await supabaseAdmin
+              .from("orders")
+              .update({
+                status: "paid",
+                updated_at: new Date().toISOString(),
+              })
+              .eq("id", orderId);
+
+            // Fetch user email for confirmation email
+            const { data: user } = await supabaseAdmin.auth.admin.getUserById(order.user_id);
+            if (user?.user?.email) {
+              const html = generateOrderConfirmedHTML(order, user.user.email);
+              await sendEmail({
+                to: user.user.email,
+                subject: "Tu pedido fue confirmado ✓",
+                html,
+              });
+            }
+          }
+
           console.log(`[PaymentSuccess] Order ${orderId}`);
         }
         break;
@@ -49,6 +70,12 @@ export async function POST(request: NextRequest) {
         const orderId = paymentIntent.metadata?.orderId;
 
         if (orderId) {
+          const { data: order } = await supabaseAdmin
+            .from("orders")
+            .select("*")
+            .eq("id", orderId)
+            .single();
+
           await supabaseAdmin
             .from("orders")
             .update({
@@ -56,6 +83,20 @@ export async function POST(request: NextRequest) {
               updated_at: new Date().toISOString(),
             })
             .eq("id", orderId);
+
+          // Send payment failed email
+          if (order) {
+            const { data: user } = await supabaseAdmin.auth.admin.getUserById(order.user_id);
+            if (user?.user?.email) {
+              const retryUrl = `${process.env.NEXTAUTH_URL}/checkout?orderId=${orderId}`;
+              const html = generatePaymentFailedHTML(orderId, retryUrl);
+              await sendEmail({
+                to: user.user.email,
+                subject: "Reintenta tu pago",
+                html,
+              });
+            }
+          }
 
           console.log(`[PaymentFailed] Order ${orderId}`);
         }
@@ -69,7 +110,7 @@ export async function POST(request: NextRequest) {
         if (paymentIntentId) {
           const { data: order } = await supabaseAdmin
             .from("orders")
-            .select("id")
+            .select("*")
             .eq("stripe_payment_intent_id", paymentIntentId)
             .single();
 
@@ -81,6 +122,17 @@ export async function POST(request: NextRequest) {
                 updated_at: new Date().toISOString(),
               })
               .eq("id", order.id);
+
+            // Send refund email
+            const { data: user } = await supabaseAdmin.auth.admin.getUserById(order.user_id);
+            if (user?.user?.email) {
+              const html = generateOrderRefundedHTML(order.id, order.total);
+              await sendEmail({
+                to: user.user.email,
+                subject: "Tu reembolso ha sido procesado",
+                html,
+              });
+            }
 
             console.log(`[Refunded] Order ${order.id}`);
           }
