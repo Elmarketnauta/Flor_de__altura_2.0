@@ -1,8 +1,5 @@
-import type { Product } from "@/types";
-import productsData from "@/data/products.json";
+import { PRODUCTS } from "@/data/products";
 import { ProductCard } from "./ProductCard";
-
-const products = productsData as Product[];
 
 export function CatalogSection() {
   return (
@@ -22,7 +19,7 @@ export function CatalogSection() {
         </div>
 
         <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {products.map((product) => (
+          {PRODUCTS.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}
         </div>

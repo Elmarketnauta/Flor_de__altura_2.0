@@ -17,6 +17,8 @@ export interface Product {
   process: string;
   /** Variedad / tipo botánico mostrado como etiqueta. */
   variety: string;
+  /** Origen geográfico (ej. "Pichanaqui, Perú"). */
+  origin: string;
   /** Notas de cata en chips. */
   notes: string[];
   /** Precio en soles (PEN) por presentación de 250 g. */

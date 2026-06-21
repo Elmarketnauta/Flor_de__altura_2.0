@@ -20,7 +20,8 @@ export type EventType =
   | "add_to_wishlist"
   | "remove_from_wishlist"
   | "scroll_depth"
-  | "element_in_view";
+  | "element_in_view"
+  | "carousel_scroll";
 
 // Inicializar Mixpanel (solo en cliente, solo si token existe)
 export function initMixpanel() {

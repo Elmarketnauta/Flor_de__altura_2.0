@@ -2,6 +2,7 @@ import dynamic from "next/dynamic";
 import { Header } from "@/components/layout/Header";
 import { Hero } from "@/components/layout/Hero";
 import { CartDrawer } from "@/components/cart/CartDrawer";
+import { RecommendationsCarousel } from "@/components/recommendations/RecommendationsCarousel";
 
 const OrigenSection = dynamic(
   () => import("@/components/layout/OrigenSection").then((m) => m.OrigenSection),
@@ -46,6 +47,15 @@ export default function HomePage() {
         <Hero />
         <OrigenSection />
         <CatalogSection />
+        <div className="bg-white border-t border-sand">
+          <div className="container-app">
+            <RecommendationsCarousel
+              strategy="trending"
+              limit={4}
+              title="Destacados para ti"
+            />
+          </div>
+        </div>
         <B2BSection />
         <RevistaSection />
         <EducationSection />
