@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
@@ -16,6 +17,23 @@ import { ProductCard } from "@/components/catalog/ProductCard";
 
 export function generateStaticParams() {
   return FINCAS.map((f) => ({ slug: f.slug }));
+}
+
+export function generateMetadata({
+  params,
+}: {
+  params: { slug: string };
+}): Metadata {
+  const finca = FINCAS.find((f) => f.slug === params.slug);
+  if (!finca) return {};
+  return {
+    title: `${finca.name} — Finca de Café de Especialidad en ${finca.region}`,
+    description: `${finca.tagline}. ${finca.description.slice(0, 130)} Altitud ${finca.altitude.min.toLocaleString()}–${finca.altitude.max.toLocaleString()} msnm. Productor: ${finca.producer.name}.`,
+    openGraph: {
+      title: `${finca.name} | Flor de Altura — Café de Especialidad Peruano`,
+      description: `${finca.tagline}. Café orgánico en ${finca.region}, ${finca.country}. ${finca.altitude.min.toLocaleString()}–${finca.altitude.max.toLocaleString()} msnm.`,
+    },
+  };
 }
 
 export default function FincaDetailPage({

@@ -13,14 +13,14 @@ import { B2BForm } from "./B2BForm";
 
 const BENEFITS = [
   {
-    title: "Abastecimiento Semanal",
+    title: "Abastecimiento Semanal de Café de Especialidad",
     description:
-      "Entregamos lotes de café recién tostado directo de la tostaduría.",
+      "Entregamos lotes de café orgánico peruano recién tostado directamente desde nuestra tostaduría hasta tu oficina en Lima.",
   },
   {
-    title: "Talleres Sensoriales",
+    title: "Talleres Sensoriales de Cata",
     description:
-      "Incluye una tarde de team building anual con cata de café guiada para tu equipo.",
+      "Incluye una jornada de team building anual con cata de café de especialidad guiada por baristas certificados.",
   },
 ];
 
@@ -57,7 +57,7 @@ export function B2BSection() {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="mt-4 font-serif text-4xl leading-tight sm:text-5xl"
           >
-            El beneficio corporativo más valorado de Lima
+            Café orgánico de especialidad para tu empresa en Lima
           </motion.h2>
 
           <motion.p
@@ -67,8 +67,8 @@ export function B2BSection() {
             className="mt-5 max-w-md text-lg text-cream/80"
           >
             Transforma el ambiente laboral de tu empresa reemplazando el café
-            industrial quemado por granos orgánicos de especialidad cultivados
-            en Pichanaqui.
+            industrial por granos orgánicos de especialidad de origen peruano,
+            cultivados a 1.700 msnm en Pichanaqui y tostados bajo pedido semanal.
           </motion.p>
 
           <motion.ul

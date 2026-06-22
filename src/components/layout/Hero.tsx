@@ -95,8 +95,8 @@ export function Hero() {
           transition={{ duration: 0.8, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
           className="w-full max-w-4xl text-balance font-serif text-4xl leading-[1.05] sm:text-6xl lg:text-7xl"
         >
-          El café que crece donde
-          <span className="text-gold"> nace la nube</span>
+          Café de especialidad peruano
+          <span className="text-gold"> cultivado donde nace la nube</span>
         </motion.h1>
 
         <motion.p
@@ -105,8 +105,9 @@ export function Hero() {
           transition={{ duration: 0.8, delay: 0.25 }}
           className="mt-6 w-full max-w-xl text-balance text-lg text-cream/80"
         >
-          Microlotes de especialidad cultivados a 1.700 msnm en Pichanaqui.
-          Trazabilidad total, puntaje {BRAND.scaRange}, y un ritual en cada taza.
+          Microlotes orgánicos de origen único cultivados a 1.700 – 1.950 msnm
+          en la Selva Central del Perú. Trazabilidad total, {BRAND.scaRange}, y
+          un ritual auténtico en cada taza.
         </motion.p>
 
         <motion.div
@@ -130,7 +131,7 @@ export function Hero() {
           className="mt-10 flex items-center gap-2 text-sm text-cream/60"
         >
           <Sparkles className="h-4 w-4 text-gold-light" />
-          Tostado bajo pedido · Orgánico · Comercio directo con el productor
+          Tostado bajo pedido · 100% Orgánico · Comercio directo con el productor peruano
         </motion.div>
       </motion.div>
 

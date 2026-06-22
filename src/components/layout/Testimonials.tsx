@@ -5,22 +5,22 @@ import { Star } from "lucide-react";
 
 const TESTIMONIALS = [
   {
-    text: "El Geysha es sencillamente espectacular. Tiene notas florales que nunca habia sentido en un cafe comercial. La entrega a Miraflores llego al dia siguiente del tostado.",
+    text: "El Geisha de Altura es sencillamente espectacular. Tiene notas florales y de bergamota que nunca había sentido en un café peruano. La entrega a Miraflores llegó al día siguiente del tostado.",
     initials: "AC",
-    name: "Alejandro Cardenas",
-    role: "Suscripcion Mensual B2C",
+    name: "Alejandro Cárdenas",
+    role: "Suscriptor Club Flor de Altura",
   },
   {
-    text: "Implementamos el plan Flor de Altura en la oficina y el cambio ha sido rotundo. Los chicos valoran mucho que sea organico y el soporte de mantenimiento es excelente.",
+    text: "Implementamos el plan corporativo de Flor de Altura en la oficina y el cambio ha sido rotundo. El equipo valora enormemente que sea café orgánico peruano certificado y el servicio es impecable.",
     initials: "VS",
     name: "Valeria Salazar",
-    role: "HR Manager - Tech Solutions",
+    role: "HR Manager · Tech Solutions Lima",
   },
   {
-    text: "Compre el curso de barismo en Hotmart y el cupon RITUAL20 me sirvio para abastecerme del grano Catuai. Preparar mi V60 por la manana es mi momento favorito.",
+    text: "Tomé el curso de barismo y con el cupón RITUAL20 me abastecí del Catuai orgánico de Pichanaqui. Preparar mi V60 cada mañana con este café de especialidad peruano es mi ritual favorito.",
     initials: "GP",
     name: "Gustavo Ponce",
-    role: "Comprador Frecuente",
+    role: "Comprador Frecuente · Lima",
   },
 ];
 
@@ -39,7 +39,7 @@ export function Testimonials() {
             Opiniones Reales
           </span>
           <h2 className="mt-3 font-serif text-4xl leading-tight text-espresso-800 sm:text-5xl">
-            Recomendado por amantes del buen cafe
+            Lo que dicen los amantes del café de especialidad peruano
           </h2>
         </motion.div>
 

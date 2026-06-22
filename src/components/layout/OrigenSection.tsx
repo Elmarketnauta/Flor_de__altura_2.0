@@ -88,7 +88,7 @@ export function OrigenSection() {
             transition={{ duration: 0.8, delay: 0.1 }}
             className="mt-4 font-serif text-4xl leading-tight text-espresso-800 sm:text-5xl"
           >
-            Cosechando identidad en alturas excepcionales
+            Café peruano de altura: donde la altitud transforma el grano
           </motion.h2>
 
           {/* Párrafo 1: Altitud */}
@@ -100,10 +100,10 @@ export function OrigenSection() {
             className="mt-8 space-y-2"
           >
             <p className="text-lg text-espresso-600">
-              Flor de Altura nace en el corazón de Pichanaqui, Junín, como una
-              alianza directa con pequeños agricultores locales. A 1.700 msnm,
-              creemos que la calidad de la taza no es fruto del azar, sino del
-              respeto a los tiempos de la tierra.
+              Flor de Altura nace en el corazón de Pichanaqui, Junín, Selva Central del Perú,
+              como una alianza directa con pequeños productores de altura. Entre 1.700 y 1.950 msnm,
+              el frío nocturno ralentiza la maduración del grano, concentrando azúcares naturales
+              y construyendo la complejidad aromática que define al auténtico café de especialidad peruano.
             </p>
           </motion.div>
 
@@ -116,10 +116,10 @@ export function OrigenSection() {
             className="mt-12 space-y-2"
           >
             <p className="text-lg text-espresso-600">
-              Nuestros cafetos crecen protegidos por árboles de sombra nativos,
-              absorbiendo lentamente los nutrientes de suelos fértiles de
-              montaña. Al prescindir de pesticidas y abonos químicos,
-              garantizamos un grano puro, limpio, 100% orgánico y saludable.
+              Nuestros cafetos Arábica — variedades Catuai Rojo y Geisha — crecen bajo la
+              sombra de árboles nativos de guabo y pacae, absorbiendo los nutrientes únicos
+              de los suelos volcánicos andino-amazónicos. Sin pesticidas ni abonos sintéticos:
+              certificación orgánica SENASA que garantiza un grano puro, limpio y 100% trazable.
             </p>
           </motion.div>
 
@@ -132,10 +132,11 @@ export function OrigenSection() {
             className="mt-12 space-y-6"
           >
             <p className="text-lg text-espresso-600">
-              Pagamos primas especiales por encima del mercado para asegurar la
-              sostenibilidad de las familias caficultoras. Cada taza de Flor de
-              Altura es un viaje directo desde la mano del agricultor a tu mesa,
-              sin intermediarios.
+              Trabajamos en comercio directo con los productores de la Finca San Ignacio
+              y la Finca Bella Vista, pagando primas por encima del mercado para garantizar
+              la sostenibilidad de las familias caficultoras de Junín y Chanchamayo.
+              Cada taza de Flor de Altura es un viaje trazable desde la mano del productor
+              hasta tu mesa — sin intermediarios, sin anonimato.
             </p>
 
             <CulturaLink />
@@ -150,13 +151,13 @@ export function OrigenSection() {
           >
             <FeatureCard
               icon={Mountain}
-              title="1.700 msnm"
-              description="Altitud que propicia maduración lenta y mayor concentración de azúcares naturales."
+              title="1.700 – 1.950 msnm"
+              description="La altitud ralentiza la maduración y concentra azúcares naturales, creando el perfil complejo del café de especialidad."
             />
             <FeatureCard
               icon={Sprout}
-              title="Comercio Justo"
-              description="Pagamos primas especiales para asegurar la sostenibilidad de nuestros agricultores."
+              title="Comercio Justo Certificado"
+              description="FLO-CERT Fairtrade y pago directo a los productores de Pichanaqui y Perené, sin intermediarios."
             />
           </motion.div>
         </div>

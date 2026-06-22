@@ -11,6 +11,7 @@ import { formatPEN } from "@/lib/utils";
 import { trackEvent } from "@/lib/analytics";
 import { ProductCard } from "@/components/catalog/ProductCard";
 
+
 type SortOption = "price-asc" | "price-desc" | "score" | "name";
 type FilterValue = string | null;
 
@@ -103,8 +104,11 @@ export default function ProductsPage() {
             </Link>
           </motion.div>
           <h1 className="font-serif text-3xl font-semibold text-espresso-900">
-            Catálogo Completo
+            Café de Especialidad Peruano
           </h1>
+          <p className="mt-1 text-sm text-organic font-mono uppercase tracking-widest">
+            Microlotes orgánicos · 1.700 – 1.950 msnm · SCA 84–87
+          </p>
           <p className="mt-2 text-espresso-500">
             {filteredProducts.length} producto{filteredProducts.length !== 1 ? "s" : ""}{" "}
             encontrado{filteredProducts.length !== 1 ? "s" : ""}

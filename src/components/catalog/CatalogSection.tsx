@@ -7,14 +7,15 @@ export function CatalogSection() {
       <div className="container-app">
         <div className="mx-auto max-w-2xl text-center">
           <p className="text-sm font-semibold uppercase tracking-[0.2em] text-gold-dark">
-            Nuestro catálogo
+            Café de especialidad peruano
           </p>
           <h2 className="mt-2 font-serif text-3xl text-espresso-800 sm:text-4xl">
-            Café de especialidad, trazable hasta la planta
+            Microlotes orgánicos trazables hasta la planta
           </h2>
           <p className="mt-3 text-espresso-500">
-            Microlotes cultivados en Pichanaqui a 1.700 msnm. Selección por
-            puntaje SCA 84–87. Elige tu formato y añádelo al carrito.
+            Catuai y Geisha cultivados a 1.700 – 1.950 msnm en Pichanaqui y Perené,
+            Selva Central del Perú. Selección rigurosa por puntaje SCA 84–87.
+            Tostado bajo pedido, envío a todo el país.
           </p>
         </div>
 

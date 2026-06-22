@@ -36,7 +36,7 @@ export default function FincasPage() {
             transition={{ delay: 0.1 }}
             className="font-serif text-5xl font-semibold text-cream sm:text-6xl"
           >
-            Nuestras Fincas
+            Fincas de Origen Peruano
           </motion.h1>
 
           <motion.p
@@ -45,9 +45,10 @@ export default function FincasPage() {
             transition={{ delay: 0.2 }}
             className="mt-6 text-lg text-espresso-200 max-w-2xl mx-auto"
           >
-            Cada taza de Flor de Altura nace en un territorio específico, con un
-            productor con nombre y apellido. La altitud no es marketing: es la razón
-            por la que este café existe.
+            Cada taza de Flor de Altura nace en un territorio específico de la Selva Central
+            del Perú, cultivada por un productor con nombre y apellido. La altitud entre
+            1.700 y 1.950 msnm no es marketing: es la razón científica por la que este
+            café de especialidad existe.
           </motion.p>
         </div>
       </section>
@@ -168,12 +169,12 @@ export default function FincasPage() {
             <Mountain className="h-10 w-10 text-gold" />
           </div>
           <h2 className="font-serif text-3xl text-espresso-900">
-            Trazabilidad desde la planta
+            Trazabilidad completa: de la planta a tu taza
           </h2>
           <p className="mt-4 text-espresso-500 max-w-xl mx-auto">
-            En Flor de Altura no compramos café anónimo. Cada bolsa lleva el slug de la finca,
-            el nombre del productor y la altitud exacta de cultivo. Eso es lo que hace
-            que un café de especialidad sea especial.
+            En Flor de Altura no compramos café anónimo. Cada bolsa identifica la finca de origen,
+            el nombre del productor, la altitud exacta de cultivo y el proceso de beneficio.
+            Eso es trazabilidad real — el estándar del verdadero café de especialidad peruano.
           </p>
           <Link
             href="/productos"

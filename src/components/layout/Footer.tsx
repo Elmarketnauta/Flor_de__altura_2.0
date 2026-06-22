@@ -67,9 +67,9 @@ export function Footer() {
               className="h-14 w-14 object-contain"
             />
             <p className="mt-4 text-sm leading-relaxed">
-              Un café orgánico de especialidad y origen único cultivado en
-              Pichanaqui, Selva Central del Perú. Calidad, trazabilidad y
-              comercio justo real en cada grano.
+              Café de especialidad 100% Arábica orgánico cultivado entre 1.700 y 1.950 msnm
+              en Pichanaqui y Perené, Selva Central del Perú. Microlotes trazables,
+              SCA 84–87, comercio justo FLO-CERT certificado.
             </p>
             <motion.div
               className="mt-4 flex gap-3"

@@ -27,23 +27,51 @@ const dmMono = DM_Mono({
 });
 
 export const metadata: Metadata = {
-  title:
-    "Flor de Altura Café | Café Orgánico de Especialidad y Origen Único",
+  title: {
+    default: "Flor de Altura | Café de Especialidad de Origen Peruano",
+    template: "%s | Flor de Altura Café",
+  },
   description:
-    "Marca premium de café de especialidad, 100% Arábica Orgánico de origen único, cultivado en la Selva Central del Perú (Pichanaqui). Granos selectos frescos y planes corporativos.",
+    "Café de especialidad 100% Arábica orgánico cultivado a 1.700 – 1.950 msnm en Pichanaqui y Perené, Selva Central del Perú. Microlotes trazables con puntaje SCA 84–87. Envío a Lima y todo el país.",
   keywords: [
-    "cafe de especialidad peru",
-    "comprar cafe organico lima",
-    "cafe pichanaqui",
-    "cafe geysha peru",
-    "cafe para oficinas lima",
-    "flor de altura cafe",
+    "café de especialidad peruano",
+    "café orgánico Pichanaqui",
+    "comprar café de especialidad Lima",
+    "café Geisha Perú",
+    "café Catuai orgánico",
+    "microlote café Perú",
+    "café Selva Central Perú",
+    "café de altura Junín",
+    "café trazable origen único",
+    "Flor de Altura café",
+    "café SCA 84 87 puntos",
+    "café para oficinas Lima",
   ],
+  authors: [{ name: "Flor de Altura Café", url: "https://flordealtura.com" }],
+  creator: "Flor de Altura Café",
   openGraph: {
-    title: "Flor de Altura Café | Café de Especialidad",
+    title: "Flor de Altura | Café de Especialidad de Origen Peruano",
     description:
-      "Café orgánico cultivado a 1.700 msnm en Pichanaqui. Tostado en pequeños lotes para preservar su pureza floral y afrutada.",
+      "Microlotes de café orgánico cultivados entre 1.700 y 1.950 msnm en la Selva Central del Perú. Trazabilidad total del grano al productor. Puntaje SCA 84–87.",
     type: "website",
+    locale: "es_PE",
+    siteName: "Flor de Altura Café",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Flor de Altura | Café de Especialidad Peruano",
+    description:
+      "Microlotes orgánicos cultivados a 1.700 msnm en Pichanaqui, Junín. Trazabilidad total, SCA 84–87.",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
   },
 };
 
