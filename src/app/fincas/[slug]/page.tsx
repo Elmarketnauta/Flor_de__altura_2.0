@@ -62,13 +62,14 @@ export default function FincaDetailPage({
         <div className="absolute inset-0 bg-gradient-to-b from-espresso-900/40 via-espresso-900/20 to-espresso-900/80" />
 
         <div className="absolute left-4 top-20 sm:left-8">
-          <Link
-            href="/fincas"
-            className="flex items-center gap-2 rounded-full bg-white/20 px-4 py-2 text-sm font-medium text-cream backdrop-blur-sm hover:bg-white/30 transition"
-          >
-            <ArrowLeft className="h-4 w-4" />
-            Todas las fincas
-          </Link>
+          <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 rounded-full bg-white/20 px-4 py-2 backdrop-blur-sm text-sm text-cream/80">
+            <Link href="/" className="hover:text-cream transition">Inicio</Link>
+            <span aria-hidden className="text-cream/50">/</span>
+            <Link href="/fincas" className="hover:text-cream transition flex items-center gap-1">
+              <ArrowLeft className="h-3 w-3" />
+              Fincas
+            </Link>
+          </nav>
         </div>
 
         {/* Altitud siempre visible */}

@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { ArrowLeft, Search, X } from "lucide-react";
+import { Search, X } from "lucide-react";
 import Link from "next/link";
 import { PRODUCTS } from "@/data/products";
 import { useCartStore } from "@/store/cart-store";
@@ -95,13 +95,11 @@ export default function ProductsPage() {
             animate={{ opacity: 1, y: 0 }}
             className="flex items-center gap-4 mb-6"
           >
-            <Link
-              href="/#catalogo"
-              className="flex items-center gap-2 text-sm font-medium text-espresso-600 hover:text-espresso-800 transition"
-            >
-              <ArrowLeft className="h-4 w-4" />
-              Volver
-            </Link>
+            <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-sm text-espresso-500">
+              <Link href="/" className="hover:text-espresso-800 transition">Inicio</Link>
+              <span aria-hidden>/</span>
+              <span className="font-medium text-espresso-900">Catálogo</span>
+            </nav>
           </motion.div>
           <h1 className="font-serif text-3xl font-semibold text-espresso-900">
             Café de Especialidad Peruano

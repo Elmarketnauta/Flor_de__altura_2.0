@@ -2,17 +2,18 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { Clock, Facebook, Instagram, Mail, MapPin, Phone } from "lucide-react";
+import { Clock, Facebook, Instagram, Mail, MapPin, Phone, Mountain } from "lucide-react";
 import { motion } from "framer-motion";
 import { BRAND } from "@/lib/constants";
 import { ScrollToTop } from "./ScrollToTop";
 
 const SITE_LINKS = [
-  { href: "#top", label: "Inicio" },
-  { href: "#origen", label: "Origen y Finca" },
-  { href: "#catalogo", label: "Catálogo de Granos" },
-  { href: "#b2b", label: "Planes de Oficina" },
-  { href: "#revista", label: "Revista Digital" },
+  { href: "/", label: "Inicio" },
+  { href: "/productos", label: "Catálogo" },
+  { href: "/fincas", label: "Fincas de Origen" },
+  { href: "/club", label: "Club de Suscripción" },
+  { href: "/revista", label: "Revista" },
+  { href: "/#b2b", label: "Café para Oficinas" },
 ];
 
 const LEGAL_LINKS = [
@@ -102,9 +103,9 @@ export function Footer() {
             <ul className="mt-3 space-y-2 text-sm">
               {SITE_LINKS.map((l) => (
                 <li key={l.label}>
-                  <a href={l.href} className="transition hover:text-gold">
+                  <Link href={l.href} className="transition hover:text-gold">
                     {l.label}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -152,7 +153,28 @@ export function Footer() {
           </motion.div>
         </motion.div>
 
-        <div className="mt-10 flex flex-col items-center justify-between gap-3 border-t border-espresso-700 pt-6 text-sm sm:flex-row">
+        {/* CTA newsletter / club */}
+        <div className="mt-10 rounded-2xl border border-espresso-700 px-6 py-8 flex flex-col items-center gap-4 text-center sm:flex-row sm:text-left sm:justify-between">
+          <div>
+            <div className="flex items-center gap-2 justify-center sm:justify-start mb-1">
+              <Mountain className="h-4 w-4 text-gold" />
+              <span className="font-mono text-xs uppercase tracking-widest text-gold">
+                Club Flor de Altura
+              </span>
+            </div>
+            <p className="font-serif text-lg text-cream">
+              Un microlote diferente cada mes, desde 1.700 msnm.
+            </p>
+          </div>
+          <Link
+            href="/club"
+            className="flex-shrink-0 rounded-full bg-gold px-6 py-2.5 text-sm font-bold text-espresso-900 hover:bg-gold-light transition"
+          >
+            Unirme al Club
+          </Link>
+        </div>
+
+        <div className="mt-8 flex flex-col items-center justify-between gap-3 border-t border-espresso-700 pt-6 text-sm sm:flex-row">
           <p>
             © {new Date().getFullYear()} {BRAND.name}. Todos los derechos
             reservados. RUC {BRAND.ruc}

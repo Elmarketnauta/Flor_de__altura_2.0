@@ -1,7 +1,5 @@
 import dynamic from "next/dynamic";
-import { Header } from "@/components/layout/Header";
 import { Hero } from "@/components/layout/Hero";
-import { CartDrawer } from "@/components/cart/CartDrawer";
 import { RecommendationsCarousel } from "@/components/recommendations/RecommendationsCarousel";
 
 const OrigenSection = dynamic(
@@ -34,37 +32,25 @@ const Testimonials = dynamic(
   { loading: () => <div className="h-96" /> }
 );
 
-const Footer = dynamic(
-  () => import("@/components/layout/Footer").then((m) => m.Footer),
-  { loading: () => <div className="h-20" /> }
-);
-
 export default function HomePage() {
   return (
-    <>
-      <Header />
-      <main>
-        <Hero />
-        <OrigenSection />
-        <CatalogSection />
-        <div className="bg-white border-t border-sand">
-          <div className="container-app">
-            <RecommendationsCarousel
-              strategy="trending"
-              limit={4}
-              title="Destacados para ti"
-            />
-          </div>
+    <main>
+      <Hero />
+      <OrigenSection />
+      <CatalogSection />
+      <div className="bg-white border-t border-sand">
+        <div className="container-app">
+          <RecommendationsCarousel
+            strategy="trending"
+            limit={4}
+            title="Destacados para ti"
+          />
         </div>
-        <B2BSection />
-        <RevistaSection />
-        <EducationSection />
-        <Testimonials />
-      </main>
-      <Footer />
-
-      {/* Carrito global: vive fuera del flujo, disponible en toda la app */}
-      <CartDrawer />
-    </>
+      </div>
+      <B2BSection />
+      <RevistaSection />
+      <EducationSection />
+      <Testimonials />
+    </main>
   );
 }

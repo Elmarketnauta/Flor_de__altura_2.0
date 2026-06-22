@@ -88,10 +88,10 @@ export function ProductDetailClient({
       <div className="border-b border-sand bg-white px-4 py-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl flex items-center gap-2 text-sm text-espresso-500">
           <Link href="/" className="hover:text-gold transition">Inicio</Link>
-          <span>/</span>
-          <Link href="/#catalogo" className="hover:text-gold transition">Catálogo</Link>
-          <span>/</span>
-          <span className="text-espresso-800 font-medium">{product.name}</span>
+          <span aria-hidden>/</span>
+          <Link href="/productos" className="hover:text-gold transition">Catálogo</Link>
+          <span aria-hidden>/</span>
+          <span className="text-espresso-800 font-medium truncate max-w-[180px]">{product.name}</span>
         </div>
       </div>
 

@@ -3,6 +3,7 @@ import Script from "next/script";
 import { Poppins, Playfair_Display, DM_Mono } from "next/font/google";
 import "./globals.css";
 import { AppProviders } from "@/components/providers/AppProviders";
+import { SiteShell } from "@/components/layout/SiteShell";
 
 const GTM_ID = "GTM-WVWL28V4";
 
@@ -105,7 +106,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           />
         </noscript>
         {/* End Google Tag Manager (noscript) */}
-        <AppProviders>{children}</AppProviders>
+        <AppProviders>
+          <SiteShell>{children}</SiteShell>
+        </AppProviders>
       </body>
     </html>
   );

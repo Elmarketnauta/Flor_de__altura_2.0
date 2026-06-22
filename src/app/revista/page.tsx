@@ -45,11 +45,11 @@ export default function RevistaPage() {
             className="flex items-center gap-4 mb-6"
           >
             <Link
-              href="/#revista"
+              href="/"
               className="flex items-center gap-2 text-sm font-medium text-espresso-600 hover:text-espresso-800 transition"
             >
               <ArrowLeft className="h-4 w-4" />
-              Volver
+              Inicio
             </Link>
           </motion.div>
           <h1 className="font-serif text-4xl font-semibold text-espresso-900">
