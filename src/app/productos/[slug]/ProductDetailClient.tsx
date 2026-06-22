@@ -83,7 +83,7 @@ export function ProductDetailClient({
   };
 
   return (
-    <main className="min-h-screen bg-cream pt-20">
+    <main className="min-h-screen bg-cream">
       {/* Breadcrumb */}
       <div className="border-b border-sand bg-white px-4 py-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl flex items-center gap-2 text-sm text-espresso-500">

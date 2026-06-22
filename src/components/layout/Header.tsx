@@ -2,19 +2,13 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import { Menu, Heart, User, Mountain } from "lucide-react";
 import { CartButton } from "@/components/cart/CartButton";
 import { MobileMenu } from "./MobileMenu";
 import { useClubStore } from "@/store/club-store";
 
-/**
- * Cada item define cómo resolver el href según el contexto de la ruta.
- * - `href`: destino real (ruta absoluta o anchor en home)
- * - `homeAnchor`: anchor usado sólo cuando ya estamos en "/"
- * - `matchPath`: prefijo de ruta para marcar el item como activo
- */
 export interface NavItem {
   label: string;
   href: string;
@@ -32,12 +26,30 @@ export const NAV: NavItem[] = [
 
 export function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const { isSubscribed } = useClubStore();
   const pathname = usePathname();
   const isHome = pathname === "/";
 
+  // Detecta scroll para cambiar apariencia del header
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 48);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  // En home: transparente hasta que scrollea. En páginas internas: siempre opaco.
+  const isTransparent = isHome && !scrolled;
+
   return (
-    <header className="sticky top-0 z-40 border-b border-sand/70 bg-cream/90 backdrop-blur-md">
+    <header
+      className={`sticky top-0 z-40 transition-all duration-300 ${
+        isTransparent
+          ? "border-b border-white/10 bg-transparent"
+          : "border-b border-sand/70 bg-cream/95 shadow-sm backdrop-blur-md"
+      }`}
+    >
       <div className="container-app flex h-16 items-center justify-between">
         {/* Logo */}
         <Link
@@ -53,7 +65,11 @@ export function Header() {
             className="h-10 w-10 object-contain"
             priority
           />
-          <span className="hidden font-serif text-lg font-semibold text-espresso-800 sm:block">
+          <span
+            className={`hidden font-serif text-lg font-semibold sm:block transition-colors duration-300 ${
+              isTransparent ? "text-cream" : "text-espresso-800"
+            }`}
+          >
             Flor de Altura
           </span>
         </Link>
@@ -67,7 +83,6 @@ export function Header() {
               (pathname === item.matchPath ||
                 pathname.startsWith(item.matchPath + "/"));
 
-            // En la home usamos el anchor directo; en otras rutas la ruta real
             const resolvedHref =
               isHome && item.homeAnchor ? item.homeAnchor : item.href;
             const isAnchor = resolvedHref.startsWith("#");
@@ -78,9 +93,11 @@ export function Header() {
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={`flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-semibold transition ${
+                  className={`flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-semibold transition-all duration-200 ${
                     isActive
                       ? "bg-espresso-900 text-cream"
+                      : isTransparent
+                      ? "bg-white/20 text-cream hover:bg-white/30 backdrop-blur-sm"
                       : "bg-espresso-800 text-cream hover:bg-espresso-900"
                   }`}
                 >
@@ -100,16 +117,23 @@ export function Header() {
               <Comp
                 key={item.href}
                 href={resolvedHref}
-                className={`relative px-3 py-1.5 text-sm font-medium transition rounded-md ${
+                className={`relative px-3 py-1.5 text-sm font-medium transition-colors duration-200 rounded-md ${
                   isActive
-                    ? "text-espresso-900 font-semibold"
+                    ? isTransparent
+                      ? "text-cream font-semibold"
+                      : "text-espresso-900 font-semibold"
+                    : isTransparent
+                    ? "text-cream/80 hover:text-cream"
                     : "text-espresso-500 hover:text-espresso-900"
                 }`}
               >
                 {item.label}
-                {/* Indicador de ruta activa */}
                 {isActive && (
-                  <span className="absolute bottom-0 left-3 right-3 h-0.5 rounded-full bg-gold" />
+                  <span
+                    className={`absolute bottom-0 left-3 right-3 h-0.5 rounded-full ${
+                      isTransparent ? "bg-gold" : "bg-gold"
+                    }`}
+                  />
                 )}
               </Comp>
             );
@@ -121,10 +145,12 @@ export function Header() {
           <Link
             href="/wishlist"
             aria-label="Mis favoritos"
-            className={`rounded-full p-2.5 transition hover:bg-sand ${
+            className={`rounded-full p-2.5 transition-colors duration-200 ${
               pathname === "/wishlist"
                 ? "text-gold"
-                : "text-espresso-700 hover:text-gold"
+                : isTransparent
+                ? "text-cream/80 hover:text-cream hover:bg-white/10"
+                : "text-espresso-700 hover:text-gold hover:bg-sand"
             }`}
           >
             <Heart className="h-5 w-5" />
@@ -132,10 +158,12 @@ export function Header() {
           <Link
             href="/perfil"
             aria-label="Mi perfil"
-            className={`rounded-full p-2.5 transition hover:bg-sand ${
+            className={`rounded-full p-2.5 transition-colors duration-200 ${
               pathname === "/perfil"
                 ? "text-gold"
-                : "text-espresso-700 hover:text-gold"
+                : isTransparent
+                ? "text-cream/80 hover:text-cream hover:bg-white/10"
+                : "text-espresso-700 hover:text-gold hover:bg-sand"
             }`}
           >
             <User className="h-5 w-5" />
@@ -145,7 +173,11 @@ export function Header() {
             onClick={() => setMenuOpen(true)}
             aria-label="Abrir menú"
             aria-expanded={menuOpen}
-            className="rounded-full p-2.5 text-espresso-700 transition hover:bg-sand md:hidden"
+            className={`rounded-full p-2.5 transition-colors duration-200 md:hidden ${
+              isTransparent
+                ? "text-cream/80 hover:text-cream hover:bg-white/10"
+                : "text-espresso-700 hover:bg-sand"
+            }`}
           >
             <Menu className="h-5 w-5" />
           </button>

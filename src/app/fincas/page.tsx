@@ -8,7 +8,7 @@ import { FINCAS } from "@/data/fincas";
 
 export default function FincasPage() {
   return (
-    <main className="min-h-screen bg-cream pt-20">
+    <main className="min-h-screen bg-cream">
       {/* Hero */}
       <section className="relative overflow-hidden bg-espresso-800 px-4 py-24 sm:px-6 lg:px-8">
         {/* Ruido orgánico */}

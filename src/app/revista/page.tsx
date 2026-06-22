@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { ArrowLeft, ChevronRight } from "lucide-react";
+import { ChevronRight } from "lucide-react";
 import Link from "next/link";
 import articlesData from "@/data/articles.json";
 import { trackEvent } from "@/lib/analytics";
@@ -35,7 +35,7 @@ export default function RevistaPage() {
   };
 
   return (
-    <main className="min-h-screen bg-cream pt-20">
+    <main className="min-h-screen bg-cream">
       {/* Header */}
       <div className="border-b border-sand bg-white px-4 py-6 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl">
@@ -44,13 +44,11 @@ export default function RevistaPage() {
             animate={{ opacity: 1, y: 0 }}
             className="flex items-center gap-4 mb-6"
           >
-            <Link
-              href="/"
-              className="flex items-center gap-2 text-sm font-medium text-espresso-600 hover:text-espresso-800 transition"
-            >
-              <ArrowLeft className="h-4 w-4" />
-              Inicio
-            </Link>
+            <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-sm text-espresso-500">
+              <Link href="/" className="hover:text-espresso-800 transition">Inicio</Link>
+              <span aria-hidden>/</span>
+              <span className="font-medium text-espresso-900">Revista</span>
+            </nav>
           </motion.div>
           <h1 className="font-serif text-4xl font-semibold text-espresso-900">
             Flor de Altura Revista
