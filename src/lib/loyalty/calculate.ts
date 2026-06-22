@@ -1,4 +1,27 @@
 import { LoyaltyTier } from "@/types";
+import type { ClubTier } from "@/types";
+
+const CLUB_MULTIPLIERS: Record<ClubTier, number> = {
+  explorador: 1.25,
+  cumbre: 1.5,
+  "cumbre-plus": 2.0,
+};
+
+/**
+ * Puntos ganados considerando tier de loyalty Y tier del Club.
+ * Se toma el mayor multiplicador entre los dos para no penalizar.
+ */
+export function calculatePointsWithClub(
+  orderAmount: number,
+  loyaltyTier: LoyaltyTier,
+  clubTier: ClubTier | null
+): number {
+  const basePoints = Math.floor(orderAmount);
+  const loyaltyMultiplier = getPointsMultiplier(loyaltyTier);
+  const clubMultiplier = clubTier ? CLUB_MULTIPLIERS[clubTier] : 1.0;
+  const multiplier = Math.max(loyaltyMultiplier, clubMultiplier);
+  return Math.floor(basePoints * multiplier);
+}
 
 /**
  * Loyalty tier thresholds based on lifetime points.

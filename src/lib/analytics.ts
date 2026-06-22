@@ -23,7 +23,12 @@ export type EventType =
   | "element_in_view"
   | "carousel_scroll"
   | "filter_change"
-  | "filter_clear";
+  | "filter_clear"
+  | "club_subscribe"
+  | "club_pause"
+  | "club_cancel"
+  | "product_detail_view"
+  | "finca_view";
 
 // Inicializar Mixpanel (solo en cliente, solo si token existe)
 export function initMixpanel() {

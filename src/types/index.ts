@@ -2,31 +2,109 @@
 
 export type ProductFormat = "grano" | "molido";
 
+export interface ProductTastingProfile {
+  acidity: number;
+  body: number;
+  sweetness: number;
+  complexity: number;
+}
+
 export interface Product {
   id: string;
   slug: string;
   name: string;
-  /** Notas de cata / descripción corta para la tarjeta. */
   tagline: string;
   description: string;
-  /** Puntaje SCA (84–87). */
   scaScore: number;
-  /** Altitud de cultivo en msnm. */
+  /** Altitud de cultivo en msnm — elemento de marca permanente. */
   altitude: number;
-  /** Proceso de beneficio (lavado, honey, natural...). */
   process: string;
-  /** Variedad / tipo botánico mostrado como etiqueta. */
   variety: string;
-  /** Origen geográfico (ej. "Pichanaqui, Perú"). */
+  botanicalVariety?: string;
   origin: string;
-  /** Notas de cata en chips. */
+  fincaSlug?: string;
+  fincaName?: string;
   notes: string[];
-  /** Precio en soles (PEN) por presentación de 250 g. */
+  tastingProfile?: ProductTastingProfile;
+  cupProfile?: string;
   price: number;
   weightGrams: number;
   image: string;
   badge?: string;
   available: boolean;
+}
+
+// ============================================================
+// FINCAS (Farms)
+// ============================================================
+
+export interface FincaProducer {
+  name: string;
+  role: string;
+  bio: string;
+  image: string;
+}
+
+export interface FincaAltitudeRange {
+  min: number;
+  max: number;
+}
+
+export interface Finca {
+  slug: string;
+  name: string;
+  tagline: string;
+  region: string;
+  country: string;
+  altitude: FincaAltitudeRange;
+  coordinates: { lat: number; lng: number };
+  description: string;
+  story: string[];
+  producer: FincaProducer;
+  image: string;
+  heroImage: string;
+  certifications: string[];
+  varieties: string[];
+  processes: string[];
+  productSlugs: string[];
+  established: number;
+}
+
+// ============================================================
+// CLUB FLOR DE ALTURA (Suscripción mensual)
+// ============================================================
+
+export type ClubTier = "explorador" | "cumbre" | "cumbre-plus";
+export type ClubFrequency = "mensual" | "bimestral";
+export type ClubStatus = "active" | "paused" | "cancelled";
+
+export interface ClubTierConfig {
+  id: ClubTier;
+  name: string;
+  tagline: string;
+  priceMonthly: number;
+  weightGrams: number;
+  bags: number;
+  pointsBonus: number;
+  pointsMultiplier: number;
+  perks: string[];
+  badge: string;
+}
+
+export interface ClubSubscription {
+  id: string;
+  userId: string;
+  tier: ClubTier;
+  frequency: ClubFrequency;
+  status: ClubStatus;
+  format: ProductFormat;
+  startDate: string;
+  nextShipmentDate: string;
+  currentCycleProduct?: string;
+  totalShipments: number;
+  pointsEarned: number;
+  createdAt: string;
+  updatedAt: string;
 }
 
 /** Línea de producto dentro del carrito (producto + cantidad + formato). */

@@ -1,8 +1,9 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useState } from "react";
-import { Plus, Heart } from "lucide-react";
+import { Plus, Heart, Mountain } from "lucide-react";
 import type { Product, ProductFormat } from "@/types";
 import { useCartStore } from "@/store/cart-store";
 import { useWishlistStore } from "@/store/wishlist-store";
@@ -15,19 +16,13 @@ const FORMATS: { value: ProductFormat; label: string }[] = [
   { value: "molido", label: "Molido" },
 ];
 
-/**
- * Tarjeta de producto con tilt 3D (inclinación hacia el cursor) + brillo reflectante.
- * Simula profundidad y premium sin WebGL. Desactivado en touch y reduced-motion.
- */
 export function ProductCard({ product }: { product: Product }) {
   const addItem = useCartStore((s) => s.addItem);
   const isFavorite = useWishlistStore((s) => s.isFavorite);
   const addToWishlist = useWishlistStore((s) => s.addToWishlist);
   const removeFromWishlist = useWishlistStore((s) => s.removeFromWishlist);
   const [format, setFormat] = useState<ProductFormat>("grano");
-  const [isWishlisted, setIsWishlisted] = useState(
-    isFavorite(product.id)
-  );
+  const [isWishlisted, setIsWishlisted] = useState(isFavorite(product.id));
   const { ref, glareRef } = useTilt({
     scale: 1.08,
     rotationX: 12,
@@ -36,7 +31,9 @@ export function ProductCard({ product }: { product: Product }) {
     glareMaxOpacity: 0.25,
   });
 
-  const handleAddToCart = () => {
+  const handleAddToCart = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
     addItem(product, format);
     trackEvent("add_to_cart", {
       productId: product.id,
@@ -46,7 +43,9 @@ export function ProductCard({ product }: { product: Product }) {
     });
   };
 
-  const handleToggleWishlist = () => {
+  const handleToggleWishlist = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
     if (isWishlisted) {
       removeFromWishlist(product.id);
       trackEvent("remove_from_wishlist", { productId: product.id });
@@ -58,23 +57,30 @@ export function ProductCard({ product }: { product: Product }) {
     }
   };
 
+  const handleFormatChange = (e: React.MouseEvent, value: ProductFormat) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setFormat(value);
+  };
+
   return (
     <article
       ref={ref}
       className="group relative flex flex-col overflow-hidden rounded-2xl bg-white shadow-card transition"
       style={{ transformStyle: "preserve-3d" }}
     >
-      {/* Brillo reflectante (glare) */}
+      {/* Glare reflectante */}
       <div
         ref={glareRef}
         className="pointer-events-none absolute inset-0 z-10 rounded-2xl"
         style={{ pointerEvents: "none" }}
       />
 
-      {/* Contenido principal */}
-      <div
+      <Link
+        href={`/productos/${product.slug}`}
         className="flex flex-1 flex-col overflow-hidden"
         style={{ transformStyle: "preserve-3d" }}
+        aria-label={`Ver detalle de ${product.name}`}
       >
         <div className="relative aspect-[4/3] overflow-hidden bg-gradient-to-br from-sand to-cream">
           <Image
@@ -84,12 +90,22 @@ export function ProductCard({ product }: { product: Product }) {
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             className="object-contain p-6 transition duration-500 group-hover:scale-105"
           />
+
+          {/* Altitud — elemento de marca permanente */}
+          <div className="absolute left-3 top-3 flex items-center gap-1 rounded-full bg-espresso-800/90 px-2.5 py-1 backdrop-blur-sm">
+            <Mountain className="h-3 w-3 text-gold" />
+            <span className="font-mono text-[10px] font-bold text-cream tracking-wide">
+              {product.altitude.toLocaleString()} msnm
+            </span>
+          </div>
+
           {product.badge && (
-            <span className="absolute left-3 top-3 rounded-full bg-gold px-2.5 py-1 text-xs font-bold text-espresso-900">
+            <span className="absolute right-3 top-3 rounded-full bg-gold px-2.5 py-1 text-xs font-bold text-espresso-900">
               {product.badge}
             </span>
           )}
-          <span className="absolute right-3 top-3 rounded-full bg-espresso-800/90 px-2.5 py-1 text-xs font-semibold text-cream">
+
+          <span className="absolute bottom-3 right-3 rounded-full bg-white/80 px-2 py-0.5 text-xs font-semibold text-espresso-700 backdrop-blur-sm">
             SCA {product.scaScore}
           </span>
         </div>
@@ -98,10 +114,16 @@ export function ProductCard({ product }: { product: Product }) {
           <span className="font-mono text-xs uppercase tracking-wide text-gold-dark">
             {product.variety}
           </span>
-          <h3 className="mt-1 font-serif text-lg leading-snug text-espresso-800">
+          <h3 className="mt-1 font-serif text-lg leading-snug text-espresso-800 group-hover:text-espresso-900 transition">
             {product.name}
           </h3>
           <p className="mt-1 text-sm text-espresso-500">{product.tagline}</p>
+
+          {product.fincaName && (
+            <p className="mt-1.5 text-xs text-organic font-medium">
+              {product.fincaName}
+            </p>
+          )}
 
           <div className="mt-3 flex flex-wrap gap-1.5">
             {product.notes.map((note) => (
@@ -119,13 +141,13 @@ export function ProductCard({ product }: { product: Product }) {
             {FORMATS.map((f) => (
               <button
                 key={f.value}
-                onClick={() => setFormat(f.value)}
+                onClick={(e) => handleFormatChange(e, f.value)}
                 aria-pressed={format === f.value}
                 className={cn(
                   "rounded-full px-3 py-1 text-xs font-medium transition",
                   format === f.value
                     ? "bg-espresso-700 text-cream"
-                    : "text-espresso-500 hover:text-espresso-700",
+                    : "text-espresso-500 hover:text-espresso-700"
                 )}
               >
                 {f.label}
@@ -174,7 +196,7 @@ export function ProductCard({ product }: { product: Product }) {
             </div>
           </div>
         </div>
-      </div>
+      </Link>
     </article>
   );
 }

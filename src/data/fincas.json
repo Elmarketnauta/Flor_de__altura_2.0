@@ -1,0 +1,58 @@
+[
+  {
+    "slug": "san-ignacio",
+    "name": "Finca San Ignacio",
+    "tagline": "Donde el bosque de niebla abraza cada cereza",
+    "region": "Pichanaqui, Junín",
+    "country": "Perú",
+    "altitude": { "min": 1700, "max": 1850 },
+    "coordinates": { "lat": -10.9167, "lng": -74.7667 },
+    "description": "En las estribaciones de la Selva Central peruana, a más de 1.700 metros sobre el nivel del mar, la Finca San Ignacio produce uno de los cafés Catuai más reconocibles de la región. El microclima de Pichanaqui, con sus noches frías y días soleados, obliga al grano a desarrollarse lentamente, concentrando azúcares y complejidad aromática.",
+    "story": [
+      "La historia de San Ignacio comienza en 1978, cuando Aurelio Quispe Mamani llegó a Pichanaqui desde Huancayo con la intención de cultivar cacao. Pero el suelo volcánico y la altitud le convencieron rápidamente de que el café era el verdadero tesoro de aquellas tierras.",
+      "Durante tres décadas, Aurelio construyó su finca árbol por árbol, aprendiendo los ciclos de cada variedad, el comportamiento de las lluvias y el momento exacto en que la cereza alcanza su punto de madurez óptimo. Hoy, su hija Carmen gestiona la finca con la misma filosofía: paciencia, altitud y respeto por el ecosistema.",
+      "San Ignacio opera bajo certificación orgánica desde 2008. No se usan fertilizantes sintéticos: el compostaje de pulpa de café, los árboles de sombra de guabo y el control biológico de plagas son los pilares de un modelo que prioriza la calidad sobre el volumen. La cosecha es 100% manual, cereza por cereza, durante los meses de junio a agosto."
+    ],
+    "producer": {
+      "name": "Carmen Quispe",
+      "role": "Productora y gestora de calidad",
+      "bio": "Carmen heredó la finca de su padre Aurelio hace ocho años. Ingeniera agrónoma de formación, combinó el conocimiento tradicional familiar con técnicas modernas de fermentación controlada y secado en camas africanas. Es la primera mujer productora de su comunidad en obtener una puntuación SCA superior a 84.",
+      "image": "/brand/logo.png"
+    },
+    "image": "/brand/logo.png",
+    "heroImage": "/brand/logo.png",
+    "certifications": ["Orgánico SENASA", "Rainforest Alliance", "FLO-CERT Fairtrade"],
+    "varieties": ["Catuai Rojo", "Pache"],
+    "processes": ["Lavado", "Natural"],
+    "productSlugs": ["catuai-250", "catuai-500"],
+    "established": 1978
+  },
+  {
+    "slug": "bella-vista",
+    "name": "Finca Bella Vista",
+    "tagline": "Microlotes de excepción a casi 2.000 metros",
+    "region": "Perené, Chanchamayo",
+    "country": "Perú",
+    "altitude": { "min": 1850, "max": 1950 },
+    "coordinates": { "lat": -11.0667, "lng": -75.0167 },
+    "description": "Finca Bella Vista es una de las pocas propiedades en el Valle del Perené que cultiva Geisha a altitudes superiores a 1.850 msnm. La combinación de suelos franco-arcillosos, temperatura promedio de 18°C y precipitaciones bien distribuidas crea las condiciones ideales para que esta variedad despliegue todo su potencial floral.",
+    "story": [
+      "Roberto Pariona Huanca adquirió los terrenos de Bella Vista en 2004, cuando el mercado de café de especialidad en Perú era apenas emergente. Apostó por variedades de alto valor agronómico en lugar de aumentar el volumen de producción, una decisión que tardó años en dar frutos pero que hoy define la identidad de la finca.",
+      "La introducción de la variedad Geisha fue un experimento en 2015. Roberto viajó hasta Boquete, Panamá, para aprender de primera mano las exigencias de esta variedad legendaria. De regreso en Perené, adaptó las técnicas de manejo al microclima andino: sombra regulada, poda sistemática y un protocolo de fermentación honey de 36 horas.",
+      "Hoy, Bella Vista produce apenas 200 kg de Geisha por año. Cada lote es catado por un panel de evaluadores SCA antes de su comercialización. La limitada producción y la calidad consistente han convertido este café en uno de los más buscados por tostadores de specialty en Lima, Bogotá y Ciudad de México."
+    ],
+    "producer": {
+      "name": "Roberto Pariona Huanca",
+      "role": "Productor y catador Q-Grader",
+      "bio": "Roberto es uno de los pocos productores peruanos con certificación Q-Grader, la credencial más exigente del mundo del café de especialidad. Esta formación le permite evaluar cada lote con precisión técnica antes de la venta, garantizando que solo los granos que superen 85 puntos SCA lleven el sello de Bella Vista.",
+      "image": "/brand/logo.png"
+    },
+    "image": "/brand/logo.png",
+    "heroImage": "/brand/logo.png",
+    "certifications": ["Orgánico SENASA", "Q-Grader Verified", "Specialty Coffee Association"],
+    "varieties": ["Geisha", "Bourbon Rosado"],
+    "processes": ["Honey", "Natural Anaeróbico"],
+    "productSlugs": ["geysha-250"],
+    "established": 2004
+  }
+]
