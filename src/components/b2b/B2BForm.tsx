@@ -4,7 +4,7 @@ import { forwardRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AnimatePresence, motion } from "framer-motion";
-import { CheckCircle2, Loader2 } from "lucide-react";
+import { CheckCircle2, Loader2, Mail } from "lucide-react";
 import { b2bLeadSchema, type B2BLead } from "@/lib/schemas";
 import { cn } from "@/lib/utils";
 
@@ -13,6 +13,7 @@ type Status = "idle" | "submitting" | "success" | "error";
 export function B2BForm() {
   const [status, setStatus] = useState<Status>("idle");
   const [leadName, setLeadName] = useState("");
+  const [subscribedNewsletter, setSubscribedNewsletter] = useState(false);
 
   const {
     register,
@@ -22,6 +23,7 @@ export function B2BForm() {
   } = useForm<B2BLead>({
     resolver: zodResolver(b2bLeadSchema),
     mode: "onBlur",
+    defaultValues: { newsletter: true },
   });
 
   const onSubmit = async (data: B2BLead) => {
@@ -35,21 +37,22 @@ export function B2BForm() {
       });
       if (!res.ok) throw new Error(`Respuesta ${res.status}`);
 
-      // Evento para la capa de datos (GTM → BigQuery → Looker).
       if (typeof window !== "undefined") {
         window.dataLayer = window.dataLayer || [];
         window.dataLayer.push({
           event: "generate_lead_b2b",
           lead_company: data.company,
           lead_channel: "b2b_form",
+          newsletter_opt_in: data.newsletter ?? false,
         });
       }
 
       setLeadName(data.contactName.split(" ")[0] ?? "");
+      setSubscribedNewsletter(data.newsletter ?? false);
       setStatus("success");
       reset();
-    } catch (error) {
-      console.error("[B2BForm] Error al enviar el lead:", error);
+    } catch (err) {
+      console.error("[B2BForm]", err);
       setStatus("error");
     }
   };
@@ -57,13 +60,15 @@ export function B2BForm() {
   return (
     <div className="relative rounded-2xl bg-cream p-6 shadow-card sm:p-8">
       <AnimatePresence mode="wait">
+
+        {/* ── Estado de éxito ── */}
         {status === "success" ? (
           <motion.div
             key="success"
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0 }}
-            className="flex flex-col items-center py-8 text-center"
+            className="flex flex-col items-center py-6 text-center"
             data-layer="b2b_lead_success"
           >
             <motion.div
@@ -74,22 +79,69 @@ export function B2BForm() {
             >
               <CheckCircle2 className="h-9 w-9 text-organic" />
             </motion.div>
+
             <h3 className="font-serif text-2xl text-espresso-800">
-              ¡Cata Gratis Agendada!
+              ¡Solicitud recibida!
             </h3>
             <p className="mt-2 max-w-sm text-espresso-500">
-              Gracias{leadName ? `, ${leadName}` : ""}. Recibimos tu solicitud y
-              te contactaremos muy pronto para coordinar la cata guiada en tu
-              oficina. ☕
+              Gracias{leadName ? `, ${leadName}` : ""}. Revisaremos tu solicitud
+              y te contactaremos en las próximas 24 horas para coordinar los
+              detalles.
             </p>
+
+            {/* Propuesta de newsletter */}
+            {subscribedNewsletter ? (
+              <motion.div
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3 }}
+                className="mt-6 flex items-start gap-3 rounded-xl border border-gold/40 bg-gold/8 px-4 py-3 text-left"
+              >
+                <Mail className="mt-0.5 h-4 w-4 flex-shrink-0 text-gold-dark" />
+                <p className="text-sm text-espresso-600">
+                  <span className="font-semibold text-espresso-800">Ya estás suscrito al newsletter.</span>
+                  {" "}Recibirás guías de preparación, novedades de cosecha y contenido
+                  SCA de la Selva Central directamente en tu correo.
+                </p>
+              </motion.div>
+            ) : (
+              <motion.div
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3 }}
+                className="mt-6 w-full rounded-xl border border-sand bg-white px-4 py-4 text-left"
+              >
+                <p className="font-mono text-[10px] uppercase tracking-widest text-gold-dark">
+                  Mientras esperas
+                </p>
+                <p className="mt-1 font-serif text-base text-espresso-800">
+                  Suscríbete al newsletter de café de especialidad
+                </p>
+                <p className="mt-1 text-xs text-espresso-500">
+                  Guías de extracción, novedades de cosecha y cultura del café
+                  desde la Selva Central — sin spam, sin compromiso.
+                </p>
+                <a
+                  href="mailto:hola@flordealtura.com?subject=Quiero%20suscribirme%20al%20newsletter"
+                  className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-gold-dark underline-offset-2 hover:underline"
+                >
+                  <Mail className="h-3.5 w-3.5" />
+                  Suscribirme al newsletter
+                </a>
+              </motion.div>
+            )}
+
             <button
               onClick={() => setStatus("idle")}
-              className="mt-6 text-sm font-medium text-gold-dark underline-offset-4 hover:underline"
+              className="mt-6 text-sm font-medium text-espresso-400 underline-offset-4 hover:underline"
             >
               Enviar otra solicitud
             </button>
           </motion.div>
+
         ) : (
+
+          /* ── Formulario ── */
           <motion.div
             key="form"
             initial={{ opacity: 0 }}
@@ -97,11 +149,11 @@ export function B2BForm() {
             exit={{ opacity: 0 }}
           >
             <h3 className="font-serif text-2xl text-espresso-800">
-              Prueba el Plan Gratis
+              Prueba el Plan Oficina
             </h3>
             <p className="mt-2 text-sm text-espresso-500">
-              Completa el formulario y solicita una tarde de café y cata guiada
-              gratis para un equipo de hasta 15 colaboradores.
+              Completa el formulario y un especialista te contactará para diseñar
+              el programa de café para tu equipo.
             </p>
 
             <form
@@ -127,6 +179,16 @@ export function B2BForm() {
                 {...register("contactName")}
               />
               <Field
+                id="email"
+                label="Correo Electrónico"
+                type="email"
+                inputMode="email"
+                placeholder="Ej. andrea@startup.com"
+                autoComplete="email"
+                error={errors.email?.message}
+                {...register("email")}
+              />
+              <Field
                 id="phone"
                 label="Teléfono de Contacto"
                 type="tel"
@@ -136,6 +198,24 @@ export function B2BForm() {
                 error={errors.phone?.message}
                 {...register("phone")}
               />
+
+              {/* Checkbox newsletter */}
+              <label className="flex cursor-pointer items-start gap-3 rounded-xl border border-sand bg-white px-4 py-3 transition hover:border-gold/50">
+                <input
+                  type="checkbox"
+                  className="mt-0.5 h-4 w-4 flex-shrink-0 accent-gold-dark"
+                  {...register("newsletter")}
+                />
+                <span className="text-sm text-espresso-600">
+                  <span className="font-medium text-espresso-800">
+                    Suscribirme al newsletter de café de especialidad
+                  </span>
+                  <span className="ml-1 text-espresso-400">
+                    — guías de extracción, novedades de cosecha y contenido SCA.
+                    Sin spam.
+                  </span>
+                </span>
+              </label>
 
               {status === "error" && (
                 <p
@@ -159,7 +239,7 @@ export function B2BForm() {
                     Enviando…
                   </>
                 ) : (
-                  "Agendar Cata Gratis"
+                  "Solicitar información"
                 )}
               </button>
 
@@ -180,7 +260,6 @@ interface FieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
   error?: string;
 }
 
-/** Campo de formulario accesible con estado de error. forwardRef para RHF. */
 const Field = forwardRef<HTMLInputElement, FieldProps>(
   ({ id, label, error, ...props }, ref) => (
     <div>

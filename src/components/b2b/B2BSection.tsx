@@ -20,7 +20,12 @@ const BENEFITS = [
   {
     title: "Talleres Sensoriales de Cata",
     description:
-      "Incluye una jornada de team building anual con cata de café de especialidad guiada por baristas certificados.",
+      "Programa experiencias de cata guiadas por baristas certificados SCA para tu equipo — team building con propósito y cultura del café de especialidad.",
+  },
+  {
+    title: "Newsletter de Café de Especialidad",
+    description:
+      "Contenido editorial mensual: guías de extracción, novedades de cosecha, puntajes SCA y cultura del café desde la Selva Central del Perú.",
   },
 ];
 
