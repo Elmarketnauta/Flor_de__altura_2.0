@@ -2,6 +2,7 @@ import { supabaseAdmin } from "@/lib/supabase/server";
 import { getAuthedUser } from "@/lib/auth/session";
 import Stripe from "stripe";
 import { NextResponse, NextRequest } from "next/server";
+import { checkRateLimit } from "@/lib/rate-limit";
 
 export const dynamic = "force-dynamic";
 
@@ -21,6 +22,14 @@ export async function POST(request: NextRequest) {
     const user = await getAuthedUser();
     if (!user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
+    const { allowed } = await checkRateLimit(`payment:${user.id}`, 20, 3600);
+    if (!allowed) {
+      return NextResponse.json(
+        { error: "Too many payment attempts. Try again later." },
+        { status: 429, headers: { "Retry-After": "3600" } },
+      );
     }
 
     const body = await request.json();

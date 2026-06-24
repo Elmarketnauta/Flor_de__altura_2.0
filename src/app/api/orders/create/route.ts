@@ -44,19 +44,19 @@ export async function POST(request: NextRequest) {
     let subtotal = 0;
 
     for (const item of incomingItems) {
-      const quantity = Number(item.quantity);
+      const quantity = parseInt(String(item.quantity), 10);
 
       if (!item.productId || !Number.isInteger(quantity) || quantity < 1) {
         return NextResponse.json(
           { error: "Invalid item in cart" },
-          { status: 400 }
+          { status: 400 },
         );
       }
 
       if (quantity > MAX_QTY_PER_ITEM) {
         return NextResponse.json(
           { error: `Quantity too high for ${item.productId}` },
-          { status: 400 }
+          { status: 400 },
         );
       }
 
