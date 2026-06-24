@@ -13,12 +13,12 @@ export const authConfig: any = {
     Google({
       clientId,
       clientSecret,
-      allowDangerousEmailAccountLinking: true,
+      allowDangerousEmailAccountLinking: false,
     }),
     GitHub({
       clientId: githubId,
       clientSecret: githubSecret,
-      allowDangerousEmailAccountLinking: true,
+      allowDangerousEmailAccountLinking: false,
     }),
     CredentialsProvider({
       name: "Credentials",
@@ -113,6 +113,7 @@ export const authConfig: any = {
   // getServerSession to read the session in API routes) and explicit secret.
   session: {
     strategy: "jwt",
+    maxAge: 24 * 60 * 60, // 24 hours
   },
   secret: process.env.NEXTAUTH_SECRET,
 };
