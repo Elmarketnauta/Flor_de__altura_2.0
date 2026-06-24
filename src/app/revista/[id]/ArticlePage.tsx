@@ -3,7 +3,8 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowLeft, Clock, Calendar, Award, ChevronRight } from "lucide-react";
-import type { Article, ArticleSection } from "@/types";
+import type { Article, ArticleCategory, ArticleSection } from "@/types";
+import { EditorialCover } from "@/components/revista/EditorialCover";
 
 const CATEGORY_LABELS: Record<string, string> = {
   origen: "Origen",
@@ -699,8 +700,12 @@ export function ArticlePage({ article }: { article: Article }) {
                   <TemperaturaIllustration />
                 </div>
               ) : (
-                <div className="h-48 w-full bg-gradient-to-br from-espresso-700 to-organic/40 flex items-center justify-center rounded-t-2xl">
-                  <span className="text-4xl">{article.category === "metodos" ? "☕" : "🌿"}</span>
+                <div className="w-full max-w-[480px] overflow-hidden rounded-2xl shadow-card">
+                  <EditorialCover
+                    category={article.category as ArticleCategory}
+                    word={article.title.split(" ")[0]}
+                    variant="wide"
+                  />
                 </div>
               )}
             </motion.div>

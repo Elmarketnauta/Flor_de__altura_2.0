@@ -2,12 +2,12 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import Image from "next/image";
 import { ArrowRight } from "lucide-react";
-import type { Article } from "@/types";
+import type { Article, ArticleCategory } from "@/types";
 import { ARTICLE_CATEGORY_LABELS } from "@/lib/constants";
 import { useTilt } from "@/lib/use-tilt";
 import { trackEvent } from "@/lib/analytics";
+import { EditorialCover } from "./EditorialCover";
 
 interface ArticleCardProps {
   article: Article;
@@ -50,15 +50,14 @@ export function ArticleCard({ article, onOpen }: ArticleCardProps) {
         className="flex h-full flex-col text-left"
         style={{ transformStyle: "preserve-3d" } as any}
       >
-        <div className="relative aspect-[16/10] overflow-hidden bg-gradient-to-br from-sand to-cream">
-          <Image
-            src={article.image}
-            alt={article.title}
-            fill
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            className="object-contain p-8 transition duration-500 group-hover:scale-105"
+        <div className="relative aspect-[16/10] overflow-hidden">
+          <EditorialCover
+            category={article.category as ArticleCategory}
+            word={article.title.split(" ")[0]}
+            variant="wide"
+            className="h-full w-full transition duration-500 group-hover:scale-105"
           />
-          <span className="absolute left-3 top-3 rounded-full bg-espresso-800/90 px-3 py-1 font-mono text-xs uppercase tracking-wide text-cream">
+          <span className="absolute left-3 top-3 z-10 rounded-full bg-espresso-800/90 px-3 py-1 font-mono text-xs uppercase tracking-wide text-cream">
             {ARTICLE_CATEGORY_LABELS[article.category]}
           </span>
         </div>
