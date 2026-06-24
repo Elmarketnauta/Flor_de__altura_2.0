@@ -1,16 +1,30 @@
 import { supabaseAdmin } from "@/lib/supabase/server";
 import { NextResponse, NextRequest } from "next/server";
+import { checkRateLimit, getClientIp } from "@/lib/rate-limit";
 
 export const dynamic = "force-dynamic";
 
+function extractBearerToken(authHeader: string | null): string | null {
+  if (!authHeader) return null;
+  const match = authHeader.match(/^Bearer\s+(\S+)$/);
+  return match ? match[1] : null;
+}
+
 export async function GET(request: NextRequest) {
   try {
-    const authHeader = request.headers.get("authorization");
-    if (!authHeader) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    const clientIp = await getClientIp();
+    const { allowed } = await checkRateLimit(`profile:${clientIp}`, 30, 3600);
+
+    if (!allowed) {
+      return NextResponse.json(
+        { error: "Too many requests" },
+        { status: 429, headers: { "Retry-After": "3600" } },
+      );
     }
 
-    const token = authHeader.split(" ")[1];
+    const authHeader = request.headers.get("authorization");
+    const token = extractBearerToken(authHeader);
+
     if (!token) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
@@ -68,12 +82,19 @@ export async function GET(request: NextRequest) {
 
 export async function PUT(request: NextRequest) {
   try {
-    const authHeader = request.headers.get("authorization");
-    if (!authHeader) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    const clientIp = await getClientIp();
+    const { allowed } = await checkRateLimit(`profile:${clientIp}`, 20, 3600);
+
+    if (!allowed) {
+      return NextResponse.json(
+        { error: "Too many requests" },
+        { status: 429, headers: { "Retry-After": "3600" } },
+      );
     }
 
-    const token = authHeader.split(" ")[1];
+    const authHeader = request.headers.get("authorization");
+    const token = extractBearerToken(authHeader);
+
     if (!token) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }

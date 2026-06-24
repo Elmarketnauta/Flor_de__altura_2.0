@@ -1,6 +1,8 @@
 import { Order, OrderItem } from "@/types";
+import { escapeHtml, sanitizeUrl, isValidAppUrl } from "@/lib/email-validation";
 
 export function generateOrderConfirmedHTML(order: Order, userEmail: string): string {
+  const sanitizedEmail = escapeHtml(userEmail);
   const itemsHTML = order.items
     .map(
       (item) =>
@@ -53,9 +55,9 @@ export function generateOrderConfirmedHTML(order: Order, userEmail: string): str
       <p>Gracias por tu compra, tu café está en camino!</p>
 
       <div class="order-section">
-        <h2>Detalles del Pedido #${order.id.slice(0, 8).toUpperCase()}</h2>
+        <h2>Detalles del Pedido #${escapeHtml(order.id.slice(0, 8).toUpperCase())}</h2>
         <p style="margin: 0; color: #666;">
-          <strong>Email:</strong> ${userEmail}<br>
+          <strong>Email:</strong> ${sanitizedEmail}<br>
           <strong>Fecha:</strong> ${new Date(order.createdAt).toLocaleDateString("es-PE")}
         </p>
       </div>
@@ -107,6 +109,12 @@ export function generateOrderConfirmedHTML(order: Order, userEmail: string): str
 }
 
 export function generatePaymentFailedHTML(orderId: string, retryUrl: string): string {
+  if (!isValidAppUrl(retryUrl, process.env.NEXTAUTH_URL || "")) {
+    throw new Error("Invalid retry URL");
+  }
+
+  const sanitizedRetryUrl = sanitizeUrl(retryUrl);
+
   return `
 <!DOCTYPE html>
 <html>
@@ -130,10 +138,10 @@ export function generatePaymentFailedHTML(orderId: string, retryUrl: string): st
       <h1>⚠ Pago No Completado</h1>
     </div>
     <div class="content">
-      <p>Hubo un problema al procesar tu pago para el pedido <strong>#${orderId.slice(0, 8).toUpperCase()}</strong>.</p>
+      <p>Hubo un problema al procesar tu pago para el pedido <strong>#${escapeHtml(orderId.slice(0, 8).toUpperCase())}</strong>.</p>
       <p>Tu carrito está reservado. Intenta de nuevo:</p>
       <div class="cta">
-        <a href="${retryUrl}">Reintentar Pago</a>
+        <a href="${sanitizedRetryUrl}">Reintentar Pago</a>
       </div>
       <p style="margin-top: 20px; font-size: 13px; color: #666;">
         Si el problema persiste, contáctanos en <strong>hola@flordealtura.com</strong>.

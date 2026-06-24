@@ -3,6 +3,7 @@ import { extractProductVector, vectorToArray } from "@/lib/ml/feature-extractor"
 import { calculateUserVector, findTopSimilar } from "@/lib/ml/collab-filtering";
 import { supabaseAdmin } from "@/lib/supabase/server";
 import { NextRequest, NextResponse } from "next/server";
+import { checkRateLimit, getClientIp } from "@/lib/rate-limit";
 
 interface RecommendationRequest {
   strategy: "browsing" | "trending" | "similar_taste" | "collaborative";
@@ -12,18 +13,35 @@ interface RecommendationRequest {
 
 export const dynamic = "force-dynamic";
 
+function extractBearerToken(authHeader: string | null): string | null {
+  if (!authHeader) return null;
+  const match = authHeader.match(/^Bearer\s+(\S+)$/);
+  return match ? match[1] : null;
+}
+
 export async function POST(request: NextRequest) {
   try {
+    const clientIp = await getClientIp();
+    const { allowed } = await checkRateLimit(`recommendations:${clientIp}`, 100, 3600);
+
+    if (!allowed) {
+      return NextResponse.json(
+        { error: "Too many requests" },
+        { status: 429, headers: { "Retry-After": "3600" } },
+      );
+    }
+
     const body: RecommendationRequest = await request.json();
     const { strategy = "trending", browsedIds = [], limit = 5 } = body;
 
-    // Try to get user from auth header (optional for recommendations)
     let userId: string | null = null;
     const authHeader = request.headers.get("authorization");
     if (authHeader) {
-      const token = authHeader.split(" ")[1];
-      const { data: userData } = await supabaseAdmin.auth.getUser(token);
-      userId = userData?.user?.id || null;
+      const token = extractBearerToken(authHeader);
+      if (token) {
+        const { data: userData } = await supabaseAdmin.auth.getUser(token);
+        userId = userData?.user?.id || null;
+      }
     }
 
     // Extract vectors for all products

@@ -2,6 +2,7 @@ import { supabaseAdmin } from "@/lib/supabase/server";
 import { getAdminUser } from "@/lib/auth/session";
 import { sendEmail } from "@/lib/email/send";
 import { generateOrderShippedHTML } from "@/lib/email/templates";
+import { validateEmailAddress, sanitizeTrackingUrl } from "@/lib/email-validation";
 import { NextRequest, NextResponse } from "next/server";
 
 export const dynamic = "force-dynamic";
@@ -45,16 +46,19 @@ export async function POST(request: NextRequest) {
     let subject: string;
 
     switch (type) {
-      case "shipped":
+      case "shipped": {
+        const sanitizedTrackingUrl = sanitizeTrackingUrl(trackingUrl);
         subject = "📦 Tu pedido está en camino";
-        html = generateOrderShippedHTML(orderId, trackingUrl, trackingNumber);
+        html = generateOrderShippedHTML(orderId, sanitizedTrackingUrl, trackingNumber);
         break;
+      }
       default:
         return NextResponse.json({ error: "Unknown email type" }, { status: 400 });
     }
 
+    const validatedEmail = validateEmailAddress(user.user.email);
     const result = await sendEmail({
-      to: user.user.email,
+      to: validatedEmail,
       subject,
       html,
     });
@@ -63,13 +67,13 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: result.error || "Failed to send email" }, { status: 500 });
     }
 
-    // Log email sent
+    // Log email sent (sanitized)
     await supabaseAdmin.from("audit_logs").insert([
       {
         user_id: admin.id,
         event_type: "email_sent",
         details: {
-          to: user.user.email,
+          to: validatedEmail,
           type,
           orderId,
         },

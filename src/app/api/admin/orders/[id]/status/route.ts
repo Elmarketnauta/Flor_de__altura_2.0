@@ -2,6 +2,7 @@ import { supabaseAdmin } from "@/lib/supabase/server";
 import { getAdminUser } from "@/lib/auth/session";
 import { sendEmail } from "@/lib/email/send";
 import { generateOrderShippedHTML } from "@/lib/email/templates";
+import { sanitizeTrackingUrl, validateEmailAddress } from "@/lib/email-validation";
 import { NextRequest, NextResponse } from "next/server";
 
 export const dynamic = "force-dynamic";
@@ -60,16 +61,18 @@ export async function PATCH(
     if (status === "shipped") {
       const { data: user } = await supabaseAdmin.auth.admin.getUserById(order.user_id);
       if (user?.user?.email) {
-        const html = generateOrderShippedHTML(orderId, trackingUrl, trackingNumber);
+        const sanitizedTrackingUrl = sanitizeTrackingUrl(trackingUrl);
+        const validatedEmail = validateEmailAddress(user.user.email);
+        const html = generateOrderShippedHTML(orderId, sanitizedTrackingUrl, trackingNumber);
         await sendEmail({
-          to: user.user.email,
+          to: validatedEmail,
           subject: "📦 Tu pedido está en camino",
           html,
         });
       }
     }
 
-    // Log admin action
+    // Log admin action (sanitized)
     await supabaseAdmin.from("audit_logs").insert([
       {
         user_id: admin.id,
@@ -77,7 +80,8 @@ export async function PATCH(
         details: {
           orderId,
           newStatus: status,
-          trackingNumber,
+          trackingNumber: trackingNumber || null,
+          trackingUrl: sanitizeTrackingUrl(trackingUrl) || null,
         },
       },
     ]);
