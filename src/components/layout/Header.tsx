@@ -44,7 +44,7 @@ export function Header() {
 
   return (
     <header
-      className={`sticky top-0 z-40 transition-all duration-300 ${
+      className={`fixed inset-x-0 top-0 z-40 transition-all duration-300 ${
         isTransparent
           ? "border-b border-white/10 bg-transparent"
           : "border-b border-sand/70 bg-cream/95 shadow-sm backdrop-blur-md"
@@ -168,7 +168,7 @@ export function Header() {
           >
             <User className="h-5 w-5" />
           </Link>
-          <CartButton />
+          <CartButton isTransparent={isTransparent} />
           <button
             onClick={() => setMenuOpen(true)}
             aria-label="Abrir menú"

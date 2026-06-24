@@ -5,7 +5,7 @@ import { useCartStore } from "@/store/cart-store";
 import { useHydrated } from "@/lib/use-hydrated";
 
 /** Botón de la barra superior que abre el carrito y muestra el contador. */
-export function CartButton() {
+export function CartButton({ isTransparent = false }: { isTransparent?: boolean }) {
   const openCart = useCartStore((s) => s.openCart);
   const count = useCartStore((s) => s.totalItems());
   const hydrated = useHydrated();
@@ -15,7 +15,11 @@ export function CartButton() {
       onClick={openCart}
       aria-label={`Abrir carrito, ${hydrated ? count : 0} artículos`}
       data-layer="open_cart"
-      className="relative rounded-full p-2.5 text-espresso-700 transition hover:bg-sand"
+      className={`relative rounded-full p-2.5 transition-colors duration-200 ${
+        isTransparent
+          ? "text-cream/80 hover:text-cream hover:bg-white/10"
+          : "text-espresso-700 hover:text-gold hover:bg-sand"
+      }`}
     >
       <ShoppingBag className="h-5 w-5" />
       {hydrated && count > 0 && (
