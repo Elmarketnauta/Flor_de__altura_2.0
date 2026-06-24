@@ -58,20 +58,29 @@
   5. Merge to production
 
 ### 2. Next.js Upgrade Planning
-- **Status**: ⏳ Planning phase
+- **Status**: ⏳ Detailed plan created
 - **Current**: 14.2.30 (8+ known CVEs)
-- **Target**: 16.2.9 or latest
-- **Effort**: 2-3 sprints (testing required)
-- **Risk**: Breaking changes in API routes
-- **Checklist**:
-  - [ ] Create upgrade branch
-  - [ ] Update package.json
-  - [ ] Run full test suite
-  - [ ] Test image optimization endpoints
-  - [ ] Verify middleware behavior
-  - [ ] Test rewrites/redirects
-  - [ ] Stage testing
-  - [ ] Production deployment
+- **Target**: 16.2.9 (stable LTS)
+- **Effort**: 2-3 sprints (40-60 hours)
+- **Timeline**: 2026-07-01 to 2026-07-31
+- **Key Changes**: NextAuth v4→v5, React 18→19, breaking API changes
+- **Documentation**: [NEXTJS_UPGRADE_PLAN.md](NEXTJS_UPGRADE_PLAN.md)
+
+**Phases**:
+1. Preparation & Node.js check (Week 1)
+2. Dependency updates (Week 1)
+3. Core code updates: auth, API routes, dynamic segments (Week 1-2)
+4. Testing: unit + integration + staging (Week 2)
+5. Performance validation: bundle size, load testing (Week 2-3)
+6. Documentation & knowledge transfer (Week 3)
+7. Production deployment with rollback plan (Week 3-4)
+
+**Critical Path**:
+- [ ] NextAuth v5 migration (80% rewrite of auth.config.ts)
+- [ ] API response streaming updates
+- [ ] Staging full test suite pass
+- [ ] Load testing validation
+- [ ] Security headers verification post-deploy
 
 ### 3. Email Service Audit
 - **Status**: ⏳ Pending
@@ -270,6 +279,7 @@ export function setupCsrfToken(response: NextResponse) {
 - [SECURITY_FIXES.md](SECURITY_FIXES.md) - Initial critical fixes
 - [SECURITY_AUDIT_FINDINGS.md](SECURITY_AUDIT_FINDINGS.md) - Full audit report
 - [SECURITY_VALIDATION_SUMMARY.md](SECURITY_VALIDATION_SUMMARY.md) - Summary stats
+- [NEXTJS_UPGRADE_PLAN.md](NEXTJS_UPGRADE_PLAN.md) - Detailed Next.js upgrade strategy
 
 ---
 
