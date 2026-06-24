@@ -1,0 +1,225 @@
+name: CI Monitor — Auto-diagnóstico matutino
+
+# Corre cada mañana a las 8:00 AM hora Perú (13:00 UTC).
+# Si el CI del último push falló, abre/actualiza un issue con diagnóstico
+# y sugerencia de fix. Si el mismo fallo lleva 2+ días, lo escala.
+
+on:
+  schedule:
+    - cron: "0 13 * * *"   # 08:00 PET (UTC-5) todos los días
+  workflow_dispatch: {}     # ejecución manual desde Actions
+
+permissions:
+  contents: read
+  issues: write
+  actions: read
+  pull-requests: write
+
+jobs:
+  diagnose-ci:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Verificar estado del último CI run
+        id: ci-status
+        uses: actions/github-script@v7
+        with:
+          script: |
+            // Buscar el workflow "CI" por nombre
+            const workflows = await github.rest.actions.listRepoWorkflows({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+            });
+            const ciWorkflow = workflows.data.workflows.find(w => w.name === 'CI');
+            if (!ciWorkflow) {
+              core.setOutput('status', 'unknown');
+              core.setOutput('summary', 'No se encontró el workflow CI');
+              return;
+            }
+
+            // Obtener el último run del workflow CI en main
+            const runs = await github.rest.actions.listWorkflowRuns({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              workflow_id: ciWorkflow.id,
+              branch: 'main',
+              per_page: 3,
+            });
+
+            if (runs.data.total_count === 0) {
+              core.setOutput('status', 'no_runs');
+              core.setOutput('summary', 'No hay runs de CI recientes');
+              return;
+            }
+
+            const lastRun = runs.data.workflow_runs[0];
+            const runUrl = lastRun.html_url;
+            const conclusion = lastRun.conclusion; // success, failure, cancelled, null
+            const status = lastRun.status;          // completed, in_progress, queued
+            const commit = lastRun.head_commit?.message?.split('\n')[0] ?? 'sin mensaje';
+            const runId = lastRun.id;
+
+            core.setOutput('conclusion', conclusion ?? status);
+            core.setOutput('run_url', runUrl);
+            core.setOutput('run_id', String(runId));
+            core.setOutput('commit', commit);
+            core.setOutput('workflow_id', String(ciWorkflow.id));
+
+            // Revisar si hay un patrón de fallo recurrente (2+ runs fallidos seguidos)
+            const recentConclusions = runs.data.workflow_runs.map(r => r.conclusion);
+            const consecutiveFails = recentConclusions.findIndex(c => c === 'success');
+            core.setOutput('consecutive_fails', String(consecutiveFails === -1 ? runs.data.total_count : consecutiveFails));
+
+            if (conclusion === 'failure') {
+              // Intentar obtener los jobs fallidos para diagnóstico
+              const jobs = await github.rest.actions.listJobsForWorkflowRun({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                run_id: runId,
+              });
+
+              const failedJobs = jobs.data.jobs.filter(j => j.conclusion === 'failure');
+              const failedSteps = failedJobs.flatMap(j =>
+                j.steps.filter(s => s.conclusion === 'failure').map(s => ({
+                  job: j.name,
+                  step: s.name,
+                }))
+              );
+
+              const diagnose = failedSteps.map(fs => `- **${fs.job}** → paso \`${fs.step}\``).join('\n');
+              core.setOutput('failed_steps', diagnose || '(no se pudo determinar el paso exacto)');
+              core.setOutput('failed_jobs', failedJobs.map(j => j.name).join(', '));
+            } else {
+              core.setOutput('failed_steps', '');
+              core.setOutput('failed_jobs', '');
+            }
+
+      - name: Abrir o actualizar issue si CI falló
+        if: steps.ci-status.outputs.conclusion == 'failure'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            // Crear label ci-failure si no existe
+            try {
+              await github.rest.issues.createLabel({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                name: 'ci-failure',
+                color: 'd73a4a',
+                description: 'Fallo automático detectado en CI',
+              });
+            } catch (e) {
+              // Ya existe — ignorar
+            }
+
+            const runUrl     = '${{ steps.ci-status.outputs.run_url }}';
+            const commit     = `${{ steps.ci-status.outputs.commit }}`;
+            const failedJobs = '${{ steps.ci-status.outputs.failed_jobs }}';
+            const failedSteps = `${{ steps.ci-status.outputs.failed_steps }}`;
+            const consecFails = parseInt('${{ steps.ci-status.outputs.consecutive_fails }}');
+            const now        = new Date().toLocaleString('es-PE', { timeZone: 'America/Lima' });
+
+            // Diagnóstico automático basado en el nombre del step
+            let autofix = '';
+            if (failedSteps.includes('Run linter') || failedSteps.includes('lint')) {
+              autofix = '**Sugerencia:** Corre `npm run lint` localmente y corrige los errores de ESLint antes del próximo push.';
+            } else if (failedSteps.includes('Type check') || failedSteps.includes('typecheck')) {
+              autofix = '**Sugerencia:** Corre `npx tsc --noEmit` localmente. Probablemente un tipo incorrecto en los últimos cambios.';
+            } else if (failedSteps.includes('Run tests') || failedSteps.includes('test')) {
+              autofix = '**Sugerencia:** Corre `npm run test:ci` localmente. Revisa si algún mock o snapshot quedó desactualizado.';
+            } else if (failedSteps.includes('Build')) {
+              autofix = '**Sugerencia:** Corre `npm run build` localmente. Puede ser una env var faltante o un error de compilación de Next.js.';
+            } else {
+              autofix = '**Sugerencia:** Revisa los logs del run para identificar el paso exacto que falló.';
+            }
+
+            const escalation = consecFails >= 2
+              ? `\n\n⚠️ **ATENCIÓN:** Este es el fallo #${consecFails} consecutivo. El CI lleva ${consecFails} runs fallidos seguidos en \`main\`. Prioridad alta.`
+              : '';
+
+            const title = '🔴 CI falló en main';
+            const body = [
+              `**Detectado:** ${now} hora Lima`,
+              `**Último commit:** ${commit}`,
+              `**Jobs fallidos:** ${failedJobs || 'desconocido'}`,
+              '',
+              '### Pasos que fallaron',
+              failedSteps || '(ver logs del run)',
+              '',
+              '### Diagnóstico automático',
+              autofix,
+              escalation,
+              '',
+              `**Ver run completo:** ${runUrl}`,
+              '',
+              '---',
+              '_Generado automáticamente por el workflow `ci-monitor.yml`_',
+            ].join('\n');
+
+            // Buscar issue abierto existente con el label ci-failure
+            const existing = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'open',
+              labels: 'ci-failure',
+            });
+
+            if (existing.data.length > 0) {
+              // Agregar comment al issue existente
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: existing.data[0].number,
+                body,
+              });
+              console.log(`Comentario añadido al issue #${existing.data[0].number}`);
+            } else {
+              // Crear nuevo issue
+              await github.rest.issues.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title,
+                body,
+                labels: ['ci-failure'],
+              });
+              console.log('Issue de CI creado.');
+            }
+
+      - name: Cerrar issue si CI está verde
+        if: steps.ci-status.outputs.conclusion == 'success'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            // Si el CI ahora está verde, cerrar el issue de ci-failure si existe
+            const existing = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'open',
+              labels: 'ci-failure',
+            });
+
+            const now = new Date().toLocaleString('es-PE', { timeZone: 'America/Lima' });
+
+            for (const issue of existing.data) {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issue.number,
+                body: `✅ **CI restaurado** — ${now} hora Lima. El último run en \`main\` finalizó con éxito. Cerrando issue.`,
+              });
+              await github.rest.issues.update({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issue.number,
+                state: 'closed',
+              });
+            }
+
+      - name: Resumen del estado
+        run: |
+          echo "=== CI Monitor ==="
+          echo "Conclusión del último CI run: ${{ steps.ci-status.outputs.conclusion }}"
+          echo "Commit: ${{ steps.ci-status.outputs.commit }}"
+          echo "Fallos consecutivos: ${{ steps.ci-status.outputs.consecutive_fails }}"
+          echo "URL del run: ${{ steps.ci-status.outputs.run_url }}"

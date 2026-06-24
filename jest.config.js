@@ -18,8 +18,13 @@ const customJestConfig = {
     '!src/**/__tests__/**',
   ],
   coveragePathIgnorePatterns: ['/node_modules/', '/.next/', '/dist/'],
+  // framer-motion v11 ships conditional ESM exports; jest needs to transform it
+  transformIgnorePatterns: [
+    '/node_modules/(?!(framer-motion)/)',
+    '^.+\\.module\\.(css|sass|scss)$',
+  ],
   transform: {
-    '^.+\\.(ts|tsx)$': ['@swc/jest'],
+    '^.+\\.(ts|tsx|js|mjs)$': ['@swc/jest'],
   },
 }
 
