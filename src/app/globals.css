@@ -80,20 +80,3 @@
   }
 }
 
-/* Oculta el cursor nativo cuando hay puntero fino (lo reemplaza CustomCursor).
-   En touch o reduced-motion el cursor nativo permanece intacto. */
-@media (pointer: fine) {
-  @media (prefers-reduced-motion: no-preference) {
-    body {
-      cursor: none;
-    }
-    a,
-    button,
-    [role="button"],
-    input,
-    select,
-    textarea {
-      cursor: none;
-    }
-  }
-}
