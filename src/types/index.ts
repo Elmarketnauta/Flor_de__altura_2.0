@@ -161,10 +161,15 @@ export type UserRole = "customer" | "admin";
 export interface User {
   id: string;
   email: string;
+  firstName?: string;
+  lastName?: string;
   fullName?: string;
+  dni?: string;
+  address?: string;
   phone?: string;
   country: string;
   role: UserRole;
+  emailVerified: boolean;
   createdAt: string;
   updatedAt: string;
 }
