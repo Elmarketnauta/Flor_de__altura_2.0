@@ -8,7 +8,7 @@ export const CLUB_TIERS: ClubTierConfig[] = [
   {
     id: "explorador",
     name: "Explorador",
-    tagline: "Tu primer paso al café de altura",
+    tagline: "Descubre el café de especialidad",
     priceMonthly: 55,
     weightGrams: 250,
     bags: 1,
@@ -25,7 +25,7 @@ export const CLUB_TIERS: ClubTierConfig[] = [
   {
     id: "cumbre",
     name: "Cumbre",
-    tagline: "Para el entendido que quiere más",
+    tagline: "Para el paladar que busca más complejidad",
     priceMonthly: 95,
     weightGrams: 500,
     bags: 1,
@@ -42,8 +42,8 @@ export const CLUB_TIERS: ClubTierConfig[] = [
   },
   {
     id: "cumbre-plus",
-    name: "Cumbre Plus",
-    tagline: "La experiencia completa del café de altura",
+    name: "Aventurero",
+    tagline: "La cima del café de especialidad peruano",
     priceMonthly: 165,
     weightGrams: 500,
     bags: 2,

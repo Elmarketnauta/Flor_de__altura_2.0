@@ -46,7 +46,7 @@ const LOYALTY_INTEGRATION = [
     extra: "10% descuento en catálogo",
   },
   {
-    tier: "Cumbre Plus",
+    tier: "Aventurero",
     loyaltyBonus: "500 pts bienvenida",
     multiplier: "2.0×",
     extra: "20% descuento + cupping virtual",
@@ -72,7 +72,7 @@ const FAQS = [
   },
   {
     q: "¿Puedo elegir el café que recibo?",
-    a: "Los niveles Explorador y Cumbre reciben la selección curatorial del mes. Cumbre Plus recibe dos orígenes distintos y puede indicar preferencias de perfil (floral, dulce, intenso).",
+    a: "Los niveles Explorador y Cumbre reciben la selección curatorial del mes. Aventurero recibe dos orígenes distintos y puede indicar preferencias de perfil (floral, dulce, intenso).",
   },
 ];
 
@@ -175,9 +175,10 @@ export default function ClubPage() {
             transition={{ delay: 0.2 }}
             className="mt-6 text-lg text-espresso-200 max-w-2xl mx-auto"
           >
-            Descubre un microlote diferente cada ciclo. Cafés cultivados entre
-            1.700 y 1.950 msnm, con nota de cata, historia del productor y
-            puntos de fidelidad que se acumulan automáticamente.
+            Descubre un microlote diferente cada ciclo. Cafés de especialidad
+            cultivados entre 1.700 y 2.300 msnm, clasificados por puntaje SCA,
+            con nota de cata, historia del productor y puntos de fidelidad que
+            se acumulan automáticamente.
           </motion.p>
 
           <motion.div
@@ -186,7 +187,7 @@ export default function ClubPage() {
             transition={{ delay: 0.3 }}
             className="mt-8 flex flex-wrap justify-center gap-4 text-sm"
           >
-            {["Sin permanencia", "Pausa cuando quieras", "Puntos x2 en Cumbre Plus"].map((perk) => (
+            {["Sin permanencia", "Pausa cuando quieras", "Puntos x2 en Aventurero"].map((perk) => (
               <div key={perk} className="flex items-center gap-1.5 text-espresso-200">
                 <Check className="h-4 w-4 text-gold" />
                 {perk}
@@ -233,7 +234,7 @@ export default function ClubPage() {
               {
                 icon: Star,
                 title: "Elige tu plan",
-                desc: "Selecciona entre Explorador, Cumbre o Cumbre Plus según tu consumo y curiosidad.",
+                desc: "Selecciona entre Explorador (SCA 80-83), Cumbre (SCA 84-85) o Aventurero (SCA 85+) según tu paladar y curiosidad.",
               },
               {
                 icon: Mountain,
@@ -279,7 +280,7 @@ export default function ClubPage() {
               Planes
             </p>
             <h2 className="mt-2 font-serif text-3xl text-espresso-900">
-              Elige tu nivel de altura
+              Elige tu nivel de especialidad
             </h2>
           </div>
 
@@ -343,10 +344,10 @@ export default function ClubPage() {
                     <Mountain className="h-3.5 w-3.5 text-gold" />
                     <span className="font-mono text-xs uppercase tracking-widest text-gold-dark">
                       {tier.id === "explorador"
-                        ? "1.700 msnm"
+                        ? "SCA 80 – 83 pts"
                         : tier.id === "cumbre"
-                        ? "1.850 msnm"
-                        : "1.950 msnm"}
+                        ? "SCA 84 – 85 pts"
+                        : "SCA 85+ pts"}
                     </span>
                   </div>
 
@@ -586,7 +587,7 @@ export default function ClubPage() {
               <div className="flex items-center gap-2 rounded-full bg-gold/20 px-4 py-2">
                 <Mountain className="h-4 w-4 text-gold" />
                 <span className="font-mono text-xs font-semibold uppercase tracking-widest text-gold">
-                  1.700 – 1.950 msnm
+                  1.700 – 2.300 msnm · SCA 80+
                 </span>
               </div>
             </div>

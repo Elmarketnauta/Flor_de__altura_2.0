@@ -121,18 +121,32 @@ export interface CartItem {
 /** Slug de categoría (coincide con los filtros de la revista). */
 export type ArticleCategory = "origen" | "metodos" | "sostenibilidad";
 
+export interface ArticleSection {
+  type: "paragraph" | "heading" | "pullquote" | "callout" | "tasting-card" | "data-table" | "timeline";
+  text?: string;
+  items?: string[];
+  rows?: { label: string; value: string }[];
+  events?: { year: string; fact: string }[];
+  label?: string;
+}
+
 export interface Article {
   id: string;
   category: ArticleCategory;
   title: string;
+  subtitle?: string;
   excerpt: string;
   image: string;
+  heroImage?: string;
   /** Fecha en formato visible (ej. "18 de Junio, 2026"). */
   date: string;
   /** Tiempo de lectura legible (ej. "5 min"). */
   readTime: string;
-  /** Cuerpo del artículo en párrafos. */
+  author?: { name: string; role: string };
+  /** Cuerpo del artículo en párrafos (legado). */
   content: string[];
+  /** Cuerpo editorial enriquecido. */
+  sections?: ArticleSection[];
 }
 
 /** Opción de filtro de la revista, incluido "Todos". */

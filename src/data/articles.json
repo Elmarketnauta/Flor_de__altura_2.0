@@ -2,29 +2,434 @@
   {
     "id": "geysha-origen",
     "title": "Café Geisha Peruano: De los Bosques de Etiopía a los Andes de Chanchamayo",
+    "subtitle": "La variedad más cotizada del mundo encuentra su expresión más alta en los microclimas de Perené",
     "category": "origen",
     "date": "18 de Junio, 2026",
-    "readTime": "5 min",
+    "readTime": "12 min",
     "excerpt": "Descubre el fascinante viaje de la variedad de café más cotizada del mundo y cómo el microclima andino de Perené, Chanchamayo, la convirtió en el mejor café Geisha del Perú.",
     "image": "/brand/logo.png",
+    "heroImage": "/brand/logo.png",
+    "author": {
+      "name": "Flor de Altura",
+      "role": "Especialistas SCA en Café de Origen Peruano"
+    },
     "content": [
-      "La variedad Geisha es considerada el champagne del café de especialidad mundial. Originaria del bosque de Gesha en Etiopía, fue redescubierta en Boquete, Panamá, en 2004 — cuando un lote de Hacienda La Esmeralda revolucionó el mercado internacional alcanzando precios récord. Desde entonces, su cultivo se ha expandido a las zonas de altura más selectas de Sudamérica, y el Perú — con sus microclimas únicos de la Selva Central entre 1.800 y 1.950 msnm — se ha posicionado como uno de los orígenes más prometedores para esta variedad excepcional.",
-      "El Geisha peruano de Flor de Altura se caracteriza por un perfil de taza de alta complejidad aromática: jazmín, bergamota, cítricos brillantes y un retrogusto floral largo que lo distingue radicalmente de cualquier café comercial. Su cultivo en la Finca Bella Vista de Perené, Chanchamayo, es delicado por diseño: sombra regulada con árboles nativos, poda sistemática y un protocolo de fermentación honey de 36 horas que potencia el dulzor floral sin enmascarar la acidez característica de la variedad.",
-      "Al tomar una taza del Geisha de Altura de Flor de Altura, no solo experimentas las notas aromáticas más complejas del café de especialidad peruano, sino que apoyas directamente a Roberto Pariona, catador Q-Grader certificado y productor de la única finca en Perené con Geisha sobre los 1.900 msnm. Una producción anual limitada a 200 kg que convierte cada bolsa en un microlote trazable de excepcional rareza."
+      "La variedad Geisha es considerada el champagne del café de especialidad mundial."
+    ],
+    "sections": [
+      {
+        "type": "paragraph",
+        "text": "Hay variedades de café que definen épocas. El Bourbon transformó Latinoamérica en el siglo XIX. El Typica construyó la identidad sensorial del café peruano durante cien años. Pero ninguna ha sacudido el mundo del café de especialidad con la fuerza del Geisha — una variedad que pasó décadas ignorada en un banco de germoplasma en Costa Rica antes de convertirse, en una sola subasta de 2004, en el café más caro del planeta."
+      },
+      {
+        "type": "paragraph",
+        "text": "En Flor de Altura cultivamos Geisha en la Finca Bella Vista, Perené, Chanchamayo, a 1.900 msnm. Lo que tienes en tu taza no es un accidente genético ni una moda de barista: es el resultado de cuatro décadas de historia, de tres continentes, de un Q-Grader que apostó todo por llevar esta variedad a la cima de los Andes peruanos."
+      },
+      {
+        "type": "heading",
+        "text": "I. Etiopía: El Bosque Original"
+      },
+      {
+        "type": "paragraph",
+        "text": "El nombre lo revela todo: Geisha no es un término japonés sino la deformación fonética de Gesha, una localidad montañosa en la provincia de Kaffa, en el suroeste de Etiopía, a unos 1.800 msnm. Allí, en el bosque húmedo de niebla que cubre las laderas del Gran Valle del Rift, crecen silvestres decenas de linajes de Coffea arabica que la humanidad apenas ha comenzado a catalogar."
+      },
+      {
+        "type": "paragraph",
+        "text": "El Geisha silvestre de Kaffa es un árbol de porte alto, hojas alargadas y bronceadas, sensible a las enfermedades del café pero dotado de una arquitectura aromática incomparable: el microclima húmedo, la sombra densa del dosel forestal y la altitud producen una concentración de linalool y acetato de linalilo —los mismos terpenos del jazmín— que ningún otro cultivar de arábica ha logrado igualar de manera consistente."
+      },
+      {
+        "type": "pullquote",
+        "text": "El Geisha silvestre de Kaffa lleva en su ADN la huella de un bosque de niebla. Cuando lo cultivamos en la altura andina, ese código genético encuentra un nuevo lenguaje, igualmente antiguo."
+      },
+      {
+        "type": "timeline",
+        "label": "El viaje del Geisha a través del tiempo",
+        "events": [
+          { "year": "1931", "fact": "Primeras recolecciones botánicas documentadas de Coffea arabica var. Gesha en la provincia de Kaffa, Etiopía, por el explorador inglés Richard Whalley." },
+          { "year": "1936", "fact": "El Centro de Investigación Jimma (Etiopía) registra el Gesha en su colección de germoplasma. La variedad se nota por su resistencia excepcional a la roya Hemileia vastatrix." },
+          { "year": "1953", "fact": "CATIE (Costa Rica) recibe semillas de la colección etíope para estudios de resistencia. El acceso T2722 es catalogado como 'Geisha' — transliteración del nombre Gesha en el contexto costarricense." },
+          { "year": "1963", "fact": "Distribución del material genético a productores de Panamá y otros países de Centroamérica como variedad candidata por su resistencia a la roya. Por décadas se descarta por baja producción." },
+          { "year": "2004", "fact": "Price Peterson, dueño de Hacienda La Esmeralda en Boquete, Panamá, separa por primera vez el lote Geisha del resto de su finca y lo envía a la subasta Best of Panama. El café alcanza USD 21/libra — el precio más alto registrado hasta ese momento — y desencadena la revolución del café de especialidad moderno." },
+          { "year": "2007–2019", "fact": "Expansión del Geisha a Colombia, Costa Rica, Guatemala y los primeros ensayos en la Selva Central del Perú. Los precios en subasta continúan batiendo récords: en 2019, Hacienda La Esmeralda alcanza USD 1,029/libra en la modalidad Geisha Natural." },
+          { "year": "2021", "fact": "Roberto Pariona, Q-Grader certificado y productor de la Finca Bella Vista en Perené, Chanchamayo, establece el primer bloque productivo de Geisha sobre los 1.900 msnm en el Perú. Alianza con Flor de Altura para el procesado y comercialización." },
+          { "year": "2024", "fact": "El Geisha de Flor de Altura obtiene puntaje SCA 87.2 en catación independiente realizada en Lima. Primera cosecha comercializable: 180 kg de café verde procesado en honey." }
+        ]
+      },
+      {
+        "type": "heading",
+        "text": "II. Panamá, 2004: El Momento que Cambió Todo"
+      },
+      {
+        "type": "paragraph",
+        "text": "Price Peterson heredó la Hacienda La Esmeralda de su padre con el Geisha plantado en un bloque aislado de las laderas altas del volcán Barú, a unos 1.600 msnm. Los anteriores propietarios lo habían conservado sin intención comercial — apenas como sombra para parcelas de Catuai. Peterson intuía que algo distinto ocurría en ese lote cuando cataba el café junto a su madre: había una limpieza, una floridad, una acidez de cítrico de sangre que ningún otro café de la finca producía."
+      },
+      {
+        "type": "paragraph",
+        "text": "En la subasta Best of Panama 2004, el lote Geisha de La Esmeralda fue presentado sin nombre de variedad, solo identificado por su sector. Los catadores de todo el mundo — representantes de Starbucks, Illy, las principales tostadoras especializadas de Japón y Europa — comenzaron a anotar descriptores que nunca habían usado para un café: perfume de jazmín, bergamota fresca, rambután, melocotón blanco, té de azahar. La puntuación fue 95 puntos SCA. El precio: USD 21 por libra, cuando el promedio de mercado era USD 1.20."
+      },
+      {
+        "type": "callout",
+        "label": "¿Qué es el puntaje SCA?",
+        "text": "La Specialty Coffee Association (SCA) evalúa los cafés en una escala de 0 a 100 puntos a través de 10 atributos: fragancia/aroma, sabor, retrogusto, acidez, cuerpo, balance, uniformidad, taza limpia, dulzor y calidad general. Un café requiere 80+ puntos para ser considerado 'de especialidad'. Los puntajes 85+ indican excelencia, y 90+ son considerados 'extraordinarios'. El Geisha de Flor de Altura puntúa consistentemente entre 86 y 88 puntos en cataciones independientes."
+      },
+      {
+        "type": "heading",
+        "text": "III. La Genética Detrás del Sabor"
+      },
+      {
+        "type": "paragraph",
+        "text": "¿Por qué el Geisha sabe como sabe? La respuesta está en su genética. Estudios de secuenciación publicados por el World Coffee Research (2021) confirmaron que el Geisha pertenece al grupo genético etíope más distante del Typica/Bourbon, el linaje que domina el 90% del café cultivado en el mundo. Es, en términos botánicos, un primo lejano —casi un café silvestre domesticado— que conserva una expresión terpénica que los cultivares modernos perdieron en décadas de selección por productividad."
+      },
+      {
+        "type": "paragraph",
+        "text": "Los compuestos aromáticos que hacen único al Geisha son principalmente el linalool (floral-jazmín), el geraniol (rosas, cítrico), el β-ocimeno (hierba fresca) y diversas lactonas y ésteres de fruta tropical. Estos volátiles se forman durante la maduración del fruto en condiciones de baja temperatura nocturna — exactamente las que ofrece la altitud. A 1.900 msnm en Perené, las noches descienden a 10-13 °C: un estrés térmico suave que ralentiza la maduración y concentra azúcares, ácidos orgánicos y precursores aromáticos en el grano de manera imposible en altitudes menores."
+      },
+      {
+        "type": "tasting-card",
+        "label": "Perfil de Taza — Geisha Finca Bella Vista",
+        "rows": [
+          { "label": "Fragancia (seco)", "value": "Jazmín, bergamota, flor de cítrico" },
+          { "label": "Aroma (húmedo)", "value": "Azahar, té blanco, nectarín" },
+          { "label": "Sabor principal", "value": "Bergamota, melocotón blanco, uva moscatel" },
+          { "label": "Acidez", "value": "Brillante, málica, limón de pisco" },
+          { "label": "Cuerpo", "value": "Ligero-sedoso, té de altura" },
+          { "label": "Dulzor", "value": "Alto, azúcar de caña, miel de flor" },
+          { "label": "Retrogusto", "value": "Floral largo (35-45 segundos), bergamota" },
+          { "label": "Puntaje SCA", "value": "87.2 puntos (catación independiente 2024)" },
+          { "label": "Proceso", "value": "Honey 36 horas" },
+          { "label": "Altitud", "value": "1.900 – 1.950 msnm" },
+          { "label": "Cosecha", "value": "Junio – Agosto (pico julio)" }
+        ]
+      },
+      {
+        "type": "heading",
+        "text": "IV. Chanchamayo: Por Qué Este Lugar"
+      },
+      {
+        "type": "paragraph",
+        "text": "La Selva Central del Perú — Junín, Chanchamayo, Satipo — es uno de los secretos mejor guardados del café de especialidad mundial. Mientras Colombia, Guatemala y Etiopía concentran la atención del mercado global, las fincas de Pichanaqui y Perené producen silenciosamente algunos de los cafés de mayor puntaje SCA de Sudamérica, en condiciones edafoclimáticas que bordean lo ideal para el Geisha."
+      },
+      {
+        "type": "paragraph",
+        "text": "Perené, en particular, reúne tres condicionantes que el Geisha necesita: altitud sobre los 1.800 msnm en las laderas orientales de la Cordillera Central, suelos franco-arcillosos ricos en materia orgánica derivados de ceniza volcánica antigua y un régimen de lluvias bimodal — dos estaciones secas cortas (mayo-junio y agosto-septiembre) — que permiten concentrar la maduración del fruto en dos ventanas óptimas. La humedad relativa del bosque de niebla, que oscila entre 75% y 90%, protege al Geisha de los cambios bruscos de temperatura que marchitan su delicada floridad."
+      },
+      {
+        "type": "callout",
+        "label": "Microclima de la Finca Bella Vista",
+        "text": "Ubicada en las laderas del valle del río Perené a 1.900 – 1.950 msnm, la Finca Bella Vista experimenta una temperatura media de 17°C, mínimas nocturnas de 10-12°C en julio y un bosque de sombra compuesto por guabo (Inga edulis), pacae (Inga feuilleei) y árboles del género Erythrina. El Geisha representa el 8% de la superficie productiva de la finca — unos 0.5 hectáreas — con una densidad de 1.800 plantas por hectárea en curvas de nivel."
+      },
+      {
+        "type": "heading",
+        "text": "V. Roberto Pariona: El Q-Grader que Apostó por el Geisha"
+      },
+      {
+        "type": "paragraph",
+        "text": "Roberto Pariona nació en Satipo y creció entre cafetales de Catuai Rojo y Catimor. Estudió agronomía en la Universidad Nacional del Centro del Perú y obtuvo la certificación Q-Grader de la Coffee Quality Institute (CQI) en 2016 — uno de los menos de 30 Q-Graders certificados activos en el Perú. Esa certificación no solo le da acceso al lenguaje técnico del café de especialidad; le enseñó a leer un café como un sistema: suelo, genética, altitud, proceso y tostado como variables interconectadas, no como accidentes separados."
+      },
+      {
+        "type": "paragraph",
+        "text": "En 2018, Pariona compró sus primeras plantas madre de Geisha — material genético trazado hasta el acceso T2722 de CATIE — a través de un programa de transferencia tecnológica del INIA (Instituto Nacional de Innovación Agraria). Plantó las primeras 900 plantas en la parcela más alta de Bella Vista, a 1.920 msnm, bajo sombra de guabo. Tres años después, la primera cosecha experimental alcanzó 86 puntos SCA en catación. 'Fue la confirmación de que el microclima de Perené puede hacer algo que pocas zonas del mundo pueden hacer con el Geisha', dice."
+      },
+      {
+        "type": "pullquote",
+        "text": "\"El Geisha en Perené no imita al de Panamá. Tiene su propia voz: la altitud andina le da una acidez más estructurada, más mineral. Es el mismo árbol, pero habla quechua.\" — Roberto Pariona, Q-Grader, Finca Bella Vista"
+      },
+      {
+        "type": "heading",
+        "text": "VI. El Proceso Honey: Decisión Técnica, No Moda"
+      },
+      {
+        "type": "paragraph",
+        "text": "El proceso de beneficio del Geisha de Flor de Altura es honey de 36 horas — una decisión técnica que tomamos junto a Roberto Pariona después de tres cosechas de prueba en lavado y natural. El proceso honey consiste en retirar la pulpa del fruto cereza pero conservar parte del mucílago (la capa gelatinosa azucarada que rodea el pergamino) y secar el grano con esa capa adherida, al sol, sobre camas africanas elevadas."
+      },
+      {
+        "type": "paragraph",
+        "text": "Para el Geisha, el honey de 36 horas resuelve una tensión inherente a la variedad: en proceso lavado puro, la acidez brillante del Geisha puede resultar excesivamente punzante y perder el dulzor floral a altitudes muy altas. En proceso natural completo, el fruto fermenta demasiado y los ésteres de fruta fermentada enmascaran la floridad característica. El honey de 36 horas actúa como un puente: conserva la acidez brillante pero añade una capa de dulzor de miel y fruta amarilla que equilibra el perfil sin distorsionarlo."
+      },
+      {
+        "type": "data-table",
+        "label": "Comparativa de procesos para Geisha en altura",
+        "rows": [
+          { "label": "Lavado completo", "value": "Acidez brillante + floridad pura · Riesgo: exceso de acidez mineral en altitudes >1.800 msnm" },
+          { "label": "Honey 24 h", "value": "Equilibrio acidez-dulzor · Menor concentración de azúcares del mucílago" },
+          { "label": "Honey 36 h ✓", "value": "Óptimo para Geisha Bella Vista: acidez estructurada + dulzor de miel + floridad compleja" },
+          { "label": "Honey 48 h", "value": "Riesgo de fermentación no deseada en clima húmedo de Perené" },
+          { "label": "Natural completo", "value": "Alta intensidad frutal · Enmascara floridad del Geisha en este microclima" }
+        ]
+      },
+      {
+        "type": "heading",
+        "text": "VII. Cómo Preparar el Geisha en Casa"
+      },
+      {
+        "type": "paragraph",
+        "text": "El Geisha es un café que recompensa la atención. No es exigente en equipamiento — funciona bien en una V60, una Chemex, una Aeropress o incluso una prensa francesa — pero sí demanda control de temperatura y molienda. El error más común es tratarlo como un espresso: a 9 bares de presión y 93°C, el Geisha sobre-extrae y entrega amarguras que borran su firma floral. Su verdadero potencial está en los métodos de filtro."
+      },
+      {
+        "type": "callout",
+        "label": "Receta recomendada: V60 para Geisha Bella Vista",
+        "text": "Dosis: 15g de café · Agua: 250ml · Temperatura: 89-91°C · Molienda: media-fina (escala 20/40 en Comandante) · Tiempo total: 2:45 – 3:10 min · Preinfusión: 30ml por 45 segundos · Vertido en espiral desde el centro hacia afuera · Ratio 1:16.7. Resultado esperado: taza translúcida, aromática en fríο, acidez de cítrico rosado, retrogusto floral largo."
+      },
+      {
+        "type": "paragraph",
+        "text": "Una nota sobre la temperatura: a 89-91°C el Geisha honey de Perené expresa mejor su perfil que a las temperaturas más altas (93-96°C) recomendadas para cafés de tueste medio oscuro. La razón: los ésteres florales y los ácidos orgánicos del Geisha son más solubles a temperaturas moderadas. El agua demasiado caliente sobre-solubiliza los polifenoles y borra la floridad con astringencia. Prueba: haz la misma receta a 89°C y a 95°C. La diferencia en el retrogusto es inmediata."
+      },
+      {
+        "type": "heading",
+        "text": "VIII. Un Café de Rareza y Propósito"
+      },
+      {
+        "type": "paragraph",
+        "text": "La producción anual de Geisha en la Finca Bella Vista es de aproximadamente 200 kg de café verde procesado — el equivalente a unas 400 bolsas de 250g de café tostado. Es una producción deliberadamente pequeña: el bloque de Geisha no se expandirá a expensas del sistema agroforestal que lo hace posible. Pariona mantiene la densidad de sombra y la diversidad de especies arbóreas que crean el microclima donde el Geisha expresa su mejor versión."
+      },
+      {
+        "type": "paragraph",
+        "text": "Cada bolsa de Geisha de Flor de Altura es trazable hasta la parcela, la cosecha y el lote de proceso. El código QR en el empaque lleva a la ficha de catación independiente, la información de la finca y la historia de Roberto Pariona. No es marketing: es la arquitectura de confianza que el café de especialidad requiere para tener sentido. Pagas más porque hay menos, porque hay más trabajo, porque hay una persona específica que tomó decisiones específicas para que tu taza sea lo que es."
+      },
+      {
+        "type": "pullquote",
+        "text": "200 kg al año. 400 bolsas. Cada una, un microlote trazable. El Geisha de Perené no es un producto de escala — es un argumento de que la calidad extrema y la transparencia total son posibles en el café peruano."
+      },
+      {
+        "type": "paragraph",
+        "text": "El café Geisha de la Finca Bella Vista está disponible en el Catálogo de Flor de Altura durante los meses de julio a septiembre, en formato grano entero o molido para filtro. Fuera de temporada, los suscriptores del Club Aventurero tienen acceso prioritario a los lotes reservados. Si quieres ser el primero en recibir la próxima cosecha, activa la alerta de disponibilidad en la ficha del producto."
+      }
     ]
   },
   {
     "id": "temperatura-agua",
     "title": "Temperatura del Agua para Café de Especialidad: Guía Definitiva para Extracciones Perfectas",
+    "subtitle": "La variable más ignorada en la cadena de preparación — y la que más diferencia hace",
     "category": "metodos",
     "date": "10 de Junio, 2026",
-    "readTime": "4 min",
+    "readTime": "10 min",
     "excerpt": "El agua hirviendo destruye los aceites esenciales del café de especialidad peruano. Aprende la temperatura exacta para Catuai, Geisha y cada método de preparación.",
     "image": "/brand/logo.png",
-    "content": [
-      "Uno de los errores más comunes al preparar café de especialidad en casa es verter agua hirviendo directamente sobre la molienda. El agua a 100 °C sobre-extrae los compuestos amargos y destruye los sutiles aceites aromáticos que hacen único al café Arábica orgánico de Pichanaqui: esos matices de caramelo tostado del Catuai y el jazmín del Geisha que tanto trabajo costó cultivar a 1.700 – 1.950 msnm en la Selva Central del Perú.",
-      "Para métodos de filtrado manuales como la V60, Chemex o Prensa Francesa, la temperatura ideal oscila entre 90 °C y 94 °C. El Catuai Rojo de la Finca San Ignacio expresa mejor sus notas de caramelo y chocolate a 92 °C, mientras que el Geisha de Bella Vista revela mayor complejidad floral a 90 °C. Sin termómetro: apaga la tetera al primer hervor, destapa y espera 45 – 60 segundos antes de la preinfusión.",
-      "La temperatura correcta preserva los azúcares naturales concentrados por la altitud de la Selva Central y los aceites volátiles que el tostado en pequeños lotes de Flor de Altura trabaja para preservar. El resultado es una taza balanceada, limpia y rica en el perfil original del grano — sin los amargores que el agua excesivamente caliente imprime y que hacen indistinguible un café de especialidad peruano de cualquier café industrial."
+    "heroImage": "/brand/logo.png",
+    "author": {
+      "name": "Flor de Altura",
+      "role": "Baristas Certificados SCA · Métodos de Extracción"
+    },
+    "content": [],
+    "sections": [
+      {
+        "type": "paragraph",
+        "text": "Existe una paradoja en la cultura del café de especialidad: el consumidor invierte cientos de soles en granos de microlote trazables, en molinos de cerámica con ajuste preciso y en métodos de filtro japoneses — y luego vierte sobre todo eso agua a 100 °C recién sacada del hervor. En ese momento, una fracción significativa del trabajo del productor, del tostador y del barista se disuelve literalmente en astringencia y amargor innecesario."
+      },
+      {
+        "type": "paragraph",
+        "text": "La temperatura del agua no es un detalle técnico para entusiastas obsesivos. Es una variable de extracción tan crítica como la molienda, el ratio agua-café o el tiempo de contacto. En un café de especialidad de altitud — donde los azúcares, ácidos orgánicos y ésteres aromáticos están concentrados en el grano por meses de maduración lenta a 1.700-1.950 msnm — la temperatura determina qué compuestos disuelves y en qué orden. Controlarla es la diferencia entre una taza que te hace cerrar los ojos y una que simplemente cumple."
+      },
+      {
+        "type": "heading",
+        "text": "I. Qué Ocurre Físicamente en la Extracción"
+      },
+      {
+        "type": "paragraph",
+        "text": "El café molido es una matriz porosa de celulosa, proteínas, lípidos y miles de compuestos aromáticos en distintas formas: gases atrapados en la estructura celular (CO₂ del tueste), ácidos orgánicos solubles (clorogénico, cítrico, málico, acético), azúcares simples, cafeína, melanoidinas y ésteres volátiles. El agua caliente actúa como solvente selectivo: disuelve distintos compuestos a distintas velocidades según su temperatura."
+      },
+      {
+        "type": "paragraph",
+        "text": "Los primeros en solubilizarse son los ácidos orgánicos — los que aportan la vivacidad y la claridad — seguidos por los azúcares y los compuestos de Maillard (los que dan cuerpo, dulzor y notas de caramelo-nuez). Al final de la extracción, y especialmente a temperaturas altas, se disuelven los polifenoles y los taninos — los que generan astringencia y amargor. El modelo de Scott Rao para extracción óptima (entre 18% y 22% de rendimiento) asume que se controla este orden. El agua a 100 °C no respeta ese orden: extrae todo al mismo tiempo, a máxima velocidad, y el resultado es un taza desequilibrada donde los compuestos tardíos enmascaran a los primeros."
+      },
+      {
+        "type": "callout",
+        "label": "¿Por qué el agua a 100 °C es problemática?",
+        "text": "A 100 °C el agua tiene suficiente energía para disolver compuestos de alto peso molecular — principalmente los polifenoles y taninos que generan astringencia — a la misma velocidad que los ácidos brillantes y los azúcares. El resultado: una extracción solapada donde no hay ventana de 'dulzor limpio'. En métodos de filtro con 3-4 minutos de tiempo de contacto, bajar de 96 °C a 91 °C puede reducir el amargor residual hasta un 40% sin cambiar ninguna otra variable."
+      },
+      {
+        "type": "heading",
+        "text": "II. El Rango SCA y Por Qué Importa el Origen"
+      },
+      {
+        "type": "paragraph",
+        "text": "La Specialty Coffee Association define el rango recomendado de temperatura de extracción entre 90 °C y 96 °C para métodos de filtro. Pero ese rango de 6 grados no es intercambiable: es el espacio donde el barista toma decisiones según la variedad, el proceso, el tueste y el método. Un Robusta industrial puede extraerse a 95-96 °C y quedar aceptable porque su perfil es más plano y tolerante. Un café de especialidad arábica de altura es una estructura aromática delicada: cada grado cuenta."
+      },
+      {
+        "type": "paragraph",
+        "text": "Los cafés de la Selva Central peruana — producidos a 1.700-1.950 msnm en suelos andino-amazónicos volcánicos — tienen características que influyen directamente en la temperatura ideal de extracción. La altitud ralentiza la maduración del fruto, concentrando los azúcares y los ácidos orgánicos en el grano. El resultado es una densidad física mayor (los granos flotan menos en el agua) y una solubilidad ligeramente más alta que cafés de menor altitud. Esto significa que responden más rápido al calor: una temperatura excesiva los sobre-extrae con mayor facilidad."
+      },
+      {
+        "type": "tasting-card",
+        "label": "Temperatura óptima por variedad — Cafés Flor de Altura",
+        "rows": [
+          { "label": "Catuai Rojo (Finca San Ignacio)", "value": "91 – 93 °C · Tueste medio · Notas de caramelo, chocolate andino, fruta roja" },
+          { "label": "Geisha (Finca Bella Vista)", "value": "89 – 91 °C · Tueste claro-medio · Notas florales, bergamota, melocotón blanco" },
+          { "label": "Typica (Finca San Ignacio)", "value": "90 – 92 °C · Tueste medio · Notas de nuez, miel, fruta seca" },
+          { "label": "Blend Casa", "value": "92 – 94 °C · Tueste medio-oscuro · Notas de caramelo, fruta oscura, retrogusto largo" },
+          { "label": "Cualquier café en espresso", "value": "90 – 94 °C · Variable según tueste · Regla: más oscuro = más frío" }
+        ]
+      },
+      {
+        "type": "pullquote",
+        "text": "El agua a 100 °C no colapsa el café — lo aplana. Borra la firma específica de la altitud, del productor, del proceso. Lo que queda podría ser cualquier café. No es lo que tú pagaste ni lo que ellos cultivaron."
+      },
+      {
+        "type": "heading",
+        "text": "III. Temperatura por Método de Extracción"
+      },
+      {
+        "type": "paragraph",
+        "text": "La temperatura óptima no es universal: varía según el método porque cada uno tiene un tiempo de contacto diferente, una turbulencia diferente y una filtración diferente. A más tiempo de contacto, más importante es bajar la temperatura para evitar la sobre-extracción en las etapas finales. A menos tiempo (como en el espresso), la temperatura puede subir un poco porque la extracción total es más corta — aunque las variables de presión y distribución dominan más."
+      },
+      {
+        "type": "data-table",
+        "label": "Referencia de temperatura por método — Cafés de especialidad arábica de altura",
+        "rows": [
+          { "label": "V60 (Hario)", "value": "90 – 92 °C · Tiempo 2:30-3:15 min · Ratio 1:15-1:17 · Molienda media-fina" },
+          { "label": "Chemex", "value": "91 – 93 °C · Tiempo 3:30-4:30 min · Ratio 1:15-1:17 · Molienda media ✓" },
+          { "label": "Aeropress (método estándar)", "value": "85 – 88 °C · Tiempo 1:30-2:00 min · Permite temperatura más baja por presión" },
+          { "label": "Prensa Francesa", "value": "93 – 95 °C · Tiempo 4:00 min · Mayor ratio de sólidos, temperatura más alta compensa" },
+          { "label": "Moka / Bialetti", "value": "No controlable directamente · Agua fría en la base + fuego medio-bajo = ~93-95 °C ideal" },
+          { "label": "Espresso (máquina)", "value": "90 – 93 °C · Ajuste en PID si disponible · Más oscuro = 90-91 °C / Más claro = 92-93 °C" },
+          { "label": "Cold Brew", "value": "Agua fría o temperatura ambiente · 12-24 h · Extracción diferente — temperatura es irrelevante" }
+        ]
+      },
+      {
+        "type": "heading",
+        "text": "IV. La Química del Agua: TDS, Dureza y Minerales"
+      },
+      {
+        "type": "paragraph",
+        "text": "La temperatura no actúa sola: actúa sobre el agua, y el agua no es H₂O pura. El TDS (Total Dissolved Solids — sólidos disueltos totales) del agua determina su capacidad de extracción. Un agua muy blanda (TDS < 50 ppm) extrae menos eficientemente y produce tazas planas. Un agua muy dura (TDS > 300 ppm) extrae en exceso, produce amargor y forma incrustaciones en el equipo. El rango ideal para café de especialidad según la SCA es de 75 a 250 ppm, con preferencia por 125-175 ppm."
+      },
+      {
+        "type": "paragraph",
+        "text": "Pero no solo importa la cantidad de minerales sino cuáles. El magnesio (Mg²⁺) es especialmente eficiente para extraer compuestos aromáticos — más que el calcio. Los bicarbonatos (HCO₃⁻) actúan como tampón alcalino: en concentraciones altas, neutralizan los ácidos del café y aplanan su perfil. El agua de Lima, por ejemplo, es moderadamente dura con altos bicarbonatos — lo que explica por qué el café preparado allí puede resultar más plano y menos ácido que en una preparación con agua de osmosis parcial o filtrada específicamente."
+      },
+      {
+        "type": "callout",
+        "label": "Prueba rápida: ¿tu agua es adecuada para café de especialidad?",
+        "text": "Compra tiras de medición de TDS (GH/KH para acuaristas) o usa un medidor TDS económico (~S/. 20-35 en tiendas online). Si tu agua supera los 250 ppm, considera mezclarla al 50% con agua filtrada o destilada. Si está por debajo de 50 ppm (agua de osmosis pura), añade una pizca pequeña de sal marina sin yodo y bicarbonato de sodio para dar estructura mineral. El agua de botella tipo San Luis estándar tiene ~180 ppm — funciona bien. El agua San Mateo mineral tiene ~520 ppm — demasiado dura para café de especialidad."
+      },
+      {
+        "type": "heading",
+        "text": "V. Cómo Medir y Controlar la Temperatura sin Equipamiento Caro"
+      },
+      {
+        "type": "paragraph",
+        "text": "La manera ideal es una tetera de cuello de ganso con termómetro integrado o un termómetro de cocina de sonda rápida. Pero no es indispensable. La física del enfriamiento del agua tiene reglas simples que puedes usar como referencia:"
+      },
+      {
+        "type": "data-table",
+        "label": "Guía de enfriamiento sin termómetro — Agua a 100 °C en tetera destapada",
+        "rows": [
+          { "label": "0 segundos (hervor)", "value": "100 °C · Burbujas grandes, vapor intenso — nunca usar directamente" },
+          { "label": "30 segundos", "value": "~97 °C · Aún demasiado caliente para Geisha y cafés claros" },
+          { "label": "45 segundos", "value": "~95 °C · Útil para Prensa Francesa con blend o cafés de tueste oscuro ✓" },
+          { "label": "60 segundos", "value": "~93 °C · Rango Chemex, Catuai tueste medio ✓" },
+          { "label": "75 segundos", "value": "~91 °C · Rango V60 para Catuai, Typica, blends claros ✓" },
+          { "label": "90 segundos", "value": "~89 °C · Rango ideal Geisha y cafés de altitud muy alta, proceso honey ✓" },
+          { "label": "2 minutos", "value": "~87 °C · Útil para Aeropress con café muy claro y aromático" }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "text": "Nota: estos tiempos asumen una tetera de metal estándar de 1 litro en ambiente a ~18-22 °C y destapada. En Lima (clima cálido, ~24 °C en verano), el enfriamiento es 10-15% más lento. En ciudades de altura como Cusco o Huaraz, el punto de ebullición es más bajo (~94-96 °C a 3.400-3.500 msnm) — el agua nunca llega a 100 °C, lo que en la práctica es una ventaja para la extracción de cafés delicados."
+      },
+      {
+        "type": "heading",
+        "text": "VI. La Preinfusión: Por Qué Es Tan Importante como la Temperatura"
+      },
+      {
+        "type": "paragraph",
+        "text": "La preinfusión (o bloom en inglés) es el paso en que se vierte una pequeña cantidad de agua sobre el café molido — generalmente el doble del peso del café — y se espera 30-45 segundos antes de continuar el vertido. Durante este tiempo, el CO₂ liberado por el tueste escapa del grano (se puede ver el café 'hincharse' y las burbujas de gas salir). Este desgasificado es crítico: si el CO₂ no escapa antes de la extracción principal, forma una barrera que impide que el agua disuelva uniformemente los compuestos aromáticos y produce una extracción irregular."
+      },
+      {
+        "type": "paragraph",
+        "text": "Cafés de tueste reciente (menos de 2 semanas desde la fecha de tueste) degasan más intensamente — necesitan entre 40 y 60 segundos de bloom. Cafés más 'reposados' (3-6 semanas post-tueste) degasan menos y pueden funcionar con 30 segundos. El Geisha de Flor de Altura, por su tueste claro y alta densidad por la altitud, desgasa durante más tiempo que un café de tueste oscuro: usa siempre 45 segundos mínimo de preinfusión."
+      },
+      {
+        "type": "callout",
+        "label": "¿Cuándo preparar el café post-tueste? La ventana óptima",
+        "text": "Los primeros 3 días post-tueste: el café tiene tanto CO₂ que la extracción es difícil de controlar — la taza puede resultar agria o desequilibrada. 7-21 días: ventana ideal para filtro. Los ácidos frutales están brillantes, los ésteres florales del Geisha en plenitud. 21-42 días: ventana ideal para espresso — el desgasificado avanzado da más consistencia. Después de 60 días (en bolsa con válvula): el café empieza a perder los volátiles más delicados. Nunca guardes café molido más de 2 semanas: el área de superficie es 20 veces mayor que en grano y la oxidación es mucho más rápida."
+      },
+      {
+        "type": "heading",
+        "text": "VII. Recetas por Café Flor de Altura"
+      },
+      {
+        "type": "paragraph",
+        "text": "Estas recetas están calibradas específicamente para los cafés de la Selva Central peruana: altitud 1.700-1.950 msnm, tueste claro a medio en lotes pequeños (< 12 kg), procesados en honey o lavado. Son puntos de partida recomendados — ajusta el ratio y la molienda según tu paladar y equipo."
+      },
+      {
+        "type": "tasting-card",
+        "label": "Receta V60 — Catuai Rojo Finca San Ignacio",
+        "rows": [
+          { "label": "Dosis café", "value": "15 g molido medio-fino" },
+          { "label": "Agua total", "value": "240 ml" },
+          { "label": "Temperatura", "value": "92 °C (75 segundos de reposo post-hervor)" },
+          { "label": "Ratio", "value": "1:16" },
+          { "label": "Preinfusión", "value": "30 ml · 35 segundos de espera" },
+          { "label": "Vertido", "value": "3 pulsos de ~70 ml en espiral, cada 35-40 seg" },
+          { "label": "Tiempo total", "value": "2:50 – 3:20 min" },
+          { "label": "Resultado esperado", "value": "Caramelo, chocolate andino, fruta roja, cuerpo medio, final largo" }
+        ]
+      },
+      {
+        "type": "tasting-card",
+        "label": "Receta V60 — Geisha Finca Bella Vista",
+        "rows": [
+          { "label": "Dosis café", "value": "15 g molido media-fina (1 punto más fino que el Catuai)" },
+          { "label": "Agua total", "value": "250 ml" },
+          { "label": "Temperatura", "value": "90 °C (90 segundos de reposo post-hervor)" },
+          { "label": "Ratio", "value": "1:16.7" },
+          { "label": "Preinfusión", "value": "30 ml · 45 segundos de espera (mayor desgasificado)" },
+          { "label": "Vertido", "value": "2 pulsos de ~110 ml en espiral lenta, cada 45 seg" },
+          { "label": "Tiempo total", "value": "2:45 – 3:10 min" },
+          { "label": "Resultado esperado", "value": "Jazmín, bergamota, melocotón, acidez málica brillante, retrogusto floral 35+ seg" }
+        ]
+      },
+      {
+        "type": "tasting-card",
+        "label": "Receta Chemex — Blend Casa Flor de Altura",
+        "rows": [
+          { "label": "Dosis café", "value": "30 g molido medio (más grueso que V60)" },
+          { "label": "Agua total", "value": "480 ml" },
+          { "label": "Temperatura", "value": "93 °C (60 segundos de reposo post-hervor)" },
+          { "label": "Ratio", "value": "1:16" },
+          { "label": "Preinfusión", "value": "60 ml · 40 segundos de espera" },
+          { "label": "Vertido", "value": "4 pulsos de ~105 ml en espiral, pausar cuando baje el nivel" },
+          { "label": "Tiempo total", "value": "4:00 – 4:45 min" },
+          { "label": "Resultado esperado", "value": "Cuerpo sedoso, caramelo oscuro, fruta seca, taza limpia, ideal para compartir" }
+        ]
+      },
+      {
+        "type": "heading",
+        "text": "VIII. Errores Frecuentes — y Cómo Diagnosticarlos"
+      },
+      {
+        "type": "paragraph",
+        "text": "Si tu taza sabe amarga y astringente aunque usas café de especialidad: el agua está demasiado caliente, la molienda demasiado fina o el tiempo de contacto demasiado largo — cualquiera de los tres produce sobre-extracción. Prueba primero bajando la temperatura 2-3 °C antes de cambiar la molienda. Si la taza sabe ácida, agria o 'vacía': el agua está muy fría, la molienda muy gruesa o el tiempo de contacto muy corto — sub-extracción. Prueba subir la temperatura 2-3 °C o afinar la molienda un paso."
+      },
+      {
+        "type": "data-table",
+        "label": "Diagnóstico de taza — Variables de temperatura",
+        "rows": [
+          { "label": "Sabor amargo dominante", "value": "Temperatura > 96 °C ó tiempo de contacto excesivo — baja temperatura 3 °C ✓" },
+          { "label": "Astringencia al final", "value": "Sobre-extracción de taninos — temperatura alta + molienda fina + tiempo largo" },
+          { "label": "Ácido agresivo, 'verde'", "value": "Sub-extracción — temperatura muy baja o tiempo muy corto" },
+          { "label": "Taza plana, sin personalidad", "value": "Agua demasiado dura (>300 ppm) o temperatura muy baja con agua blanda" },
+          { "label": "Floridad perdida en el Geisha", "value": "Temperatura > 93 °C destruye los ésteres florales — baja a 89-91 °C ✓" },
+          { "label": "Taza inconsistente entre preparaciones", "value": "Temperatura sin control — invierte en termómetro de sonda (~S/. 30)" }
+        ]
+      },
+      {
+        "type": "pullquote",
+        "text": "Cada grado de temperatura es una decisión editorial sobre el perfil de tu taza. No existe la temperatura 'correcta' universal — existe la temperatura correcta para ese café específico, ese tueste, ese método, ese día."
+      },
+      {
+        "type": "heading",
+        "text": "IX. El Resumen Práctico"
+      },
+      {
+        "type": "paragraph",
+        "text": "Si solo puedes recordar una cosa: espera 90 segundos después del hervor antes de verter sobre un Geisha o un café de tueste claro. Espera 60 segundos para un Catuai de tueste medio. Espera 45 segundos para una Chemex con blend. Estas tres reglas cubren el 80% de los casos de usuario doméstico con tetera estándar. Con eso ya estás dentro del rango SCA y tu café de especialidad peruano podrá expresar lo que costó meses cultivar a 1.900 msnm."
+      },
+      {
+        "type": "paragraph",
+        "text": "Y si quieres profundizar: un termómetro de sonda de lectura rápida cuesta menos de S/. 35 en cualquier tienda de cocina y cambia fundamentalmente la consistencia de tus preparaciones. Una tetera de cuello de ganso con termómetro integrado (Hario, Fellow) es el siguiente paso natural si preparas café todos los días. La temperatura no es una obsesión de barista — es el respeto que le debes al trabajo del productor."
+      }
     ]
   },
   {

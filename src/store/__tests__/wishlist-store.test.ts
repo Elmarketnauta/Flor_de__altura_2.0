@@ -6,17 +6,16 @@ describe('Wishlist Store', () => {
   })
 
   it('should add product to wishlist', () => {
-    const { addToWishlist, items } = useWishlistStore.getState()
-    addToWishlist('prod-1', 'browse')
+    useWishlistStore.getState().addToWishlist('prod-1', 'browse')
+    const { items } = useWishlistStore.getState()
     expect(items.length).toBe(1)
     expect(items[0].productId).toBe('prod-1')
   })
 
   it('should not add duplicate products', () => {
-    const { addToWishlist, items } = useWishlistStore.getState()
-    addToWishlist('prod-1', 'browse')
-    addToWishlist('prod-1', 'recommendation')
-    expect(items.length).toBe(1)
+    useWishlistStore.getState().addToWishlist('prod-1', 'browse')
+    useWishlistStore.getState().addToWishlist('prod-1', 'recommendation')
+    expect(useWishlistStore.getState().items.length).toBe(1)
   })
 
   it('should check if product is favorited', () => {
@@ -27,10 +26,9 @@ describe('Wishlist Store', () => {
   })
 
   it('should remove product from wishlist', () => {
-    const { addToWishlist, removeFromWishlist, items } = useWishlistStore.getState()
-    addToWishlist('prod-1', 'browse')
-    removeFromWishlist('prod-1')
-    expect(items.length).toBe(0)
+    useWishlistStore.getState().addToWishlist('prod-1', 'browse')
+    useWishlistStore.getState().removeFromWishlist('prod-1')
+    expect(useWishlistStore.getState().items.length).toBe(0)
   })
 
   it('should return wishlist count', () => {
@@ -50,10 +48,9 @@ describe('Wishlist Store', () => {
   })
 
   it('should clear entire wishlist', () => {
-    const { addToWishlist, clearWishlist, items } = useWishlistStore.getState()
-    addToWishlist('prod-1', 'browse')
-    addToWishlist('prod-2', 'browse')
-    clearWishlist()
-    expect(items.length).toBe(0)
+    useWishlistStore.getState().addToWishlist('prod-1', 'browse')
+    useWishlistStore.getState().addToWishlist('prod-2', 'browse')
+    useWishlistStore.getState().clearWishlist()
+    expect(useWishlistStore.getState().items.length).toBe(0)
   })
 })

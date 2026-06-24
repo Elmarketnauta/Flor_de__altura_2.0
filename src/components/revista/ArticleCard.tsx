@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import Link from "next/link";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { ArrowRight } from "lucide-react";
@@ -73,12 +73,20 @@ export function ArticleCard({ article, onOpen }: ArticleCardProps) {
           <p className="mt-2 line-clamp-3 text-sm text-espresso-500">
             {article.excerpt}
           </p>
-          <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-gold-dark">
-            Leer artículo
-            <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
-          </span>
         </div>
       </button>
+
+      {/* Leer artículo → ruta propia */}
+      <div className="px-5 pb-5">
+        <Link
+          href={`/revista/${article.id}`}
+          onClick={() => trackEvent("open_article", { articleId: article.id })}
+          className="inline-flex items-center gap-1.5 text-sm font-medium text-gold-dark hover:text-espresso-900 transition"
+        >
+          Leer artículo
+          <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
+        </Link>
+      </div>
 
       {/* Glare overlay para tilt 3D */}
       <div

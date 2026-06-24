@@ -30,26 +30,25 @@ describe('Cart Store', () => {
   })
 
   it('should add an item to cart', () => {
-    const { addItem, items } = useCartStore.getState()
-    addItem(mockProduct, 'grano', 1)
+    useCartStore.getState().addItem(mockProduct, 'grano', 1)
+    const { items } = useCartStore.getState()
     expect(items.length).toBe(1)
     expect(items[0].name).toBe('Test Coffee')
   })
 
   it('should increment quantity on duplicate add', () => {
-    const { addItem, items } = useCartStore.getState()
-    addItem(mockProduct, 'grano', 1)
-    addItem(mockProduct, 'grano', 2)
+    useCartStore.getState().addItem(mockProduct, 'grano', 1)
+    useCartStore.getState().addItem(mockProduct, 'grano', 2)
+    const { items } = useCartStore.getState()
     expect(items.length).toBe(1)
     expect(items[0].quantity).toBe(3)
   })
 
   it('should remove an item from cart', () => {
-    const { addItem, removeItem, items } = useCartStore.getState()
-    addItem(mockProduct, 'grano', 1)
-    const lineId = items[0].id
-    removeItem(lineId)
-    expect(items.length).toBe(0)
+    useCartStore.getState().addItem(mockProduct, 'grano', 1)
+    const lineId = useCartStore.getState().items[0].id
+    useCartStore.getState().removeItem(lineId)
+    expect(useCartStore.getState().items.length).toBe(0)
   })
 
   it('should calculate total price correctly', () => {
@@ -73,9 +72,8 @@ describe('Cart Store', () => {
   })
 
   it('should clear cart', () => {
-    const { addItem, clearCart, items } = useCartStore.getState()
-    addItem(mockProduct, 'grano', 1)
-    clearCart()
-    expect(items.length).toBe(0)
+    useCartStore.getState().addItem(mockProduct, 'grano', 1)
+    useCartStore.getState().clearCart()
+    expect(useCartStore.getState().items.length).toBe(0)
   })
 })
