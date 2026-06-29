@@ -38,7 +38,7 @@ export function Testimonials() {
           <span className="font-mono text-sm uppercase tracking-wide text-gold-dark">
             Opiniones Reales
           </span>
-          <h2 className="mt-3 font-serif text-4xl leading-tight text-espresso-800 sm:text-5xl">
+          <h2 className="mt-3 font-serif text-3xl leading-tight text-espresso-800 sm:text-4xl lg:text-5xl">
             Lo que dicen los amantes del café de especialidad peruano
           </h2>
         </motion.div>

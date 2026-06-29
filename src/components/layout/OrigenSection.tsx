@@ -33,10 +33,10 @@ export function OrigenSection() {
       id="origen"
       className="noise-grain relative scroll-mt-20 bg-cream py-0 lg:py-0"
     >
-      <div className="container-app grid min-h-screen items-center gap-12 lg:grid-cols-2 lg:py-20">
-        {/* Imagen: fija en desktop, scrollea en móvil */}
+      <div className="container-app grid items-start gap-10 py-16 lg:min-h-screen lg:grid-cols-2 lg:items-center lg:gap-12 lg:py-20">
+        {/* Imagen: estática en móvil, sticky en desktop */}
         <motion.div
-          className="sticky top-1/2 -translate-y-1/2 lg:relative lg:top-auto lg:translate-y-0"
+          className="relative lg:sticky lg:top-1/4"
           style={
             reducedMotion
               ? undefined
@@ -59,7 +59,7 @@ export function OrigenSection() {
           <motion.div
             animate={reducedMotion ? undefined : { y: [0, 12, 0] }}
             transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute -bottom-6 -right-2 hidden h-40 w-40 overflow-hidden rounded-2xl border-4 border-cream bg-sand shadow-card sm:block"
+            className="absolute -bottom-6 -right-2 hidden h-40 w-40 overflow-hidden rounded-2xl border-4 border-cream bg-sand shadow-card lg:block"
           >
             <Image
               src="/brand/logo.png"
@@ -72,7 +72,7 @@ export function OrigenSection() {
         </motion.div>
 
         {/* Contenido: reveal por scroll */}
-        <div className="space-y-0 py-20 lg:py-0">
+        <div className="space-y-0">
           <motion.span
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}

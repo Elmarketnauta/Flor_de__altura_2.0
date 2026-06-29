@@ -77,7 +77,7 @@ export function Hero() {
       {/* Contenido */}
       <motion.div
         style={reducedMotion ? undefined : { y: yContent, opacity }}
-        className="container-app relative z-20 flex w-full min-w-0 max-w-full flex-col items-center text-center"
+        className="container-app relative z-20 flex w-full min-w-0 max-w-full flex-col items-center pt-16 text-center lg:pt-0"
       >
         <motion.div
           initial={{ opacity: 0, y: 16 }}
